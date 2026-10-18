@@ -13,3 +13,6 @@ logs/
 # Python and Jupyter temporary files
 __pycache__/
 .ipynb_checkpoints/
+
+# Virtual environment
+.venv/
