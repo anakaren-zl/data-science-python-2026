@@ -1,0 +1,18 @@
+# Heavy model files (GitHub rejects files > 100 MB)
+modelo/*.safetensors
+modelo/*.bin
+modelo/checkpoint-*/
+
+# Trainer outputs
+results/
+logs/
+
+# Credentials and API keys
+.env
+
+# Python and Jupyter temporary files
+__pycache__/
+.ipynb_checkpoints/
+
+# Virtual environment
+.venv/
