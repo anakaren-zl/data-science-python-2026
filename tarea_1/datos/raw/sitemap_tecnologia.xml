@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://elcomercio.pe/tecnologia/videojuegos/videojuego-peruano-dark-rally-abre-concurso-para-convertirte-en-uno-de-sus-personajes-noticia/</loc>
+    <lastmod>2026-10-18T16:00:00-05:00</lastmod>
+    <changefreq>always</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
     <loc>https://elcomercio.pe/tecnologia/actualidad/tesla-presenta-un-roadster-capaz-de-volar-y-en-las-redes-sociales-lo-reciben-con-memes-elon-musk-estados-unidos-spacex-noticia/</loc>
     <lastmod>2026-10-18T14:00:00-05:00</lastmod>
     <changefreq>always</changefreq>
@@ -117,12 +123,6 @@
   <url>
     <loc>https://elcomercio.pe/tecnologia/moviles/ventas-de-smartphones-registran-una-caida-del-20-motivado-por-la-crisis-de-memoria-ram-noticia/</loc>
     <lastmod>2026-10-15T15:38:57-05:00</lastmod>
-    <changefreq>always</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://elcomercio.pe/tecnologia/videojuegos/videojuego-peruano-dark-rally-abre-concurso-para-convertirte-en-uno-de-sus-personajes-noticia/</loc>
-    <lastmod>2026-10-15T11:49:20-05:00</lastmod>
     <changefreq>always</changefreq>
     <priority>0.5</priority>
   </url>

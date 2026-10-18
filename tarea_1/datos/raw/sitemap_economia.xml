@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://elcomercio.pe/economia/mercados/precio-del-dolar-en-peru-hoy-domingo-18-de-octubre-a-cuanto-esta-el-dolar-y-tipo-de-cambio-tasa-cotizacion-compra-y-venta-segun-bcrp-dolares-a-soles-sbs-ocona-lbposting-noticia/</loc>
+    <lastmod>2026-10-18T15:38:22-05:00</lastmod>
+    <changefreq>always</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
     <loc>https://elcomercio.pe/economia/deficit-fiscal-se-redujo-a-09-del-pbi-a-setiembre-segun-el-mef-noticia/</loc>
     <lastmod>2026-10-18T14:25:10-05:00</lastmod>
     <changefreq>always</changefreq>
@@ -9,12 +15,6 @@
   <url>
     <loc>https://elcomercio.pe/economia/superavit-comercial-del-peru-supero-los-us30000-millones-entre-enero-y-agosto-segun-bcr-noticia/</loc>
     <lastmod>2026-10-18T13:03:22-05:00</lastmod>
-    <changefreq>always</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://elcomercio.pe/economia/mercados/precio-del-dolar-en-peru-hoy-domingo-18-de-octubre-a-cuanto-esta-el-dolar-y-tipo-de-cambio-tasa-cotizacion-compra-y-venta-segun-bcrp-dolares-a-soles-sbs-ocona-lbposting-noticia/</loc>
-    <lastmod>2026-10-18T11:29:25-05:00</lastmod>
     <changefreq>always</changefreq>
     <priority>0.5</priority>
   </url>
@@ -43,13 +43,13 @@
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://elcomercio.pe/economia/dia-1/grupo-maquinarias-espera-cerrar-el-ano-con-5300-unidades-vendidas-noticia/</loc>
+    <loc>https://elcomercio.pe/economia/opinion/alacena-no-tiene-precio-noticia/</loc>
     <lastmod>2026-10-17T06:15:00-05:00</lastmod>
     <changefreq>always</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://elcomercio.pe/economia/opinion/alacena-no-tiene-precio-noticia/</loc>
+    <loc>https://elcomercio.pe/economia/dia-1/grupo-maquinarias-espera-cerrar-el-ano-con-5300-unidades-vendidas-noticia/</loc>
     <lastmod>2026-10-17T06:15:00-05:00</lastmod>
     <changefreq>always</changefreq>
     <priority>0.5</priority>
