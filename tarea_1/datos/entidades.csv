@@ -1,0 +1,718 @@
+etiqueta,tipo,entidad,frecuencia
+ciencia_tecnologia,LOC,Perú,12
+ciencia_tecnologia,ORG,Google,7
+ciencia_tecnologia,LOC,América Latina,3
+ciencia_tecnologia,LOC,Latinoamérica,3
+ciencia_tecnologia,ORG,Apple,3
+ciencia_tecnologia,ORG,Estado,3
+ciencia_tecnologia,ORG,Estados Unidos,3
+ciencia_tecnologia,ORG,Microsoft,3
+ciencia_tecnologia,PER,Francis Halzen,3
+ciencia_tecnologia,PER,Halzen,3
+ciencia_tecnologia,LOC,Estados Unidos,2
+ciencia_tecnologia,LOC,Madre de Dios,2
+ciencia_tecnologia,LOC,Pacífico,2
+ciencia_tecnologia,LOC,Polo Sur,2
+ciencia_tecnologia,LOC,Siberia,2
+ciencia_tecnologia,ORG,Cha,2
+ciencia_tecnologia,ORG,Gemini,2
+ciencia_tecnologia,ORG,Meta,2
+ciencia_tecnologia,ORG,OpenAI,2
+ciencia_tecnologia,ORG,tGPT,2
+ciencia_tecnologia,PER,JD Vance,2
+ciencia_tecnologia,PER,Kenso Soai,2
+ciencia_tecnologia,PER,León XIV,2
+ciencia_tecnologia,PER,Trump,2
+ciencia_tecnologia,LOC,Abric Romaní,1
+ciencia_tecnologia,LOC,Amazonía,1
+ciencia_tecnologia,LOC,Andes,1
+ciencia_tecnologia,LOC,Antártida,1
+ciencia_tecnologia,LOC,Argentina,1
+ciencia_tecnologia,LOC,Australia,1
+ciencia_tecnologia,LOC,Bélgica,1
+ciencia_tecnologia,LOC,California,1
+ciencia_tecnologia,LOC,Canadá,1
+ciencia_tecnologia,LOC,Caribe,1
+ciencia_tecnologia,LOC,Chile,1
+ciencia_tecnologia,LOC,China,1
+ciencia_tecnologia,LOC,Colombia,1
+ciencia_tecnologia,LOC,Colonia,1
+ciencia_tecnologia,LOC,EE.UU,1
+ciencia_tecnologia,LOC,Estación Espacial Internacional,1
+ciencia_tecnologia,LOC,Finlandia,1
+ciencia_tecnologia,LOC,Francia,1
+ciencia_tecnologia,LOC,India,1
+ciencia_tecnologia,LOC,Lima,1
+ciencia_tecnologia,LOC,México,1
+ciencia_tecnologia,LOC,Noruega,1
+ciencia_tecnologia,LOC,Reino Unido,1
+ciencia_tecnologia,LOC,Reserva Nacional Tambopata,1
+ciencia_tecnologia,LOC,Tambopata,1
+ciencia_tecnologia,LOC,Tienen,1
+ciencia_tecnologia,LOC,hos,1
+ciencia_tecnologia,ORG,Ado,1
+ciencia_tecnologia,ORG,Alemania,1
+ciencia_tecnologia,ORG,Ali,1
+ciencia_tecnologia,ORG,Amazon Music,1
+ciencia_tecnologia,ORG,Apple Intelligence,1
+ciencia_tecnologia,ORG,Apple Music,1
+ciencia_tecnologia,ORG,Ata,1
+ciencia_tecnologia,ORG,Bit,1
+ciencia_tecnologia,ORG,China,1
+ciencia_tecnologia,ORG,Comité Nobel de Química,1
+ciencia_tecnologia,ORG,Common Sense Media,1
+ciencia_tecnologia,ORG,Crew 12,1
+ciencia_tecnologia,ORG,Del,1
+ciencia_tecnologia,ORG,EE.UU,1
+ciencia_tecnologia,ORG,ESET,1
+ciencia_tecnologia,ORG,Els,1
+ciencia_tecnologia,ORG,Epic,1
+ciencia_tecnologia,ORG,FEMA,1
+ciencia_tecnologia,ORG,Fiscalía Especializada en Materia Ambiental,1
+ciencia_tecnologia,ORG,Fiscalías Especializadas en Materia Ambiental,1
+ciencia_tecnologia,ORG,Gobierno,1
+ciencia_tecnologia,ORG,Google DeepMind,1
+ciencia_tecnologia,ORG,IceCube,1
+ciencia_tecnologia,ORG,Inte,1
+ciencia_tecnologia,ORG,Justicia,1
+ciencia_tecnologia,ORG,Len,1
+ciencia_tecnologia,ORG,Marina de Guerra,1
+ciencia_tecnologia,ORG,NASA,1
+ciencia_tecnologia,ORG,Netflix,1
+ciencia_tecnologia,ORG,OpenAI. Wikimedia Foundation,1
+ciencia_tecnologia,ORG,Pekín,1
+ciencia_tecnologia,ORG,SpaceX,1
+ciencia_tecnologia,ORG,Spo,1
+ciencia_tecnologia,ORG,Tes,1
+ciencia_tecnologia,ORG,The Wall Street Journal,1
+ciencia_tecnologia,ORG,TikTok,1
+ciencia_tecnologia,ORG,Universidad Estatal de Arizona,1
+ciencia_tecnologia,ORG,Universidad de Stanford,1
+ciencia_tecnologia,ORG,Universidad de Wisconsin-Madison,1
+ciencia_tecnologia,ORG,WWF,1
+ciencia_tecnologia,ORG,Wikipedia,1
+ciencia_tecnologia,ORG,World Wildlife Fund,1
+ciencia_tecnologia,ORG,YouTube,1
+ciencia_tecnologia,ORG,YouTube Music,1
+ciencia_tecnologia,ORG,bab,1
+ciencia_tecnologia,ORG,ceCube,1
+ciencia_tecnologia,ORG,defender,1
+ciencia_tecnologia,ORG,ier,1
+ciencia_tecnologia,ORG,ropic,1
+ciencia_tecnologia,ORG,vid,1
+ciencia_tecnologia,PER,Anth,1
+ciencia_tecnologia,PER,Barack Obama,1
+ciencia_tecnologia,PER,Ben Affleck,1
+ciencia_tecnologia,PER,Bill Gates,1
+ciencia_tecnologia,PER,Claude,1
+ciencia_tecnologia,PER,Deme,1
+ciencia_tecnologia,PER,Demetrio Pacheco,1
+ciencia_tecnologia,PER,Demis Hassabis,1
+ciencia_tecnologia,PER,Edgar,1
+ciencia_tecnologia,PER,Edgardo Martínez Esparza,1
+ciencia_tecnologia,PER,Elo,1
+ciencia_tecnologia,PER,Frank Almanza,1
+ciencia_tecnologia,PER,Gregory Breit,1
+ciencia_tecnologia,PER,Henri B. Kagan,1
+ciencia_tecnologia,PER,Henri Kagan,1
+ciencia_tecnologia,PER,Jacob Coxon,1
+ciencia_tecnologia,PER,Jensen Huang,1
+ciencia_tecnologia,PER,João Bortone,1
+ciencia_tecnologia,PER,Lionel Messi,1
+ciencia_tecnologia,PER,Marco Rubio,1
+ciencia_tecnologia,PER,Margaret Hamilton,1
+ciencia_tecnologia,PER,Michael Dell,1
+ciencia_tecnologia,PER,Michael Smith,1
+ciencia_tecnologia,PER,Muse,1
+ciencia_tecnologia,PER,Musk,1
+ciencia_tecnologia,PER,Nobel de Física,1
+ciencia_tecnologia,PER,Padre de la IA,1
+ciencia_tecnologia,PER,Roberto Carlos Pacheco Villanueva,1
+ciencia_tecnologia,PER,Sat,1
+ciencia_tecnologia,PER,Thomas Edison,1
+ciencia_tecnologia,PER,Tim Sweeney,1
+ciencia_tecnologia,PER,n Musk,1
+ciencia_tecnologia,PER,shua Bengio,1
+ciencia_tecnologia,PER,trio Pacheco,1
+ciencia_tecnologia,PER,y Latam,1
+ciencia_tecnologia,PER,ya Nadella,1
+deportes,ORG,Universitario,16
+deportes,ORG,Alianza Lima,13
+deportes,ORG,Alianza Atlético,11
+deportes,ORG,Barcelona,11
+deportes,ORG,Atlético Grau,10
+deportes,ORG,Real Madrid,10
+deportes,ORG,Real Betis,9
+deportes,ORG,Alianza,8
+deportes,LOC,Pun,7
+deportes,ORG,Sevilla,7
+deportes,ORG,Sport,6
+deportes,ORG,ing Cristal,6
+deportes,LOC,Costa Verde,5
+deportes,LOC,La Cartuja,5
+deportes,ORG,ASICS Golden Run,5
+deportes,PER,Annia Cillóniz,5
+deportes,LOC,Mat,4
+deportes,ORG,Boca Juniors,4
+deportes,ORG,Comerciantes Unidos,4
+deportes,ORG,Inter Miami,4
+deportes,ORG,River Plate,4
+deportes,ORG,Tall,4
+deportes,ORG,Uruguay,4
+deportes,ORG,eres,4
+deportes,PER,Diego Elías,4
+deportes,PER,Eduardo Castro,4
+deportes,PER,Lam,4
+deportes,PER,ine Yamal,4
+deportes,LOC,Are,3
+deportes,LOC,Argentina,3
+deportes,LOC,Callao,3
+deportes,LOC,Chucuito,3
+deportes,LOC,Europa,3
+deportes,LOC,Matute,3
+deportes,LOC,San Miguel,3
+deportes,LOC,estadio Santiago Bernabéu,3
+deportes,ORG,Atlanta United,3
+deportes,ORG,Belgrano,3
+deportes,ORG,Comer,3
+deportes,ORG,ONLINE,3
+deportes,ORG,Palmeiras,3
+deportes,ORG,Sporting Cristal,3
+deportes,ORG,Universitario de Deportes,3
+deportes,PER,Franco Velazco,3
+deportes,PER,Juan Pablo II,3
+deportes,PER,Lionel Messi,3
+deportes,PER,Luis Iberico,3
+deportes,PER,Pablo Guede,3
+deportes,PER,Raúl Orlandini,3
+deportes,LOC,Arequipa,2
+deportes,LOC,Chongoyape,2
+deportes,LOC,Estadio Alejandro Villanueva,2
+deportes,LOC,Lima,2
+deportes,LOC,estadio Alberto Gallardo,2
+deportes,ORG,ADT,2
+deportes,ORG,América,2
+deportes,ORG,Argentina,2
+deportes,ORG,Bolivia,2
+deportes,ORG,CD Moquegua,2
+deportes,ORG,Chankas,2
+deportes,ORG,Chelsea,2
+deportes,ORG,Chivas,2
+deportes,ORG,Cienciano,2
+deportes,ORG,Costa Rica,2
+deportes,ORG,Cusco FC,2
+deportes,ORG,Deportivo Garcilaso,2
+deportes,ORG,Deportivo Soan,2
+deportes,ORG,El Comercio,2
+deportes,ORG,FC Cajamarca,2
+deportes,ORG,IPD,2
+deportes,ORG,Independiente del Valle,2
+deportes,ORG,Junta Directiva,2
+deportes,ORG,LaLiga,2
+deportes,ORG,León,2
+deportes,ORG,Melgar,2
+deportes,ORG,Monterrey,2
+deportes,ORG,Pachuca,2
+deportes,ORG,Sport Boys,2
+deportes,ORG,Sport Huancayo,2
+deportes,ORG,ciantes Unidos,2
+deportes,ORG,ipzig,2
+deportes,PER,Aleska Musiris,2
+deportes,PER,André Martínez,2
+deportes,PER,Hern,2
+deportes,PER,Ignacio Buse,2
+deportes,PER,Jostin Alarcón,2
+deportes,PER,Neymar,2
+deportes,PER,Orlandini,2
+deportes,PER,Ortiz Bisso,2
+deportes,PER,Paul Coll,2
+deportes,PER,Piero Cari,2
+deportes,PER,Que,2
+deportes,PER,Urciuoli,2
+deportes,PER,Vinícius,2
+deportes,PER,án Barcos,2
+deportes,LOC,Alli,1
+deportes,LOC,Ayacucho,1
+deportes,LOC,Coliseo Polideportivo Lucha Fuentes,1
+deportes,LOC,Cusco,1
+deportes,LOC,Egipto,1
+deportes,LOC,Estadio Alberto Gallardo,1
+deportes,LOC,La Bombonera,1
+deportes,LOC,Mansiche,1
+deportes,LOC,Matute | VIDEO,1
+deportes,LOC,Paraguay,1
+deportes,LOC,París,1
+deportes,LOC,Perú,1
+deportes,LOC,Puerto Rico,1
+deportes,LOC,Santiago Bernabéu,1
+deportes,LOC,Shang,1
+deportes,LOC,VIDEO,1
+deportes,LOC,anz Arena,1
+deportes,LOC,estadio Alejandro Villanueva,1
+deportes,LOC,quipa,1
+deportes,LOC,sco,1
+deportes,LOC,ute,1
+deportes,ORG,ASICS Golden,1
+deportes,ORG,Bay,1
+deportes,ORG,Bayern Múnich,1
+deportes,ORG,Belgrano ONLINE,1
+deportes,ORG,Bet,1
+deportes,ORG,Cajamarca,1
+deportes,ORG,Camino,1
+deportes,ORG,Comando Sur,1
+deportes,ORG,Consejo de la FIFA,1
+deportes,ORG,Direc,1
+deportes,ORG,ESPN Premium,1
+deportes,ORG,Everton,1
+deportes,ORG,FDPB,1
+deportes,ORG,Federación Peruana de Basketball,1
+deportes,ORG,Infantino,1
+deportes,ORG,LINE,1
+deportes,ORG,Maestra Internacional,1
+deportes,ORG,Movistar PLUS,1
+deportes,ORG,Nacional,1
+deportes,ORG,Palm,1
+deportes,ORG,Perú,1
+deportes,ORG,Rojo Matador,1
+deportes,ORG,Sporting de Portugal,1
+deportes,ORG,Tigres UANL,1
+deportes,ORG,ern Múnich,1
+deportes,ORG,lez,1
+deportes,ORG,s del Inca,1
+deportes,ORG,star Plus,1
+deportes,PER,Adson,1
+deportes,PER,Angelo Caro,1
+deportes,PER,Ann,1
+deportes,PER,Bernal,1
+deportes,PER,Carlos,1
+deportes,PER,Carlos Andrés Gómez,1
+deportes,PER,Castillo,1
+deportes,PER,Dibu,1
+deportes,PER,Dibu Martínez,1
+deportes,PER,El Pibe,1
+deportes,PER,Fabián Bustos,1
+deportes,PER,Facundo Bernal,1
+deportes,PER,Facundo Castañeda,1
+deportes,PER,Franco Navarro Manda,1
+deportes,PER,Franco Navarro Mandayo,1
+deportes,PER,Gianni Infantino,1
+deportes,PER,Gra,1
+deportes,PER,Guadalupe,1
+deportes,PER,Guede,1
+deportes,PER,Ingrid Aliaga,1
+deportes,PER,Jairo Vélez,1
+deportes,PER,Jarrad Branthwaite,1
+deportes,PER,Javier Tebas,1
+deportes,PER,Jhon Atachagua,1
+deportes,PER,Jordi Espinoza,1
+deportes,PER,José Mourinho,1
+deportes,PER,Kevin Quevedo,1
+deportes,PER,Kiki,1
+deportes,PER,Kluiverth,1
+deportes,PER,Kluiverth Aguilar,1
+deportes,PER,Kylian Mbappé,1
+deportes,PER,Lamine Yamal,1
+deportes,PER,Luis Díaz,1
+deportes,PER,Luis ‘Cuto,1
+deportes,PER,Martínez,1
+deportes,PER,Messi,1
+deportes,PER,Mia Jalit,1
+deportes,PER,Mono’ Orlandini,1
+deportes,PER,Mos,1
+deportes,PER,Mostafa Asal,1
+deportes,PER,Mourinho,1
+deportes,PER,Osorio,1
+deportes,PER,Paolo Guerrero,1
+deportes,PER,Piero Quispe,1
+deportes,PER,Quevedo,1
+deportes,PER,Ramírez,1
+deportes,PER,Raúl,1
+deportes,PER,Rojas,1
+deportes,PER,Sebastián Osorio,1
+deportes,PER,She,1
+deportes,PER,Valderrama,1
+deportes,PER,Vásquez,1
+deportes,PER,Zarita Suárez,1
+deportes,PER,a Eulogio,1
+deportes,PER,bappé,1
+deportes,PER,baza Acosta,1
+deportes,PER,caloni,1
+deportes,PER,ia Cillóniz,1
+deportes,PER,ssa Chuman,1
+deportes,PER,tafa Asal,1
+deportes,PER,vedo,1
+deportes,PER,yc Castillo,1
+deportes,PER,Álvaro Montero,1
+economia,LOC,Perú,36
+economia,ORG,Estados Unidos,7
+economia,LOC,Texas,6
+economia,LOC,Wall Street,6
+economia,ORG,Gobierno,5
+economia,LOC,Estados Unidos,4
+economia,ORG,Ima,4
+economia,ORG,Indecopi,4
+economia,LOC,Jorge Chávez,3
+economia,LOC,Oriente Medio,3
+economia,ORG,Gil,3
+economia,ORG,Interseguro,3
+economia,ORG,MEF,3
+economia,ORG,ONP,3
+economia,LOC,América Latina,2
+economia,LOC,Arabia Saudí,2
+economia,LOC,EE.UU,2
+economia,LOC,Medio Oriente,2
+economia,LOC,Valle Sagrado de los Incas,2
+economia,ORG,121,2
+economia,ORG,Ejecutivo,2
+economia,ORG,Estudios Económicos de Scotiabank,2
+economia,ORG,FEN,2
+economia,ORG,Ford,2
+economia,ORG,INEI,2
+economia,ORG,Instituto del Mar del Perú,2
+economia,ORG,Irán,2
+economia,ORG,MTC,2
+economia,ORG,Mallplaza,2
+economia,ORG,Min,2
+economia,ORG,Ministerio de Economía y Finanzas,2
+economia,ORG,Ministerio de la Producción,2
+economia,ORG,Peruano,2
+economia,ORG,ProInversión,2
+economia,ORG,Produc,2
+economia,ORG,SBS,2
+economia,ORG,SNI,2
+economia,ORG,SNP,2
+economia,ORG,SPH,2
+economia,ORG,TTC,2
+economia,ORG,achipa,2
+economia,LOC,Amazonía,1
+economia,LOC,Argentina,1
+economia,LOC,Bolivia,1
+economia,LOC,Canadá,1
+economia,LOC,Chile,1
+economia,LOC,Cono Sur de América Latina,1
+economia,LOC,Costa Rica,1
+economia,LOC,Estadios San Marcos,1
+economia,LOC,Lima,1
+economia,LOC,Loreto,1
+economia,LOC,Madre de Dios,1
+economia,LOC,Malta,1
+economia,LOC,Noruega,1
+economia,LOC,Puerto Corío,1
+economia,LOC,Puerto Rico,1
+economia,LOC,Vic,1
+economia,LOC,Yemen,1
+economia,LOC,arochirí,1
+economia,LOC,cayali,1
+economia,LOC,hayito,1
+economia,LOC,muz,1
+economia,ORG,Ade,1
+economia,ORG,Adex,1
+economia,ORG,AlaCena,1
+economia,ORG,Aranwa,1
+economia,ORG,Aranwa Hotels,1
+economia,ORG,Asociación de Exportadores,1
+economia,ORG,BBVA Research,1
+economia,ORG,BCR,1
+economia,ORG,BTS,1
+economia,ORG,Banbif,1
+economia,ORG,Banco Central de Reserva,1
+economia,ORG,Banco de la Nación,1
+economia,ORG,Cami,1
+economia,ORG,Capítulo Chileno del Consejo Empresarial Chileno,1
+economia,ORG,Cerro Verde,1
+economia,ORG,Chile,1
+economia,ORG,Coca-Cola,1
+economia,ORG,Coca-Cola Perú,1
+economia,ORG,Congreso,1
+economia,ORG,Consejo Directivo de Indecopi,1
+economia,ORG,Consejo Directivo del Instituto Nacional de Defensa de la Competencia y de la Protección Intelectual,1
+economia,ORG,Consejo Empresaria,1
+economia,ORG,Consejo Empresarial Chileno,1
+economia,ORG,Corne,1
+economia,ORG,Credicorp,1
+economia,ORG,Credicorp Capital,1
+economia,ORG,Cámara de Comercio de Lima,1
+economia,ORG,Departamento de Economía,1
+economia,ORG,Directorio de Buenaventura,1
+economia,ORG,EE.UU,1
+economia,ORG,El Comercio,1
+economia,ORG,El Peruano,1
+economia,ORG,EsHoy,1
+economia,ORG,Familia,1
+economia,ORG,Fon,1
+economia,ORG,Fonafe. El Ministerio de Economía y Finanzas,1
+economia,ORG,Fondo Nacional de Financiamiento de la Actividad Empresarial del Estado,1
+economia,ORG,Gall,1
+economia,ORG,Gloria,1
+economia,ORG,Grupo Aje,1
+economia,ORG,Grupo Fahrenheit,1
+economia,ORG,Grupo Maquinarias,1
+economia,ORG,Hil,1
+economia,ORG,Hágase Instituto,1
+economia,ORG,IATA,1
+economia,ORG,IBM,1
+economia,ORG,Inccosac,1
+economia,ORG,Inde,1
+economia,ORG,Instituto Nacional de Estadística e Informática,1
+economia,ORG,Inte,1
+economia,ORG,Luz del Sur,1
+economia,ORG,Macroconsult,1
+economia,ORG,Micro,1
+economia,ORG,Microsoft,1
+economia,ORG,Midagri,1
+economia,ORG,Ministerio de Economía,1
+economia,ORG,Nes,1
+economia,ORG,Nova,1
+economia,ORG,Oficina de Normalización Previsional,1
+economia,ORG,One to One,1
+economia,ORG,Produce,1
+economia,ORG,Programa Nacional de Telecomunicaciones,1
+economia,ORG,Proinversión,1
+economia,ORG,Pronatel,1
+economia,ORG,Rex,1
+economia,ORG,Roc,1
+economia,ORG,SURA Investments,1
+economia,ORG,Sandisk,1
+economia,ORG,Sanofi,1
+economia,ORG,Sedapal,1
+economia,ORG,Sistema Nacional de Pensiones,1
+economia,ORG,Sociedad Nacional de Construcción e Infraestructura,1
+economia,ORG,Sociedad Nacional de Industrias,1
+economia,ORG,Sociedad Nacional de Pesquería,1
+economia,ORG,Sociedad Peruana de Hidrocarburos,1
+economia,ORG,Superintendencia de Banca y Seguros,1
+economia,ORG,Tal,1
+economia,ORG,Tem,1
+economia,ORG,Temu,1
+economia,ORG,UCLA,1
+economia,ORG,Universidad del Pacífico,1
+economia,ORG,Vis,1
+economia,ORG,WPP,1
+economia,ORG,WTTC,1
+economia,ORG,Wall Street,1
+economia,ORG,agher Perú,1
+economia,ORG,at Perú,1
+economia,ORG,cetur,1
+economia,ORG,copi,1
+economia,ORG,rpe,1
+economia,ORG,rstone Perú,1
+economia,ORG,rtis,1
+economia,ORG,s Empresarias,1
+economia,ORG,san,1
+economia,ORG,sea,1
+economia,ORG,tlé,1
+economia,PER,Alberto Goachet,1
+economia,PER,Alejandro Falla,1
+economia,PER,Antonio Castillo,1
+economia,PER,Beat,1
+economia,PER,Beatriz Boza,1
+economia,PER,Brigitt Bruna Bencich Aguilar,1
+economia,PER,Cristiano Sampaio,1
+economia,PER,César Tello Ramírez,1
+economia,PER,Daniel Mas,1
+economia,PER,Daniel Velandia,1
+economia,PER,David Peñalver,1
+economia,PER,Donald Trump,1
+economia,PER,Eduardo Grisolle,1
+economia,PER,Gaspar Morán Flores,1
+economia,PER,Gonzalo Ruiz,1
+economia,PER,Grisolle,1
+economia,PER,Hall,1
+economia,PER,José Angello Tangherlini,1
+economia,PER,Justin Trudeau,1
+economia,PER,Keiko Fujimori,1
+economia,PER,Luis Del Carpio,1
+economia,PER,Luis Felipe Gazitúa,1
+economia,PER,Marco Ortiz,1
+economia,PER,Mario Gonzales,1
+economia,PER,Miguel Incháustegui,1
+economia,PER,Nuno Lopes Alves,1
+economia,PER,Pablo Nano,1
+economia,PER,Patricia Martínez,1
+economia,PER,Paul Thorndike,1
+economia,PER,Peter Cerdá,1
+economia,PER,Roque Benavides,1
+economia,PER,Roxana Barrantes,1
+economia,PER,Saki Bigio,1
+economia,PER,Tru,1
+economia,PER,mer Cuba,1
+economia,PER,oodford,1
+economia,PER,riz Boza,1
+economia,PER,xana María Irma Barrantes Cáceres,1
+economia,PER,Álvaro Vargas Llosa,1
+politica,ORG,Senado,21
+politica,PER,Keiko Fujimori,20
+politica,ORG,Comisión de Constitución del Senado,18
+politica,ORG,Comisión de Constitución,16
+politica,ORG,Ejecutivo,14
+politica,ORG,Congreso,13
+politica,LOC,Perú,12
+politica,ORG,Cámara de Diputados,12
+politica,PER,Carlos Mesía,10
+politica,ORG,Juntos por el Perú,9
+politica,PER,Álvaro Vargas Llosa,9
+politica,ORG,Ahora Nación,8
+politica,ORG,Fuerza Popular,8
+politica,PER,César Astudillo,8
+politica,ORG,Poder Ejecutivo,7
+politica,ORG,Renovación Popular,7
+politica,PER,León XIV,7
+politica,ORG,Gobierno,6
+politica,ORG,JNE,6
+politica,PER,Daniel Barragán,6
+politica,ORG,Obras,5
+politica,ORG,Partido del Buen Gobierno,5
+politica,PER,Francis Allison,5
+politica,PER,Graciela Chipana,5
+politica,ORG,El Comercio,4
+politica,ORG,Estados Unidos,4
+politica,ORG,Juntos,4
+politica,ORG,Perú,4
+politica,PER,Alfonso López Chau,4
+politica,PER,César Acuña,4
+politica,PER,Ernesto Álvarez,4
+politica,PER,Flavio Figallo,4
+politica,PER,Juan Sheput,4
+politica,PER,Miguel Torres,4
+politica,LOC,Lima,3
+politica,ORG,Diputados,3
+politica,ORG,Fiscalía,3
+politica,ORG,JEE,3
+politica,ORG,Jurado Nacional de Elecciones,3
+politica,ORG,Ministerio Público,3
+politica,ORG,Parlamento,3
+politica,ORG,Poder Judicial,3
+politica,PER,Fernando Vivas,3
+politica,PER,Rafael López Aliaga,3
+politica,LOC,La Libertad,2
+politica,ORG,APP,2
+politica,ORG,Alianza para el Progreso,2
+politica,ORG,Avanza País,2
+politica,ORG,Buen Gobierno,2
+politica,ORG,Colegio de Abogados de Loreto,2
+politica,ORG,Congreso de la República,2
+politica,ORG,Ejército,2
+politica,ORG,Jurados Electorales Especiales,2
+politica,ORG,Min,2
+politica,ORG,Ministerio de Energía y Minas,2
+politica,ORG,OEA,2
+politica,ORG,ONPE,2
+politica,ORG,PNP,2
+politica,ORG,Partido Cívico Obras,2
+politica,ORG,PerúCheck,2
+politica,ORG,República,2
+politica,ORG,Tribunal Constitucional,2
+politica,ORG,Unión Europea,2
+politica,ORG,Vaticano,2
+politica,ORG,vadef,2
+politica,PER,Arturo Alegría,2
+politica,PER,Fredy López,2
+politica,PER,Gregorio Santos,2
+politica,PER,Guillermo Shinno,2
+politica,PER,Hum,2
+politica,PER,Héctor Ventura,2
+politica,PER,Jaime Delgado,2
+politica,PER,Jorge Nieto,2
+politica,PER,Julián Pérez Mallqui,2
+politica,PER,Lourdes Alcorta,2
+politica,PER,Marco Vinelli,2
+politica,PER,María Corina Machado,2
+politica,PER,Milagros Jáuregui,2
+politica,PER,Rafael Belaunde,2
+politica,PER,Roberto Sánchez,2
+politica,PER,Rodrigo Paz,2
+politica,PER,Susan,2
+politica,PER,Tomás Gálvez,2
+politica,PER,a Villarán,2
+politica,PER,berto Abanto,2
+politica,LOC,Apurímac,1
+politica,LOC,Bolivia,1
+politica,LOC,Cajamarca,1
+politica,LOC,China,1
+politica,LOC,EE.UU,1
+politica,LOC,Los Olivos,1
+politica,LOC,Man,1
+politica,LOC,Miguel Grau,1
+politica,LOC,San Miguel,1
+politica,LOC,Trujillo,1
+politica,LOC,Valle de los Ríos,1
+politica,LOC,quegua,1
+politica,ORG,Alcal,1
+politica,ORG,Canadá,1
+politica,ORG,Comisión de Constitución de Diputados,1
+politica,ORG,Comisión de Constitución de la Cámara Alta,1
+politica,ORG,Comisión de Constitución el Senado,1
+politica,ORG,"Comisión de Constitución, Reglamento",1
+politica,ORG,Comisión de Ética Parlamentaria de la Cámara Baja,1
+politica,ORG,Comisión del Senado,1
+politica,ORG,Corte Superior Nacional de Justicia Penal Especializada,1
+politica,ORG,Cuarto Juzgado de Investigación Preparatoria Nacional de la Corte Superior Nacional de Justicia Penal Especializada,1
+politica,ORG,Cuarto Poder,1
+politica,ORG,Cámara Alta,1
+politica,ORG,Cámara de Senadores,1
+politica,ORG,Diario,1
+politica,ORG,EE.UU,1
+politica,ORG,Ecuador,1
+politica,ORG,FF.AA,1
+politica,ORG,Fen,1
+politica,ORG,Fuerzas Armadas,1
+politica,ORG,Gobierno de México,1
+politica,ORG,Juntos Por el Perú,1
+politica,ORG,Lima,1
+politica,ORG,Lima Metropolitana,1
+politica,ORG,MAS,1
+politica,ORG,MIMP,1
+politica,ORG,MINEM,1
+politica,ORG,MPCP,1
+politica,ORG,Militarizado Partido Comunista del Perú,1
+politica,ORG,Ministerio de la Mujer,1
+politica,ORG,Ministerio de la Mujer y Poblaciones Vulnerables,1
+politica,ORG,Movimiento de Afirmación Social,1
+politica,ORG,Municipal,1
+politica,ORG,Municipalidad Metropolitana de Lima,1
+politica,ORG,NDOT,1
+politica,ORG,Nación,1
+politica,ORG,Oficina Nacional de Procesos Electorales,1
+politica,ORG,PPK,1
+politica,ORG,Paraguay,1
+politica,ORG,Partido del Bueno Gobierno,1
+politica,ORG,Poder Legislativo,1
+politica,ORG,Policía Nacional,1
+politica,ORG,Policía Nacional del Perú,1
+politica,ORG,Quinto,1
+politica,ORG,Reglamento,1
+politica,ORG,Relaciones Exteriores,1
+politica,ORG,Relaciones Exteriores del Senado,1
+politica,ORG,día de Lima,1
+politica,ORG,idad de Lima,1
+politica,PER,Alfonso López-Chau,1
+politica,PER,Allison,1
+politica,PER,Carlos Paz,1
+politica,PER,Cyntia Cornejo Arista,1
+politica,PER,Del,1
+politica,PER,Delcy Rodríguez,1
+politica,PER,Erick Salas,1
+politica,PER,Giannina Avendaño,1
+politica,PER,Graciela Chicana,1
+politica,PER,Henry Albañil,1
+politica,PER,Iber Maraví,1
+politica,PER,Jorge Quispe Palomino,1
+politica,PER,Lydia Antonio de la Garza,1
+politica,PER,López Aliaga,1
+politica,PER,López-Chau,1
+politica,PER,Mario Vargas Llosa,1
+politica,PER,Mayra Figueroa,1
+politica,PER,Ministro,1
+politica,PER,Papa León XIV,1
+politica,PER,Pedro Hernández,1
+politica,PER,Pedro Pablo Kuczynski,1
+politica,PER,Presidenta de México,1
+politica,PER,Rafael Yamashiro,1
+politica,PER,Renzo Reggiardo,1
+politica,PER,Ricardo Belmont,1
+politica,PER,Trump,1
+politica,PER,Víctor Quispe Palomino,1
+politica,PER,cy Rodríguez,1
+politica,PER,hermanos Quispe Palomino,1
+politica,PER,papa,1
+politica,PER,Óscar,1
