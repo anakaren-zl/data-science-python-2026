@@ -1,0 +1,15 @@
+# Raw corpus (originals and heavy outputs are not versioned; see datos/fuentes.csv)
+datos/raw/
+
+# Model weights (GitHub rejects files > 100 MB)
+modelos/*.safetensors
+modelos/*.bin
+modelos/checkpoint-*/
+
+# Credentials and API keys
+.env
+
+# Python and Jupyter temporary files
+__pycache__/
+.ipynb_checkpoints/
+.venv/
