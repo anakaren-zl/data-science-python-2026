@@ -14,6 +14,7 @@ st.set_page_config(page_title="Peruvian News Classifier", page_icon="📰", layo
 
 ruta_noticias = "datos/noticias.csv"
 ruta_metricas = "modelo/metricas.json"
+ruta_entidades = "datos/entidades.csv"
 ruta_modelo = "modelo"
 
 # Readable names for the interface; the official labels remain unchanged in the data.
@@ -108,6 +109,10 @@ button[kind="primary"]:hover, [data-testid="stBaseButton-primary"]:hover { trans
 .barra-pista { flex: 1; height: 10px; background-color: #eef3fb; border-radius: 999px; overflow: hidden; }
 .barra-relleno { height: 100%; background: linear-gradient(90deg, #5598e7, #0d366b); border-radius: 999px; animation: llenar 1.2s cubic-bezier(0.22, 1, 0.36, 1); }
 .barra-valor { width: 44px; text-align: right; font-size: 0.9rem; font-weight: 600; color: #0d366b; }
+/* Card of the most mentioned entities */
+.tarjeta-entidades { background-color: #ffffff; border: 1px solid #e5e7eb; border-radius: 16px; padding: 14px 22px; }
+.tarjeta-entidades .barra-nombre { width: 300px; }
+.tipo-entidad { font-size: 0.7rem; font-weight: 600; color: #1c5cab; background-color: #eef3fb; padding: 2px 8px; border-radius: 999px; margin-left: 6px; }
 </style>
 """
 st.markdown(estilo, unsafe_allow_html=True)
@@ -136,6 +141,12 @@ def cargar_metricas():
         return json.load(archivo)
 
 
+@st.cache_data
+def cargar_entidades():
+    """Read the named entities extracted in the innovation notebook."""
+    return pd.read_csv(ruta_entidades)
+
+
 @st.cache_resource
 def cargar_clasificador():
     """Load the fine-tuned DistilBERT model saved in Part 2."""
@@ -145,6 +156,7 @@ def cargar_clasificador():
 
 noticias = cargar_noticias()
 metricas = cargar_metricas()
+entidades = cargar_entidades()
 
 
 # =============================================
@@ -302,6 +314,46 @@ st.download_button(
     file_name="noticias_filtradas.csv",
     mime="text/csv",
 )
+
+
+# =============================================
+#  NAMED ENTITIES
+# =============================================
+
+titulo_seccion("Who makes the news? Most mentioned entities")
+
+nombres_tipos = {"PER": "Person", "ORG": "Organization", "LOC": "Location"}
+
+# The entities follow the category filter of the sidebar.
+entidades_filtradas = entidades[entidades["etiqueta"].isin(categorias_elegidas)]
+top_entidades = (
+    entidades_filtradas.groupby(["entidad", "tipo"])["frecuencia"]
+    .sum()
+    .reset_index()
+    .sort_values("frecuencia", ascending=False)
+    .head(10)
+)
+
+if len(top_entidades) == 0:
+    st.info("Select at least one category to see its entities.")
+else:
+    maximo = top_entidades["frecuencia"].max()
+
+    # Each entity is drawn as a bar that fills up from zero, relative to the most mentioned one.
+    filas_entidades = ""
+    for _, fila in top_entidades.iterrows():
+        filas_entidades += (
+            f'<div class="barra-fila"><span class="barra-nombre">{html.escape(fila["entidad"])} '
+            f'<span class="tipo-entidad">{nombres_tipos[fila["tipo"]]}</span></span>'
+            f'<div class="barra-pista"><div class="barra-relleno" style="width: {fila["frecuencia"] / maximo:.1%};"></div></div>'
+            f'<span class="barra-valor">{fila["frecuencia"]}</span></div>'
+        )
+
+    st.markdown(f'<div class="tarjeta-entidades">{filas_entidades}</div>', unsafe_allow_html=True)
+    st.caption(
+        "Entities detected with `mrm8488/bert-spanish-cased-finetuned-ner` in headlines and summaries "
+        "(confidence ≥ 0.80). Frequencies are approximate, since name variants are not merged."
+    )
 
 
 # =============================================
