@@ -1,0 +1,7 @@
+{
+  "f1_macro_modelo": 0.8787,
+  "accuracy_modelo": 0.8793,
+  "f1_macro_zero_shot": 0.5942,
+  "f1_macro_llm": 0.877,
+  "acuerdo_llm_humano": 1.0
+}
