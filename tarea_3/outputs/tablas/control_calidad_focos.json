@@ -1,0 +1,22 @@
+{
+  "registros": 10907,
+  "valores_ausentes_por_columna": {},
+  "duplicados_exactos": 0,
+  "duplicados_misma_posicion_fecha_hora_satelite": 0,
+  "latitud_fuera_de_rango": 0,
+  "longitud_fuera_de_rango": 0,
+  "confianza": {
+    "n": 8981,
+    "l": 1337,
+    "h": 589
+  },
+  "dia_noche": {
+    "D": 9146,
+    "N": 1761
+  },
+  "detecciones_fuera_del_peru_descartadas": 2563,
+  "detecciones_en_el_peru": 8344,
+  "eventos_identificados": 2361,
+  "parametro_distancia_evento_m": 1000,
+  "crs_metrico": "EPSG:32718"
+}

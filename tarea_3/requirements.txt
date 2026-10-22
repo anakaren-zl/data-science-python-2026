@@ -1,0 +1,15 @@
+pandas
+numpy
+geopandas
+rasterio
+rasterstats
+shapely
+pyproj
+requests
+matplotlib
+plotly
+folium
+streamlit
+streamlit-folium
+python-dotenv
+pytest
