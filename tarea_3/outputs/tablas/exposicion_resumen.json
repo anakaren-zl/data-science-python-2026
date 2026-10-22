@@ -1,0 +1,14 @@
+{
+  "edificaciones_en_zona": 168326,
+  "edificaciones_en_zona_conf_075": 114983,
+  "edificaciones_a_500m": 3504,
+  "edificaciones_a_500m_conf_075": 2366,
+  "proporcion_a_500m": 0.0208,
+  "edificaciones_a_1000m": 11939,
+  "edificaciones_a_1000m_conf_075": 8245,
+  "proporcion_a_1000m": 0.0709,
+  "edificaciones_a_5000m": 129919,
+  "edificaciones_a_5000m_conf_075": 90026,
+  "proporcion_a_5000m": 0.7718,
+  "distancia_mediana_m": 2821.3
+}
