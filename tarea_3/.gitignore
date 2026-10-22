@@ -1,0 +1,13 @@
+# Credenciales: nunca se suben al repositorio
+.env
+
+# Datos descargados y procesados (se regeneran con los scripts)
+data/raw/*
+data/processed/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+
+# Archivos temporales de Python y Jupyter
+__pycache__/
+.ipynb_checkpoints/
+.venv/
