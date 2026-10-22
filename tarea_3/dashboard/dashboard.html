@@ -1,5 +1,5 @@
 <!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Fuego en territorio asháninka</title>
+<title>Exposición de infraestructura al fuego</title>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500..800&family=Montserrat:wght@400..800&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#FAF6F0;--bg2:#EFE6DA;--card:#FFFFFF;--ink:#1F140E;--ink2:#46352B;--ink3:#7A6656;--rust:#B8360A;--orange:#D9622B;--amber:#C98A2E;--brown:#4A2A1A;--line:#E8DCCC;--dark:#170E0A}
@@ -134,6 +134,9 @@ th{background:var(--dark)}
 .gi .ico{flex:none;width:46px;height:46px;border-radius:12px;background:#2A1A12;display:grid;place-items:center}
 .gi h3{margin-bottom:3px}.gi p{font-size:13px;color:var(--ink2)}
 @media(max-width:1000px){.guia{grid-template-columns:1fr}}
+.hero h1 mark{text-decoration:none!important;color:#F4A261!important;background:none}
+.hero>*{position:relative;z-index:1}
+.hero:after{z-index:0}
 </style></head><body>
 <header class="barra"><span class="marca">Monitor de Incendios · Satipo–Atalaya</span>
 <nav><a href="#resumen">Resumen</a><a href="#guia">Cómo leer</a><a href="#atencion">Atención prioritaria</a><a href="#mapa3d">Mapa 3D</a><a href="#escuelas">Escuelas</a><a href="#analisis">Análisis</a><a href="#distritos">Distritos</a><a href="#fuentes">Fuentes y método</a></nav>
@@ -141,16 +144,16 @@ th{background:var(--dark)}
 <main>
 <section id="resumen" class="hero">
  <span class="eyebrow">Exposición potencial · Incendios recientes · Junín y Ucayali <span class="vivo">ÚLTIMOS 7 DÍAS</span></span>
- <h1>Fuego en territorio asháninka: <mark>¿quién queda cerca?</mark></h1>
- <p class="bajada">Entre el 15 y el 21 de octubre de 2026, los satélites VIIRS registraron <b>1 312 detecciones</b> en las provincias de Satipo y Atalaya. A menos de 1 km de ellas hay <b>11 939 edificaciones</b>, unas <b>22 700 personas</b> y <b>166 locales educativos</b>, en distritos donde la mayoría de viviendas de las comunidades nativas ya carecía de agua y electricidad.</p>
- <p class="aviso">Estos indicadores miden proximidad (exposición potencial), no daño. Una detección térmica puede ser una quema agrícola y no un incendio forestal confirmado.</p>
+ <h1 style="max-width:30ch;font-size:clamp(30px,3.8vw,48px)">Exposición potencial de infraestructura a <mark>detecciones satelitales de incendios</mark> en la Selva Central</h1>
+ <p class="bajada">Entre el 15 y el 21 de octubre de 2026, los satélites VIIRS registraron <b>1 312 detecciones</b> en las provincias de Satipo y Atalaya. A menos de 1 km del centro de alguna de esas detecciones se ubican <b>11 939 edificaciones</b> y <b>166 locales educativos</b>, en distritos donde la mayoría de viviendas de las comunidades nativas ya carecía de agua y electricidad. La población estimada en ese radio es de unas <b>22 700 personas</b> (WorldPop).</p>
+ <p class="aviso">Estos indicadores miden proximidad (exposición potencial), no daño. Una detección térmica puede ser una quema agrícola y no un incendio forestal confirmado. Las distancias se miden al centro del píxel detectado (≈ 375 m), no al borde del fuego, y la detección pudo ocurrir cualquier día de la semana.</p>
  <div class="cifras" id="cifras"></div>
  <div class="glos"><div><b>Detección.</b> Píxel VIIRS de 375 m con anomalía térmica. Varias pueden ser el mismo incendio.</div><div><b>Evento.</b> Detecciones a ≤ 1 km entre sí (agrupación analítica, no perímetro).</div><div><b>Exposición potencial.</b> Edificaciones, personas o escuelas dentro de un radio de la detección más cercana.</div></div>
 </section>
 
 
 <section id="guia">
- <div class="cab"><div><span class="eyebrow">Antes de empezar</span><h2>Cómo leer este tablero</h2></div><p>Cada elemento del mapa y de las tablas responde a una parte de la pregunta: dónde hubo fuego y quién vive cerca.</p></div>
+ <div class="cab"><div><span class="eyebrow">Antes de empezar</span><h2>Cómo leer este tablero</h2></div><p>Cada elemento del mapa y de las tablas responde a una parte de la pregunta: dónde se detectó calor y qué infraestructura está próxima.</p></div>
  <div class="guia">
   <div class="gi"><span class="ico"><i style="width:10px;height:30px;background:#FF6B2C;border-radius:3px;display:block"></i></span><div><h3>Columnas naranjas</h3><p>Cada una es una <b>detección de fuego</b> del satélite VIIRS (un píxel de 375 m). Su <b>altura</b> es la intensidad (FRP, en megavatios). Las más brillantes son del día elegido en la línea de tiempo.</p></div></div>
   <div class="gi"><span class="ico"><i style="width:16px;height:16px;background:#FFF3E0;border:3px solid #4A2A1A;border-radius:50%;display:block"></i></span><div><h3>Puntos blancos</h3><p>Son las <b>166 escuelas</b> (locales educativos activos del MINEDU) que están a <b>1 km o menos</b> de una detección. Pase el mouse para ver su nombre, comunidad y distancia al fuego.</p></div></div>
@@ -163,14 +166,14 @@ th{background:var(--dark)}
 <section id="atencion">
  <div class="cab"><div><span class="eyebrow">Para decidir</span><h2>Atención prioritaria</h2></div><p>Tres lecturas complementarias, a 1 km de una detección. Seleccione un distrito para ubicarlo en el mapa 3D.</p></div>
  <div class="triage">
-  <article class="panel tri"><header><h3>Más edificaciones cerca</h3><p>Huellas de Open Buildings a ≤ 1 km</p></header><ol id="t1"></ol></article>
-  <article class="panel tri"><header><h3>Más personas cerca</h3><p>Población WorldPop 2026 a ≤ 1 km</p></header><ol id="t2"></ol></article>
-  <article class="panel tri"><header><h3>Más escuelas cerca</h3><p>Locales educativos activos a ≤ 1 km</p></header><ol id="t3"></ol></article>
+  <article class="panel tri"><header><h3>Más edificaciones próximas</h3><p>Huellas de Open Buildings a ≤ 1 km</p></header><ol id="t1"></ol></article>
+  <article class="panel tri"><header><h3>Más población estimada próxima</h3><p>Población WorldPop 2026 a ≤ 1 km</p></header><ol id="t2"></ol></article>
+  <article class="panel tri"><header><h3>Más escuelas próximas</h3><p>Locales educativos activos a ≤ 1 km</p></header><ol id="t3"></ol></article>
  </div>
 </section>
 
 <section id="mapa3d">
- <div class="cab"><div><span class="eyebrow">Mapa en 3D sobre el relieve real</span><h2>Dónde está el fuego y quién vive cerca</h2></div><p>Relieve real (Mapzen/AWS Terrain Tiles) con imagen satelital. Cada columna es una detección y su altura es la potencia radiativa (FRP). Arrastre para mover; clic derecho o Ctrl + arrastrar para girar; rueda para acercar.</p></div>
+ <div class="cab"><div><span class="eyebrow">Mapa en 3D sobre el relieve real</span><h2>Dónde se detectó calor y qué infraestructura está próxima</h2></div><p>Relieve real (Mapzen/AWS Terrain Tiles) con imagen satelital. Cada columna es una detección y su altura es la potencia radiativa (FRP). Arrastre para mover; clic derecho o Ctrl + arrastrar para girar; rueda para acercar.</p></div>
  <div class="mapa-wrap">
   <div class="panel">
    <div class="ctrl">
@@ -194,7 +197,7 @@ th{background:var(--dark)}
 
 
 <section id="escuelas">
- <div class="cab"><div><span class="eyebrow">Mirada de cerca</span><h2>Las escuelas más cercanas al fuego</h2></div><p>Los ocho locales educativos con una detección VIIRS más próxima. La imagen satelital es de referencia (Esri World Imagery, fecha variable) y <b>no</b> muestra el incendio: sirve para ver el entorno de cada escuela. El punto brasa marca la escuela.</p></div>
+ <div class="cab"><div><span class="eyebrow">Mirada de cerca</span><h2>Las escuelas más próximas a una detección</h2></div><p>Los ocho locales educativos con una detección VIIRS más próxima. La imagen satelital es de referencia (Esri World Imagery, fecha variable) y <b>no</b> muestra el incendio: sirve para ver el entorno de cada escuela. El punto brasa marca la escuela.</p></div>
  <div class="escgrid" id="escgrid"></div>
 </section>
 <section id="analisis">
@@ -274,7 +277,7 @@ const centro={};D.geo.features.forEach(f=>{let xs=[],ys=[];const rec=c=>typeof c
 const tip=document.getElementById('tip');
 const dg=new DeckGL({container:'mapa',initialViewState:VISTA0,controller:true,getTooltip:null,onHover:({object,x,y,layer})=>{if(!object){tip.style.display='none';return}let h='';
  if(layer.id==='focos')h=`<b>Detección VIIRS</b><br>${object[2].slice(3)} oct 2026 (UTC)<br>FRP: <b>${object[3]} MW</b> · confianza ${object[4]==='a'?'alta':object[4]==='n'?'nominal':'baja'}<br>${object[5]}`;
- else if(layer.id==='esc')h=`<b>${object[2]}</b><br>${object[3]} · ${object[4]}<br>${object[5]}<br>Detección más cercana: <b>${fmt(object[6])} m</b>`;
+ else if(layer.id==='esc')h=`<b>${object[2]}</b><br>${object[3]} · ${object[4]}<br>${object[5]}<br>Detección más próxima: <b>${fmt(object[6])} m</b>`;
  else if(layer.id==='dist'){const t=D.tabla.find(t=>t.IDDIST===object.properties.IDDIST);h=`<b>${tit(t.DISTRITO)}</b> · prioridad ${prio(t)[0].toLowerCase()}<br>${fmt(t.detecciones)} detecciones · ${fmt(t.a_1000m)} edif. a ≤ 1 km<br>Clic para enfocar`}
  tip.innerHTML=h;tip.style.display='block';tip.style.left=Math.min(x+14,innerWidth-280)+'px';tip.style.top=(y+14)+'px'},
  onClick:({object,layer})=>{if(layer&&layer.id==='dist')elegir(object.properties.IDDIST)}});
@@ -312,9 +315,9 @@ setTimeout(()=>requestAnimationFrame(giro),1500);
   const tx=Math.floor(x),ty=Math.floor(y),px=(x-tx)*100,py=(y-ty)*100;
   const url=`https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/${Z}/${ty}/${tx}`;
   const det=D.focos.reduce((m,f)=>{const d=Math.hypot((f[0]-e[0])*111320,(f[1]-e[1])*111320*Math.cos(lr));return d<m[0]?[d,f]:m},[1e9,null])[1];
-  return `<article class="ec"><div class="img" style="background-image:url('${url}');background-size:100% 100%;background-position:center"><i class="pin" style="left:${px}%;top:${py}%"></i><span class="dist">${fmt(e[6])}<small>m del foco</small></span></div>
+  return `<article class="ec"><div class="img" style="background-image:url('${url}');background-size:100% 100%;background-position:center"><i class="pin" style="left:${px}%;top:${py}%"></i><span class="dist">${fmt(e[6])}<small>m del centro de la detección</small></span></div>
   <div class="cuerpo"><span class="tag">${e[5].split(';')[0]}</span><span class="nom">${e[2]}</span><span class="lug">${e[3]} · ${e[4]}</span>
-  <div class="fil"><span>Detección más cercana</span><b>${det?det[2].slice(3)+' oct · '+det[3]+' MW':'—'}</b></div></div></article>`}).join('');})();
+  <div class="fil"><span>Detección más próxima</span><b>${det?det[2].slice(3)+' oct · '+det[3]+' MW':'—'}</b></div></div></article>`}).join('');})();
 document.getElementById('escuelas').classList.add('reveal');io.observe(document.getElementById('escuelas'));
 
 
