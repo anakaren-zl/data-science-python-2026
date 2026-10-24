@@ -1,0 +1,32 @@
+[
+  {
+    "frase": "Entre el quince y el veintiuno de octubre, el sistema FIRMS de la NASA registró mil trescientas doce detecciones térmicas en Satipo y Atalaya.",
+    "cifra": "1 312",
+    "etiqueta": "Detecciones VIIRS · 15–21 oct 2026"
+  },
+  {
+    "frase": "Según WorldPop, se estima que veintidós mil setecientas veintinueve personas están en zonas situadas a un kilómetro o menos de una detección.",
+    "cifra": "22 729",
+    "etiqueta": "Personas estimadas a ≤ 1 km"
+  },
+  {
+    "frase": "Ciento sesenta y seis locales educativos están a un kilómetro o menos; cincuenta y cuatro, a quinientos metros o menos.",
+    "cifra": "166",
+    "etiqueta": "Locales educativos a ≤ 1 km"
+  },
+  {
+    "frase": "En Yainapango, Pangoa, las dos escuelas más próximas están a entre cuarenta y cuarenta y cinco metros de una detección térmica registrada el dieciséis de octubre.",
+    "cifra": "40–45 m",
+    "etiqueta": "Escuelas de Yainapango · 16 oct"
+  },
+  {
+    "frase": "El análisis también revela brechas de servicios básicos: en Raimondi, el noventa y ocho por ciento de las viviendas de comunidades nativas no tiene agua.",
+    "cifra": "98 %",
+    "etiqueta": "Viviendas de CC. NN. sin agua · Raimondi"
+  },
+  {
+    "frase": "Una detección térmica no confirma un incendio ni demuestra daños: indica una posible exposición. Según los criterios del análisis, Mazamari-Pangoa, Río Tambo y Río Negro están entre los distritos prioritarios para una evaluación.",
+    "cifra": "3 distritos",
+    "etiqueta": "Prioritarios para evaluación"
+  }
+]
