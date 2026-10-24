@@ -1,0 +1,71 @@
+{
+  "titulo": "Incendios y escuelas en Satipo y Atalaya",
+  "escenas": [
+    {
+      "frase": "Entre el quince y el veintiuno de octubre, el sistema FIRMS de la NASA registró mil trescientas doce detecciones térmicas en Satipo y Atalaya.",
+      "cifra": "1 312",
+      "etiqueta": "Detecciones VIIRS · 15–21 oct 2026",
+      "cifra_en_texto": true,
+      "revisado_a_mano": "Borrador: 'detecciones de calor'. Cambiado a 'detecciones térmicas' (término técnico VIIRS). Se quitó el año de la narración para no pasar de 60 s; queda en pantalla.",
+      "imagen": "imagenes/mapa_focos_peru.png",
+      "wer": 0.125
+    },
+    {
+      "frase": "Según WorldPop, se estima que veintidós mil setecientas veintinueve personas están en zonas situadas a un kilómetro o menos de una detección.",
+      "cifra": "22 729",
+      "etiqueta": "Personas estimadas a 1 km o menos",
+      "cifra_en_texto": true,
+      "revisado_a_mano": "Borrador: 'viven unas veintidós mil setecientas personas'. WorldPop es una estimación modelada (raster + estadísticas zonales), no un conteo de dónde vive cada persona.",
+      "imagen": "imagenes/dash_resumen.png",
+      "wer": 0.045454545454545456
+    },
+    {
+      "frase": "Ciento sesenta y seis locales educativos están a un kilómetro o menos; cincuenta y cuatro, a quinientos metros o menos.",
+      "cifra": "166",
+      "etiqueta": "Locales educativos a 1 km o menos",
+      "cifra_en_texto": true,
+      "imagen": "imagenes/escena3_escuelas.png",
+      "wer": 0.0
+    },
+    {
+      "frase": "En Yainapango, Pangoa, las dos escuelas más próximas están a entre cuarenta y cuarenta y cinco metros de una detección térmica registrada el dieciséis de octubre.",
+      "cifra": "40–45 m",
+      "etiqueta": "Escuelas de Yainapango · 16 oct",
+      "cifra_en_texto": true,
+      "revisado_a_mano": "Se añadió 'térmica' y la fecha (16 oct): la distancia se mide al centro del píxel, no prueba que el fuego llegó a las escuelas.",
+      "imagen": "imagenes/mapa_zona.png",
+      "wer": 0.038461538461538464
+    },
+    {
+      "frase": "El análisis también revela brechas de servicios básicos: en Raimondi, el noventa y ocho por ciento de las viviendas de comunidades nativas no tiene agua.",
+      "cifra": "98 %",
+      "etiqueta": "Viviendas de CC. NN. sin agua · Raimondi",
+      "cifra_en_texto": true,
+      "revisado_a_mano": "Borrador: 'La exposición recae sobre territorios con brechas previas'. La BDPI no tiene coordenadas: la brecha es distrital y no prueba proximidad directa.",
+      "imagen": "imagenes/escena5_cifras.png",
+      "wer": 0.0
+    },
+    {
+      "frase": "Una detección térmica no confirma un incendio ni demuestra daños: indica una posible exposición. Según los criterios del análisis, Mazamari-Pangoa, Río Tambo y Río Negro están entre los distritos prioritarios para una evaluación.",
+      "cifra": "",
+      "etiqueta": "Prioritarios para una evaluación",
+      "cifra_en_texto": true,
+      "revisado_a_mano": "Borrador: 'son prioridad alta'. La prioridad viene de una regla del análisis, no de una evaluación oficial. Además, la tabla del dashboard muestra 7 distritos con prioridad alta, no 3: se cambió a 'están entre los distritos prioritarios'.",
+      "imagen": "imagenes/escena6_prioridad.png",
+      "wer": 0.058823529411764705
+    }
+  ],
+  "hashtags": [
+    "#Perú",
+    "#DatosAbiertos",
+    "#CienciaDeDatos",
+    "#Amazonía",
+    "#GestiónPública"
+  ],
+  "posts": {
+    "linkedin": "¿Qué escuelas, personas y comunidades nativas están cerca de las detecciones recientes de incendios en la selva central?\n\nCrucé las detecciones térmicas VIIRS (NASA FIRMS, 15–21 oct 2026) con Google Open Buildings, WorldPop, el padrón ESCALE del MINEDU y la BDPI del Ministerio de Cultura para Satipo y Atalaya:\n\n• 1 312 detecciones térmicas en siete días.\n• Se estima que 22 729 personas están en zonas a ≤ 1 km de una detección (WorldPop, estimación modelada).\n• 166 locales educativos están a ≤ 1 km, y 54 a ≤ 500 m.\n• En Raimondi, el 98 % de las viviendas de comunidades nativas no tiene agua.\n\nSegún los criterios del análisis, Mazamari-Pangoa, Río Tambo y Río Negro están entre los siete distritos prioritarios para una evaluación.\n\nUna detección térmica no confirma un incendio ni demuestra daños: lo que se mide es exposición potencial.\n\nProyecto de la Diplomatura de Ciencia de Datos (PUCP).\n\nVoz generada con IA a partir de mi voz.",
+    "x": "15–21 oct: FIRMS (NASA) registró 1 312 detecciones térmicas en Satipo y Atalaya. 166 locales educativos están a ≤ 1 km de alguna. Una detección no confirma un incendio: es exposición potencial.\n\n(Voz generada con IA a partir de mi voz)",
+    "facebook": "En una semana, los satélites registraron 1 312 detecciones térmicas en Satipo y Atalaya.\n\nEn Yainapango (Pangoa), las dos escuelas más próximas están a 40–45 metros de una detección térmica del 16 de octubre.\n\nUna detección no confirma un incendio ni un daño: indica una posible exposición. Los datos ayudan a decidir dónde evaluar primero.\n\nFuentes: NASA FIRMS, WorldPop, MINEDU-ESCALE y Ministerio de Cultura.\n\n(Voz generada con IA a partir de mi voz)"
+  },
+  "cifras_dudosas_en_posts": []
+}
