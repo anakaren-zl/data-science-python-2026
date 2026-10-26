@@ -39,11 +39,29 @@ The file `datos/fuentes.csv` lists the source, licence and access procedure for 
 
 ## 4. Results on the evaluation sample
 
-[PENDING — table with CER, WER, seconds per file, RTF and LLM–human agreement]
+All models were evaluated on the same 10 documents and 10 clips, against manual references. Pooled scores are computed over the ten files at once, so long files weigh more.
+
+| Modality | Model | Pooled error | Mean time per file | Real-time factor | Runs on |
+|---|---|---|---|---|---|
+| Documents | **PaddleOCR 3.7 default (baseline)** | **CER 0.525** | 130.1 s | — | local CPU |
+| Documents | PaddleOCR PP-OCRv5 mobile (Part 1) | CER 0.540 | 33.6 s | — | local CPU |
+| Documents | Gemini vision model (`gemini-flash-latest`) | CER 0.637 | 119.1 s | — | cloud API |
+| Audio | **faster-whisper `small` (baseline)** | **WER 0.372** | 44.8 s | 1.49 | local CPU |
+| Audio | Qwen3-ASR 0.6B | WER 0.393 | 133.3 s | 4.44 | local CPU |
+
+| Mean CER by document type | PaddleOCR default | PaddleOCR mobile | Gemini vision |
+|---|---|---|---|
+| Printed (1) | 0.718 | 0.718 | 1.000 |
+| Photographed (4) | 0.273 | 0.328 | **0.128** |
+| Handwritten (5) | 0.267 | 0.331 | **0.241** |
+
+**Structured extraction:** 17 of 20 randomly audited LLM extractions were completely correct (**85 %**; 8/10 documents, 9/10 clips). The three errors were two omissions on commercial images (the issuing brand and most prices were left out) and one quote that was not literal. No invented date, issuer or amount was found.
 
 ## 5. Key findings
 
-[PENDING — two analytical findings]
+**Finding 1 — No single OCR model wins: the best choice depends on the type of document.** The cloud vision model was by far the most accurate on photographs (CER 0.13 versus 0.27 for PaddleOCR) and the best on handwriting (0.24 versus 0.27), but it returned no usable transcription for the dense printed page of the official gazette, where both PaddleOCR configurations were more reliable. On that page, most of PaddleOCR's error comes from reading order rather than from misread characters: the three-column layout is read line by line across columns, which a character-level metric penalises heavily. The lighter mobile models were four times faster than the default ones at a cost of about six CER points on photos and handwriting.
+
+**Finding 2 — For interviews, recording quality matters more than the choice of model.** The two ASR models differ by only two WER points (0.37 versus 0.39), and faster-whisper is three times faster on CPU. Within each model, however, the error ranges from 0.08 on a clear monologue to 0.78 on the noisy interview, where the voice activity detector also discarded two clips as silent. Domain acronyms are a systematic weakness: *BIAM* was transcribed as *bien*, *VIAM* or *VIP*, and these errors propagate to the fields extracted by the LLM.
 
 ## 6. Technical limitations
 
@@ -100,7 +118,7 @@ The author was responsible for the research design and for every decision that a
 
 ## 10. Ethics and data protection
 
-- No real name, ID number or phone number is published. Pseudonymization was automatic and was then reviewed by hand.
+- No real name, ID number or phone number is published. Pseudonymization was automatic (NER, a private name list and regular expressions, plus a final case-insensitive pass) and was then reviewed by hand; this manual review replaced two residual name fragments that the automatic passes had missed.
 - Interview audio and document images containing third-party or personal data are not versioned or published.
 - Only texts that were reviewed and pseudonymized appear in the CSV files and the dashboard.
 - Gemini only received pseudonymized text and the ten evaluation images (one official gazette page, public signage, packaging, a menu board and personal notes without identifying information). No interview audio was sent to any external service.
