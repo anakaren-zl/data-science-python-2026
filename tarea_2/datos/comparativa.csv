@@ -1,0 +1,6 @@
+modalidad,modelo,metrica,valor,segundos_por_archivo,rtf,ejecucion
+documents,PaddleOCR mobile (Part 1),CER,0.54,33.6,,local CPU
+documents,PaddleOCR 3.7.0 default (baseline),CER,0.525,130.1,,local CPU
+documents,gemini-flash-latest vision (cloud),CER,0.637,119.1,,cloud API
+audio,faster-whisper small (baseline),WER,0.372,44.8,1.49,local CPU
+audio,Qwen3-ASR 0.6B,WER,0.393,133.3,4.44,local CPU
