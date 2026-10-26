@@ -2,7 +2,7 @@
 
 **Author:** Ana Karen Zamalloa Lima ([@anakaren-zl](https://github.com/anakaren-zl))
 **Course:** Data Science with Python — Diplomado PUCP 2026
-**Public dashboard:** [PENDING — Streamlit Community Cloud link]
+**Public dashboard:** https://t2-voces-documentos-peru.streamlit.app/
 
 ## 1. Research question
 
