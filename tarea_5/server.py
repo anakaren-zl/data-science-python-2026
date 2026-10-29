@@ -158,6 +158,31 @@ def serie(codigo: str, desde: str, hasta: str) -> dict:
 # TODO 2 · resumen(codigo, desde, hasta): primero, ultimo, cambio, variacion_pct, promedio, maximo y minimo
 #   (los tres últimos con su periodo). Úsenla para que el modelo nunca haga cuentas a mano.
 
+def _punto(fila):
+    return {"periodo": fila.periodo, "valor": round(float(fila.valor), 4)}
+
+
+@mcp.tool(annotations=SOLO_LECTURA)
+def resumen(codigo: str, desde: str, hasta: str) -> dict:
+    """Summary of one BCRP series between two dates: first and last value, change, percent change,
+    mean, maximum and minimum (each extreme with its period).
+
+    Use it whenever the question asks for a variation, an average, a peak or a low, so you never do the math
+    yourself. Same dates as serie. Example: codigo="PN01273PM", desde="2025-12", hasta="2026-09".
+    """
+    s = serie(codigo, desde, hasta)
+    if not s["datos"]:
+        raise ToolError(f"La serie {codigo!r} no tiene datos entre {desde} y {hasta}.")
+    df = pd.DataFrame(s["datos"])
+    primero, ultimo = df.iloc[0], df.iloc[-1]
+    return {"codigo": codigo, "nombre": s["nombre"], "primero": _punto(primero), "ultimo": _punto(ultimo),
+            "cambio": round(float(ultimo.valor - primero.valor), 4),
+            "variacion_pct": round(float((ultimo.valor / primero.valor - 1) * 100), 2) if primero.valor else None,
+            "promedio": round(float(df.valor.mean()), 4),
+            "maximo": _punto(df.loc[df.valor.idxmax()]), "minimo": _punto(df.loc[df.valor.idxmin()]),
+            "fuente": s["fuente"]}
+
+
 # TODO 3 · Una herramienta suya, bien descrita. Ideas:
 #   - comparar_paises con la API del Banco Mundial, que tampoco pide clave:
 #     https://api.worldbank.org/v2/country/PER;CHL;COL/indicator/NY.GDP.MKTP.KD.ZG?format=json&date=2015:2025
