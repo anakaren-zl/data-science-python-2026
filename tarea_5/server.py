@@ -7,6 +7,7 @@
 Las cuentas las hace Python, no el modelo: así cada cifra sale de una llamada que se puede repetir.
 """
 import re
+import time
 import unicodedata
 from functools import cache
 from pathlib import Path
@@ -88,6 +89,71 @@ def buscar_series(texto: str, frecuencia: str | None = None, limite: int = 10) -
 #   - Si recibe muchos pedidos seguidos, la API responde una página HTML en vez de JSON: esperen unos segundos y
 #     reintenten (y guarden en caché lo que ya bajaron).
 #   - Un código que no existe debe dar un ToolError que diga el código.
+
+MESES = {"Ene": 1, "Feb": 2, "Mar": 3, "Abr": 4, "May": 5, "Jun": 6, "Jul": 7, "Ago": 8, "Set": 9, "Sep": 9,
+         "Oct": 10, "Nov": 11, "Dic": 12}
+
+
+def _anio(a):
+    return a if len(a) == 4 else ("19" if int(a) > 50 else "20") + a
+
+
+def _periodo(nombre):
+    """Turn a BCRP period name into a sortable label.
+
+    "Ene.2025" -> "2025-01" (monthly), "01.Oct.26" -> "2026-10-01" (daily),
+    "T1.25" -> "2025-T1" (quarterly), "2025" -> "2025" (annual).
+    """
+    partes = nombre.split(".")
+    if len(partes) == 3:                                  # daily: day.month.year
+        dia, mes, anio = partes
+        return f"{_anio(anio)}-{MESES[mes]:02d}-{dia}"
+    if len(partes) == 2 and partes[0].startswith("T"):    # quarterly: quarter.year
+        return f"{_anio(partes[1])}-{partes[0]}"
+    if len(partes) == 2:                                  # monthly: month.year
+        mes, anio = partes
+        return f"{anio}-{MESES[mes]:02d}"
+    return nombre                                         # annual: already "2025"
+
+
+@cache
+def _descargar(codigo, desde, hasta):
+    """Ask the BCRP API for one series. Retry when it answers with an HTML page instead of JSON."""
+    url = f"{API}/{codigo}/json/{desde}/{hasta}"
+    for intento in range(4):
+        try:
+            return url, httpx.get(url, timeout=60).json()["periods"]
+        except (httpx.HTTPError, ValueError, KeyError):
+            time.sleep(2 * (intento + 1))   # wait 2, 4, 6 and 8 seconds
+    raise ToolError(f"El BCRP no respondió con datos para {codigo!r}. Esperen unos segundos y reintenten.")
+
+
+def _fecha_api(fecha, frecuencia):
+    """Turn a user date into the API format: "2025-01" -> "2025-1" and "2025-T1" -> "2025-1"."""
+    frecuencia = frecuencia.lower()
+    if frecuencia in ("mensual", "trimestral"):
+        anio, parte = fecha.split("-")[:2]
+        return f"{anio}-{int(parte.lstrip('T'))}"
+    if frecuencia == "anual":
+        return fecha[:4]
+    return fecha                                          # daily: already "2026-10-01"
+
+
+@mcp.tool(annotations=SOLO_LECTURA)
+def serie(codigo: str, desde: str, hasta: str) -> dict:
+    """Data points of one BCRP series between two dates, both included.
+
+    Use it after buscar_series, when you need the actual values. Dates: "2025-01" (monthly),
+    "2025-01-15" (daily), "2025-T1" (quarterly) or "2025" (annual). Example: codigo="PN01273PM",
+    desde="2025-01", hasta="2025-12". Returns the values and the source URL: cite the code and the period.
+    """
+    ficha = _ficha(codigo)
+    frecuencia = ficha["frecuencia"]
+    url, periodos = _descargar(codigo, _fecha_api(desde, frecuencia), _fecha_api(hasta, frecuencia))
+    datos = [{"periodo": _periodo(p["name"]), "valor": float(p["values"][0])}
+             for p in periodos if p["values"][0] != "n.d."]
+    return {"codigo": codigo, "nombre": ficha["nombre"], "frecuencia": frecuencia, "datos": datos, "fuente": url}
+
 
 # TODO 2 · resumen(codigo, desde, hasta): primero, ultimo, cambio, variacion_pct, promedio, maximo y minimo
 #   (los tres últimos con su periodo). Úsenla para que el modelo nunca haga cuentas a mano.
