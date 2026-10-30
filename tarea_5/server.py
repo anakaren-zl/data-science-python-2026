@@ -16,9 +16,11 @@ import httpx
 import pandas as pd
 from fastmcp import FastMCP
 from fastmcp.exceptions import ToolError
-from matplotlib import colormaps
 from matplotlib.collections import LineCollection
+from matplotlib.colors import LinearSegmentedColormap
 from matplotlib.figure import Figure
+from matplotlib.font_manager import FontProperties
+from matplotlib.lines import Line2D
 from matplotlib.patches import Polygon
 
 AQUI = Path(__file__).parent
@@ -194,8 +196,12 @@ def resumen(codigo: str, desde: str, hasta: str) -> dict:
 #   - grafico(codigo, desde, hasta) que guarde un PNG en salidas/ y devuelva la ruta
 
 
-# chart colors: a cyan -> magenta scale that follows the value, gray ink for text, a near-white surface
-PALETA, FONDO, TINTA, TINTA_SUAVE, REJILLA = colormaps["cool"], "#fcfcfb", "#0b0b0b", "#52514e", "#e4e3df"
+# chart style, shared with figura.py: a pale-to-deep blue scale that follows the value, navy ink, white surface,
+# and the Montserrat fonts kept in fuentes/ (SIL Open Font License)
+PALETA = LinearSegmentedColormap.from_list("azules", ["#b3c7e6", "#5f88c8", "#0b2a6f"])
+FONDO, TINTA, TINTA_SUAVE, REJILLA, ACENTO = "#ffffff", "#0f1b33", "#5a6478", "#dfe5ef", "#0b2a6f"
+NEGRA = FontProperties(fname=AQUI / "fuentes" / "Montserrat-Black.ttf")
+NORMAL = FontProperties(fname=AQUI / "fuentes" / "Montserrat-Regular.ttf")
 MESES_EN = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 
 
@@ -227,7 +233,9 @@ def grafico(codigo: str, desde: str, hasta: str, titulo: str | None = None) -> d
     ultimo, maximo, minimo = df.iloc[-1], df.loc[df.valor.idxmax()], df.loc[df.valor.idxmin()]
     piso = min(y) - (max(y) - min(y)) * 0.2               # room below the line for the "Low" label
     tope = max(y) + (max(y) - min(y)) * 0.18              # room above the line for the "High" label
-    color = lambda v: PALETA((v - piso) / (max(y) - piso or 1))   # low values cyan, high values magenta
+
+    def color(v):                                         # low values pale blue, high values navy
+        return PALETA((v - piso) / (max(y) - piso or 1))
 
     fig = Figure(figsize=(10, 5.6), dpi=200, facecolor=FONDO)
     ax = fig.subplots()
@@ -235,11 +243,11 @@ def grafico(codigo: str, desde: str, hasta: str, titulo: str | None = None) -> d
     ax.set_xlim(x[0] - 0.6, x[-1] + 0.6)
     ax.set_ylim(piso, tope)
 
-    # soft gradient under the line: a vertical cyan -> magenta image cut to the shape of the area
+    # soft gradient under the line: a vertical pale -> deep blue image cut to the shape of the area
     area = Polygon([(x[0], piso), *zip(x, y), (x[-1], piso)], facecolor="none", edgecolor="none")
     ax.add_patch(area)
     fondo = ax.imshow([[i / 255] for i in range(256)], cmap=PALETA, aspect="auto", origin="lower",
-                      extent=[x[0], x[-1], piso, max(y)], alpha=0.22, zorder=1)
+                      extent=[x[0], x[-1], piso, max(y)], alpha=0.25, zorder=1)
     fondo.set_clip_path(area)
 
     # the line, one short segment per period, each colored by its value
@@ -252,14 +260,15 @@ def grafico(codigo: str, desde: str, hasta: str, titulo: str | None = None) -> d
     # selective labels: the last value stands out; the peak and the low stay quiet
     ax.scatter([x[-1]], [y[-1]], s=80, color=color(y[-1]), edgecolor=FONDO, linewidth=2, zorder=3)
     ax.annotate(f"{ultimo.valor:,.2f}", (x[-1], y[-1]), xytext=(9, 0), textcoords="offset points",
-                va="center", fontsize=11, fontweight="bold", color=TINTA)
+                va="center", fontproperties=NEGRA, fontsize=13, color=ACENTO)
     for fila, sube in [(maximo, True), (minimo, False)]:
         if fila.name != len(df) - 1:
             ax.scatter([fila.name], [fila.valor], s=30, color=FONDO, edgecolor=color(fila.valor), linewidth=1.6,
                        zorder=3)
             ax.annotate(f"{'High' if sube else 'Low'} {fila.valor:,.2f}\n{_etiqueta(fila.periodo)}",
                         (fila.name, fila.valor), xytext=(0, 10 if sube else -12), textcoords="offset points",
-                        ha="center", va="bottom" if sube else "top", fontsize=8, color=TINTA_SUAVE)
+                        ha="center", va="bottom" if sube else "top", fontproperties=NORMAL, fontsize=8,
+                        color=TINTA_SUAVE)
 
     paso = max(1, len(df) // 7)                           # at most about 7 labels on the x axis
     ax.set_xticks(x[::paso], [_etiqueta(p) for p in df.periodo[::paso]])
@@ -267,15 +276,19 @@ def grafico(codigo: str, desde: str, hasta: str, titulo: str | None = None) -> d
     ax.set_axisbelow(True)
     for lado in ["top", "right", "left", "bottom"]:
         ax.spines[lado].set_visible(False)
-    ax.tick_params(colors=TINTA_SUAVE, labelsize=9, length=0, pad=6)
+    ax.tick_params(colors=TINTA_SUAVE, length=0, pad=6)
+    for etiqueta in ax.get_xticklabels() + ax.get_yticklabels():
+        etiqueta.set_fontproperties(NORMAL)
+        etiqueta.set_fontsize(9)
 
-    fig.text(0.06, 0.93, titulo or s["nombre"], fontsize=15, fontweight="bold", color=TINTA)
+    fig.text(0.06, 0.93, titulo or s["nombre"], fontproperties=NEGRA, fontsize=16, color=TINTA)
     subtitulo = f"{s['nombre']} · " if titulo else ""
     fig.text(0.06, 0.885, f"{subtitulo}{codigo} · {_etiqueta(df.periodo.iloc[0])} to {_etiqueta(ultimo.periodo)}",
-             fontsize=10, color=TINTA_SUAVE)
+             fontproperties=NORMAL, fontsize=10, color=TINTA_SUAVE)
+    fig.add_artist(Line2D([0.06, 0.94], [0.865, 0.865], color=ACENTO, linewidth=1.2))
     fig.text(0.06, 0.03, "Source: Banco Central de Reserva del Perú (BCRP), estadisticas.bcrp.gob.pe",
-             fontsize=8, color=TINTA_SUAVE)
-    fig.subplots_adjust(left=0.06, right=0.93, top=0.84, bottom=0.12)
+             fontproperties=NORMAL, fontsize=8, color=TINTA_SUAVE)
+    fig.subplots_adjust(left=0.06, right=0.93, top=0.82, bottom=0.12)
     archivo = AQUI / "salidas" / f"{codigo}_{desde}_{hasta}.png"
     archivo.parent.mkdir(exist_ok=True)
     fig.savefig(archivo, facecolor=FONDO)
