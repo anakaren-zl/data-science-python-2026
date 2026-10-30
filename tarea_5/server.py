@@ -16,6 +16,10 @@ import httpx
 import pandas as pd
 from fastmcp import FastMCP
 from fastmcp.exceptions import ToolError
+from matplotlib import colormaps
+from matplotlib.collections import LineCollection
+from matplotlib.figure import Figure
+from matplotlib.patches import Polygon
 
 AQUI = Path(__file__).parent
 CATALOGO = AQUI / "datos" / "catalogo_bcrp.csv"
@@ -189,9 +193,115 @@ def resumen(codigo: str, desde: str, hasta: str) -> dict:
 #   - correlacion(codigo_a, codigo_b, desde, hasta)
 #   - grafico(codigo, desde, hasta) que guarde un PNG en salidas/ y devuelva la ruta
 
+
+# chart colors: a cyan -> magenta scale that follows the value, gray ink for text, a near-white surface
+PALETA, FONDO, TINTA, TINTA_SUAVE, REJILLA = colormaps["cool"], "#fcfcfb", "#0b0b0b", "#52514e", "#e4e3df"
+MESES_EN = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+
+
+def _etiqueta(periodo):
+    """Short axis label: "2025-01" -> "Jan 2025", "2026-10-01" -> "01 Oct 2026"; other periods stay as they are."""
+    p = periodo.split("-")
+    if len(p) == 2 and p[1].isdigit():
+        return f"{MESES_EN[int(p[1]) - 1]} {p[0]}"
+    if len(p) == 3:
+        return f"{p[2]} {MESES_EN[int(p[1]) - 1]} {p[0]}"
+    return periodo
+
+
+@mcp.tool(annotations={"openWorldHint": True})
+def grafico(codigo: str, desde: str, hasta: str, titulo: str | None = None) -> dict:
+    """Line chart (PNG) of one BCRP series between two dates, saved in the salidas/ folder.
+
+    Use it when the user asks to see, plot or chart a series, or needs a figure for a report.
+    Same dates as serie. titulo is optional: a short sentence with the main finding, for example
+    "Inflation in Lima climbed back above 4% in 2026"; without it, the chart uses the official series name.
+    Example: codigo="PN01273PM", desde="2024-01", hasta="2026-09".
+    Returns the path of the PNG, the last value, the maximum, the minimum and the source URL.
+    """
+    s = serie(codigo, desde, hasta)
+    if not s["datos"]:
+        raise ToolError(f"La serie {codigo!r} no tiene datos entre {desde} y {hasta}.")
+    df = pd.DataFrame(s["datos"])
+    x, y = list(range(len(df))), list(df.valor)          # one position per period, evenly spaced
+    ultimo, maximo, minimo = df.iloc[-1], df.loc[df.valor.idxmax()], df.loc[df.valor.idxmin()]
+    piso = min(y) - (max(y) - min(y)) * 0.2               # room below the line for the "Low" label
+    tope = max(y) + (max(y) - min(y)) * 0.18              # room above the line for the "High" label
+    color = lambda v: PALETA((v - piso) / (max(y) - piso or 1))   # low values cyan, high values magenta
+
+    fig = Figure(figsize=(10, 5.6), dpi=200, facecolor=FONDO)
+    ax = fig.subplots()
+    ax.set_facecolor(FONDO)
+    ax.set_xlim(x[0] - 0.6, x[-1] + 0.6)
+    ax.set_ylim(piso, tope)
+
+    # soft gradient under the line: a vertical cyan -> magenta image cut to the shape of the area
+    area = Polygon([(x[0], piso), *zip(x, y), (x[-1], piso)], facecolor="none", edgecolor="none")
+    ax.add_patch(area)
+    fondo = ax.imshow([[i / 255] for i in range(256)], cmap=PALETA, aspect="auto", origin="lower",
+                      extent=[x[0], x[-1], piso, max(y)], alpha=0.22, zorder=1)
+    fondo.set_clip_path(area)
+
+    # the line, one short segment per period, each colored by its value
+    tramos = [[(x[i], y[i]), (x[i + 1], y[i + 1])] for i in range(len(x) - 1)]
+    linea = LineCollection(tramos, cmap=PALETA, linewidth=2.6, capstyle="round", joinstyle="round", zorder=2)
+    linea.set_array([(y[i] + y[i + 1]) / 2 for i in range(len(x) - 1)])
+    linea.set_clim(piso, max(y))
+    ax.add_collection(linea)
+
+    # selective labels: the last value stands out; the peak and the low stay quiet
+    ax.scatter([x[-1]], [y[-1]], s=80, color=color(y[-1]), edgecolor=FONDO, linewidth=2, zorder=3)
+    ax.annotate(f"{ultimo.valor:,.2f}", (x[-1], y[-1]), xytext=(9, 0), textcoords="offset points",
+                va="center", fontsize=11, fontweight="bold", color=TINTA)
+    for fila, sube in [(maximo, True), (minimo, False)]:
+        if fila.name != len(df) - 1:
+            ax.scatter([fila.name], [fila.valor], s=30, color=FONDO, edgecolor=color(fila.valor), linewidth=1.6,
+                       zorder=3)
+            ax.annotate(f"{'High' if sube else 'Low'} {fila.valor:,.2f}\n{_etiqueta(fila.periodo)}",
+                        (fila.name, fila.valor), xytext=(0, 10 if sube else -12), textcoords="offset points",
+                        ha="center", va="bottom" if sube else "top", fontsize=8, color=TINTA_SUAVE)
+
+    paso = max(1, len(df) // 7)                           # at most about 7 labels on the x axis
+    ax.set_xticks(x[::paso], [_etiqueta(p) for p in df.periodo[::paso]])
+    ax.grid(axis="y", color=REJILLA, linewidth=1)
+    ax.set_axisbelow(True)
+    for lado in ["top", "right", "left", "bottom"]:
+        ax.spines[lado].set_visible(False)
+    ax.tick_params(colors=TINTA_SUAVE, labelsize=9, length=0, pad=6)
+
+    fig.text(0.06, 0.93, titulo or s["nombre"], fontsize=15, fontweight="bold", color=TINTA)
+    subtitulo = f"{s['nombre']} · " if titulo else ""
+    fig.text(0.06, 0.885, f"{subtitulo}{codigo} · {_etiqueta(df.periodo.iloc[0])} to {_etiqueta(ultimo.periodo)}",
+             fontsize=10, color=TINTA_SUAVE)
+    fig.text(0.06, 0.03, "Source: Banco Central de Reserva del Perú (BCRP), estadisticas.bcrp.gob.pe",
+             fontsize=8, color=TINTA_SUAVE)
+    fig.subplots_adjust(left=0.06, right=0.93, top=0.84, bottom=0.12)
+    archivo = AQUI / "salidas" / f"{codigo}_{desde}_{hasta}.png"
+    archivo.parent.mkdir(exist_ok=True)
+    fig.savefig(archivo, facecolor=FONDO)
+    return {"archivo": str(archivo), "codigo": codigo, "nombre": s["nombre"], "puntos": len(df),
+            "ultimo": _punto(ultimo), "maximo": _punto(maximo), "minimo": _punto(minimo), "fuente": s["fuente"]}
+
+
 # TODO 4 · Un recurso, por ejemplo la plantilla bcrp://serie/{codigo} con la ficha de la serie.
 
+
+@mcp.resource("bcrp://serie/{codigo}")
+def ficha(codigo: str) -> dict:
+    """Catalog card of one BCRP series: full name, category, frequency, first date and last update."""
+    return _ficha(codigo)
+
+
 # TODO 5 · Un prompt, por ejemplo informe(tema) que pida citar el código y el periodo de cada cifra.
+
+
+@mcp.prompt
+def informe(tema: str) -> str:
+    """Short brief on a topic, built only from official BCRP figures that anyone can check."""
+    return (f"Write a short brief in five bullet points about «{tema}» with official BCRP data. "
+            "First find the right series with buscar_series; then use resumen for changes, averages, highs and lows, "
+            "and serie when you need the values. Do not do any math yourself. After every figure, cite the series "
+            "code and the period, for example (PN01273PM, 2026-09). If a chart helps, make one with grafico.")
 
 
 if __name__ == "__main__":
