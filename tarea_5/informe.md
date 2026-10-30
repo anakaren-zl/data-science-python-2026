@@ -28,6 +28,12 @@ The server (`server.py`) was written in Python with FastMCP 4 (FastMCP, 2026) an
 | `bcrp://serie/{codigo}` | Resource | Catalogue card of a series (name, category, frequency, first date, last update). |
 | `informe(tema)` | Prompt | Requests a five-bullet brief in which every figure cites its series code and period. |
 
+As an illustration, Figure 1 shows the chart that `grafico` produced for 12-month inflation in Lima, with a headline written by the user. Line and area colour follow the value, from pale blue for low readings to navy for high ones.
+
+![Figure 1](grafico_herramienta.png)
+
+**Figure 1.** Output of the server's own tool, `grafico`, for series PN01273PM (January 2024 to September 2026).
+
 The server was registered in Claude Code at project scope together with the reference `fetch` server (`.mcp.json`, no API keys). All five checks proposed in the assignment succeeded: both servers connected (`/mcp`), a question triggered `buscar_series` followed by `serie`, the resource was read through `@`, the prompt ran as `/mcp__bcrp__informe`, and `fetch` read a web page. Screenshots are stored in `evidencias/`.
 
 ### 2.2 Evaluation design
@@ -58,9 +64,9 @@ Two runs were carried out. The **base run** compared *memory only* (no tools) wi
 | Web search | 9 | 0 | 1 | 28.3 | 70.9 | 5.0 |
 | BCRP MCP | **10** | 0 | 0 | **11.8** | 13.2 | 4.5 |
 
-![Figure 1](grafico.png)
+![Figure 2](grafico.png)
 
-**Figure 1.** Correct answers and average seconds per question, by mode (extra experiment). Produced with `figura.py` from `resultados.csv`.
+**Figure 2.** Correct answers and average seconds per question, by mode (extra experiment). Produced with `figura.py` from `resultados.csv`.
 
 The MCP answered all ten questions correctly in both runs, whereas the model without tools answered none. Web search reached nine correct answers but required, on average, 28.3 seconds per question, that is, roughly 2.4 times the 11.8 seconds needed by the MCP. Notably, no mode produced a wrong figure: every miss was an explicit "don't know".
 
@@ -95,7 +101,7 @@ claude mcp add --scope project bcrp -- uv run server.py
 claude mcp add --scope project fetch -- uvx mcp-server-fetch
 uv run evaluar.py                                # base run (copied to resultados_base.csv)
 uv run evaluar.py --modos memoria web mcp        # extra experiment (resultados.csv)
-uv run figura.py                                 # grafico.png
+uv run figura.py                                 # grafico.png (Figure 2)
 ```
 
 On Windows, set `$env:PYTHONUTF8 = "1"` before running `evaluar.py`. The figures use Montserrat, bundled in `fuentes/` under the SIL Open Font License.
