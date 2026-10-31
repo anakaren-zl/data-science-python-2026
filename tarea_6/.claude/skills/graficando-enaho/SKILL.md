@@ -8,7 +8,8 @@ argument-hint: [area|sexo|edad|departamento]
 1. Si no existe `salidas/personas_2024.parquet`, usa primero la skill `limpiando-enaho`.
 2. Elige el grupo según el pedido: `area` (urbana y rural), `sexo`, `edad` o `departamento`.
    Si piden pobreza extrema, agrega `--indicador pobre_extremo`.
-3. Corre exactamente: `uv run ${CLAUDE_SKILL_DIR}/scripts/graficar.py --por $0`
+3. Corre exactamente: `uv run ${CLAUDE_SKILL_DIR}/scripts/graficar.py --por <grupo>`, donde `<grupo>` es
+   solo una de estas palabras: `area`, `sexo`, `edad` o `departamento`.
 4. Muestra la ruta del PNG y responde con las cifras que imprime el script, con un decimal.
 
 ## Reglas fijas (ya están en el script; no las cambies)
@@ -20,6 +21,8 @@ argument-hint: [area|sexo|edad|departamento]
 - El título dice qué y cuándo: «Pobreza monetaria por área de residencia, Perú 2024».
 - Nota al pie: «Fuente: INEI, ENAHO 2024».
 - PNG a 200 dpi en `figuras/`, con un CSV al lado con las cifras.
+- El promedio nacional del gráfico (27.5 %) usa `facpob07`; la cifra oficial redondeada es 27.6 %. Si preguntan,
+  explica que la diferencia es solo el factor de expansión.
 
 ## Estilo
 

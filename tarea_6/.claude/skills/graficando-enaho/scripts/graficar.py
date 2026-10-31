@@ -27,7 +27,7 @@ FIGURAS = RAIZ / "figuras"
 AZUL_NOCHE, SOMBRA = "#0b1f3a", "#050f1f"
 TINTA, TINTA_SUAVE = "#ffffff", "#a9bdd6"
 AZULES = LinearSegmentedColormap.from_list("azules", ["#2a6fc4", "#5598e7", "#9ec5f4", "#e3effd"])
-FONDO = dict(facecolor=AZUL_NOCHE, edgecolor="none", pad=1.5)   # que la línea punteada no tape las cifras
+FONDO = dict(facecolor=AZUL_NOCHE, edgecolor="none", pad=3)   # que la línea punteada no tape las cifras
 
 # Montserrat (licencia SIL OFL): se baja una sola vez a la carpeta fuentes/ de la skill
 FUENTES = Path(__file__).resolve().parent.parent / "fuentes"
@@ -110,7 +110,7 @@ def graficar(t, por, indicador, anio, nacional):
         ax.axhline(nacional, color=TINTA, lw=1, alpha=0.55, ls=(0, (3, 3)), zorder=0)   # detrás de las barras
         ax.yaxis.set_visible(False)
         for b, v in zip(barras, t.pct):
-            ax.text(b.get_x() + b.get_width() / 2, v + t.pct.max() * 0.015, f"{v:.1f} %",
+            ax.text(b.get_x() + b.get_width() / 2, v + t.pct.max() * 0.035, f"{v:.1f} %",
                     ha="center", va="bottom", fontsize=13, fontweight="bold", color=TINTA, bbox=FONDO, zorder=3)
 
     for lado in ["top", "right", "left"] if not horizontal else ["top", "right", "bottom"]:
