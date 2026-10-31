@@ -150,6 +150,23 @@ las salidas y los scripts de las skills que ya se encontraban en el repositorio.
 las diferencias de décimas respecto de las referencias y las limitaciones de la prueba, se encuentra en
 [`evaluacion.md`](evaluacion.md).
 
+## Extensión con la skill canvas-design
+
+De manera complementaria, se exploró la skill oficial `canvas-design` del repositorio `anthropics/skills`, instalada
+en Claude Code mediante el marketplace de plugins y revisada previamente para confirmar que solo contiene
+instrucciones de diseño y tipografías. Esta skill propone un método en dos fases, en el cual primero se formula una
+filosofía de diseño y, posteriormente, dicha filosofía se expresa en una pieza visual. En este caso, la filosofía
+resultante, denominada «Medición Nocturna», se encuentra en `poster/filosofia_diseno.md`, mientras que el póster
+puede consultarse en `poster/poster_pobreza_2024.png` y `poster/poster_pobreza_2024.pdf`.
+
+Cabe señalar que el pedido restringió el uso de cifras a las salidas de `mapeando-enaho` y `graficando-enaho`, y
+que exigió conservar la identidad visual del proyecto. Asimismo, la pieza se revisó y ajustó en tres iteraciones
+para homogeneizar el separador decimal, el separador de miles y el número de decimales con el resto de las figuras.
+En consecuencia, el póster reutiliza las cifras validadas sin introducir valores nuevos, lo que ilustra cómo una
+skill de diseño puede combinarse con skills de datos sin comprometer la trazabilidad de los resultados.
+
+<img src="poster/poster_pobreza_2024.png" width="60%" />
+
 ## Referencias
 
 Anthropic. (2026). *Skills en Claude Code*. https://code.claude.com/docs/en/skills
