@@ -1,0 +1,16 @@
+Validación de la limpieza · ENAHO 2024 (código INEI 966)
+
+Filas del módulo 200                                          117,721
+Residentes habituales (filas de la base)                      108,664
+Hogares en la sumaria                                          33,691
+Población expandida (millones, facpob07)                        34.15
+Pobreza monetaria, sumaria y factor07 × mieperho (%)            27.58
+Pobreza monetaria, personas y facpob07 (%)                      27.53
+Pobreza extrema, personas y facpob07 (%)                         5.50
+Pobreza urbana (estrato <= 5) (%)                               24.74
+Pobreza rural (estrato > 5) (%)                                 39.44
+Pobreza en Lima Metropolitana (dominio == 8) (%)                28.03
+Departamentos con dato                                             25
+
+Referencia oficial INEI: pobreza 27.6 %, 108,664 residentes, 33,691 hogares.
+Resultado: todas las comprobaciones pasaron (OK).
