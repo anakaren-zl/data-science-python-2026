@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trayectorias interrumpidas · Una lectura interseccional de la permanencia escolar de niñas y adolescentes en el Perú</title>
+<meta name="description" content="Dashboard interseccional sobre la permanencia escolar de niñas y adolescentes peruanas de 6 a 17 años con la ENAHO 2025 del INEI.">
+<link rel="stylesheet" href="assets/maplibre-gl.css">
+<style>
+@font-face{font-family:Montserrat;src:url(assets/fuentes/Montserrat-Regular.ttf);font-weight:400}
+@font-face{font-family:Montserrat;src:url(assets/fuentes/Montserrat-Medium.ttf);font-weight:500}
+@font-face{font-family:Montserrat;src:url(assets/fuentes/Montserrat-SemiBold.ttf);font-weight:600}
+@font-face{font-family:Montserrat;src:url(assets/fuentes/Montserrat-Bold.ttf);font-weight:700}
+@font-face{font-family:Montserrat;src:url(assets/fuentes/Montserrat-ExtraBold.ttf);font-weight:800}
+@font-face{font-family:Montserrat;src:url(assets/fuentes/Montserrat-Black.ttf);font-weight:900}
+:root{
+  --fondo:#F3EFFA; --tarjeta:#FFFFFF; --borde:#E7E0F3;
+  --morado:#6A35B5; --morado-osc:#3D1C73; --morado-claro:#EFE7FB; --morado-medio:#A47FDC;
+  --naranja:#D9661F; --naranja-claro:#FDEBDD; --naranja-osc:#9C4108;
+  --tinta:#221A33; --tinta-2:#5A5170; --tinta-3:#8C84A0; --gris:#B9B3C6;
+  --radio:22px; --sombra:0 6px 24px rgba(61,28,115,.08);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+html,body{overflow-x:hidden}
+body{margin:0;font-family:Montserrat,system-ui,sans-serif;background:var(--fondo);color:var(--tinta);font-size:14px;line-height:1.55}
+a{color:var(--morado)}
+/* barra lateral */
+.lateral{position:fixed;left:16px;top:16px;bottom:16px;width:76px;background:linear-gradient(180deg,var(--morado-osc),var(--morado));
+  border-radius:var(--radio);display:flex;flex-direction:column;align-items:center;padding:18px 0;gap:6px;z-index:20;box-shadow:var(--sombra)}
+.logo{width:46px;height:46px;border-radius:14px;background:var(--naranja);display:grid;place-items:center;color:#fff;font-weight:900;font-size:15px;margin-bottom:14px;letter-spacing:-.5px}
+.lateral a{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;color:#E4D8F7;text-decoration:none;transition:.2s;position:relative}
+.lateral a:hover,.lateral a.activo{background:rgba(255,255,255,.16);color:#fff}
+.lateral a svg{width:22px;height:22px}
+.lateral a span{position:absolute;left:58px;background:var(--tinta);color:#fff;font-size:12px;font-weight:600;padding:5px 9px;border-radius:8px;white-space:nowrap;opacity:0;pointer-events:none;transition:.15s}
+.lateral a:hover span{opacity:1}
+main{margin-left:108px;padding:16px 24px 40px 0;max-width:1480px}
+.tarjeta{background:var(--tarjeta);border-radius:var(--radio);box-shadow:var(--sombra);padding:22px 24px;border:1px solid var(--borde)}
+/* portada */
+.portada{display:grid;grid-template-columns:1.32fr 1fr;gap:18px;margin-bottom:18px}
+.hero{background:linear-gradient(125deg,var(--morado-osc) 0%,var(--morado) 62%,#8E4FC9 100%);color:#fff;border:none;position:relative;overflow:hidden}
+.hero:after{content:"";position:absolute;right:-60px;top:-60px;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(217,102,31,.55),transparent 70%)}
+.etiqueta{display:inline-block;font-size:11px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;background:rgba(255,255,255,.14);padding:5px 11px;border-radius:30px}
+h1{font-weight:900;font-size:40px;line-height:1.05;margin:14px 0 10px;letter-spacing:-1px}
+h1 em{font-style:normal;color:#FFB27A}
+.subtitulo{font-weight:700;font-size:19px;line-height:1.3;margin:0 0 14px;max-width:760px;color:#F3E9FF}
+.pregunta{font-weight:500;font-size:16px;max-width:760px;opacity:.95;text-align:justify;hyphens:auto}
+.separador{border:none;border-top:1.5px solid rgba(255,255,255,.35);margin:18px 0 12px}
+.autora{margin:0 0 12px;font-size:14.5px;font-weight:500;color:#fff}
+.autora b{font-weight:800}
+.meta{display:flex;flex-wrap:nowrap;gap:5px;margin-top:0}
+@media (max-width:1380px){.meta{flex-wrap:wrap}}
+.meta span{white-space:nowrap;font-size:10.8px;font-weight:500;background:rgba(255,255,255,.12);padding:6px 8px;border-radius:10px}
+.contexto h3{margin:0 0 8px;font-weight:800;font-size:15px}
+.contexto p{margin:0 0 10px;color:var(--tinta-2);font-size:13px;text-align:justify;hyphens:auto}
+h2{font-weight:900;font-size:22px;margin:0 0 2px;letter-spacing:-.3px}
+.sub{color:var(--tinta-2);font-weight:500;font-size:13px;margin:0 0 14px;text-align:justify;hyphens:auto}
+/* filtros */
+.filtros{position:sticky;top:10px;z-index:15;display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end;margin-bottom:18px;padding:14px 18px}
+.filtro{display:flex;flex-direction:column;gap:4px}
+.filtro label{font-size:10.5px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--tinta-3)}
+select,button{font-family:inherit;font-size:13px;font-weight:600;color:var(--tinta);border:1.5px solid var(--borde);background:#FBF9FE;border-radius:12px;padding:8px 12px;cursor:pointer}
+select:focus,button:focus-visible{outline:2px solid var(--morado);outline-offset:1px}
+.segmentado{display:flex;background:#FBF9FE;border:1.5px solid var(--borde);border-radius:12px;padding:3px}
+.segmentado button{border:none;background:transparent;padding:6px 11px;border-radius:9px}
+.segmentado button.on{background:var(--morado);color:#fff}
+.boton{background:var(--morado);border-color:var(--morado);color:#fff}
+.boton.sec{background:#fff;color:var(--morado)}
+.espacio{flex:1}
+/* KPIs */
+.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:18px}
+.kpi{padding:18px 20px;position:relative;overflow:hidden}
+.kpi .icono{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;margin-bottom:10px}
+.kpi .icono svg{width:20px;height:20px}
+.kpi .valor{font-weight:900;font-size:30px;letter-spacing:-.8px;line-height:1.05}
+.kpi .nombre{font-weight:700;font-size:12.5px;margin-top:4px}
+.kpi .nota{font-size:11.5px;color:var(--tinta-3);margin-top:3px;font-weight:500}
+.morado-bg{background:var(--morado-claro);color:var(--morado)}
+.naranja-bg{background:var(--naranja-claro);color:var(--naranja)}
+/* rejilla */
+.fila{display:grid;gap:18px;margin-bottom:18px}
+.f-mapa{grid-template-columns:1.6fr 1fr}
+.f-2{grid-template-columns:1fr 1fr}
+#mapa{height:560px;border-radius:16px;overflow:hidden;position:relative}
+.mapa-ctrl{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;align-items:center}
+.leyenda-mapa{position:absolute;left:14px;bottom:14px;z-index:5;background:rgba(255,255,255,.94);border-radius:14px;padding:10px 14px;font-size:11.5px;font-weight:600;box-shadow:var(--sombra);min-width:210px}
+.leyenda-mapa .barra{height:10px;border-radius:6px;margin:6px 0 3px}
+.leyenda-mapa .ext{display:flex;justify-content:space-between;gap:14px;color:var(--tinta-2);font-weight:600}
+.maplibregl-popup-content{font-family:Montserrat;border-radius:14px;padding:12px 14px;box-shadow:var(--sombra)}
+.ranking{max-height:560px;overflow:auto}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+th{text-align:left;font-size:10.5px;letter-spacing:.7px;text-transform:uppercase;color:var(--tinta-3);font-weight:700;padding:6px 6px;border-bottom:1.5px solid var(--borde);position:sticky;top:0;background:#fff}
+td{padding:7px 6px;border-bottom:1px solid #F1ECF8;font-weight:500}
+td.sig{color:var(--morado);font-weight:800}
+#tablaReplica tr,#tablaContraste tr{cursor:default}
+tr.sel td{background:var(--morado-claro);font-weight:700}
+tr{cursor:pointer}
+.mini{display:inline-block;height:8px;border-radius:4px;background:var(--morado);vertical-align:middle}
+.ref{color:var(--tinta-3);font-size:11px}
+.grafico{height:360px}
+.grafico.alto{height:420px}
+/* textos */
+.hallazgos{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:18px}
+.hallazgo .num{font-weight:900;font-size:44px;color:var(--morado);line-height:1;letter-spacing:-1px}
+.hallazgo h3{font-weight:800;font-size:15.5px;margin:8px 0 6px;line-height:1.3}
+.hallazgo p{margin:0;color:var(--tinta-2);font-size:13px;text-align:justify;hyphens:auto}
+.hallazgo.n2 .num{color:var(--naranja)}
+.texto h3{font-weight:800;font-size:15px;margin:16px 0 6px}
+.texto p,.texto li{color:var(--tinta-2);font-size:13px;text-align:justify;hyphens:auto}
+.texto ul{padding-left:18px;margin:6px 0}
+.caja-val{background:var(--morado-claro);border-radius:14px;padding:12px 14px;font-family:ui-monospace,Menlo,monospace;font-size:11.5px;white-space:pre-wrap;color:var(--morado-osc)}
+.pie{text-align:center;color:var(--tinta-3);font-size:12px;margin-top:10px}
+.aviso{font-size:11.5px;color:var(--tinta-3);margin-top:8px;text-align:justify}
+@media (max-width:1100px){.portada,.f-mapa,.f-2,.hallazgos{grid-template-columns:1fr}.kpis{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:700px){.lateral{display:none}main{margin-left:0;padding:10px}h1{font-size:30px}.kpis{grid-template-columns:1fr 1fr}#mapa{height:440px}.filtros{position:static}}
+</style>
+</head>
+<body>
+<nav class="lateral" aria-label="Secciones">
+  <div class="logo" title="Ana Karen Zamalloa Lima">AKZ</div>
+  <a href="#inicio" class="activo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg><span>Inicio</span></a>
+  <a href="#indicadores"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg><span>Indicadores</span></a>
+  <a href="#territorio"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2-6-2zM9 4v14M15 6v14"/></svg><span>Mapa 3D</span></a>
+  <a href="#interseccion"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="12" r="6"/><circle cx="15" cy="12" r="6"/></svg><span>Interseccionalidad</span></a>
+  <a href="#razones"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span>Razones</span></a>
+  <a href="#metodologia"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/></svg><span>Metodología y fuentes</span></a>
+</nav>
+
+<main>
+<section id="inicio" class="portada">
+  <div class="tarjeta hero">
+    <span class="etiqueta">Ciencia de Datos con Python · Diplomado PUCP 2026</span>
+    <h1>Trayectorias <em>interrumpidas</em></h1>
+    <p class="subtitulo">Una lectura interseccional de la permanencia escolar de niñas y adolescentes en el Perú</p>
+    <p class="pregunta"><b>Pregunta de investigación.</b> ¿En qué medida los ejes estructurales de desigualdad y sus intersecciones se asocian con la permanencia escolar de las niñas y adolescentes peruanas de 6 a 17 años?</p>
+    <hr class="separador">
+    <p class="autora"><b>Autora:</b> Ana Karen Zamalloa Lima</p>
+    <div class="meta"><span><b>Fuente:</b> ENAHO, INEI (2025, 2026)</span><span><b>Cobertura:</b> nacional</span><span><b>Periodo:</b> 2024 y 2025</span><span id="metaCasos"><b>Muestra:</b> 17 577 personas</span></div>
+  </div>
+  <div class="tarjeta contexto">
+    <h3>Introducción</h3>
+    <p>En 2025, cerca de 54 mil niñas y adolescentes peruanas de 6 a 17 años se encontraban fuera de la escuela sin haber concluido la secundaria. En términos relativos, representan el 2,1&nbsp;%, una proporción incluso menor que la de los varones (2,9&nbsp;%). Sin embargo, el dato agregado dice poco sobre quiénes interrumpen su trayectoria escolar y por qué lo hacen. La exclusión educativa femenina se ha concentrado históricamente en zonas rurales, entre las hablantes de lenguas originarias y en los hogares pobres (Montero, 2006; Ames, 2013), y el trabajo doméstico no remunerado continúa recayendo sobre las niñas (Young Lives, 2008).</p>
+    <p>A partir de los microdatos de la ENAHO 2024 y 2025 (INEI, 2025, 2026) y desde un enfoque interseccional (Crenshaw, 1989; McCall, 2005), el tablero presenta, en primer lugar, cuántas niñas y adolescentes se encuentran fuera de la escuela y en qué territorios se concentran. A continuación, examina si la brecha de género cambia cuando se cruza con el área de residencia, la lengua materna y la pobreza, contrasta lo observado con lo que ocurriría si las desventajas solo se sumaran (Hancock, 2007) y comprueba si los resultados se repiten en ambos años. Por último, expone las razones que declaran ellas y ellos para no asistir, y advierte un vacío en las fuentes oficiales, que aún no registran el impacto de los eventos climáticos en la educación.</p>
+  </div>
+</section>
+
+<div class="tarjeta filtros" role="region" aria-label="Filtros">
+  <div class="filtro"><label for="fAnio">Año</label>
+    <select id="fAnio"><option value="2025">2025</option><option value="2024">2024</option><option value="2024-2025">2024 y 2025</option></select></div>
+  <div class="filtro"><label for="fEdad">Edad</label>
+    <select id="fEdad"><option value="6-17">6 a 17 años</option><option value="6-11">6 a 11 años (primaria)</option><option value="12-17">12 a 17 años (secundaria)</option><option value="15-17">15 a 17 años</option></select></div>
+  <div class="filtro"><label for="fArea">Área de residencia</label>
+    <select id="fArea"><option value="">Todas</option><option value="Urbana">Área urbana</option><option value="Rural">Área rural</option></select></div>
+  <div class="filtro"><label for="fLengua">Lengua materna</label>
+    <select id="fLengua"><option value="">Todas</option><option value="Castellano">Lengua castellana</option><option value="Indígena">Lengua indígena</option></select></div>
+  <div class="filtro"><label for="fPobreza">Condición de pobreza</label>
+    <select id="fPobreza"><option value="">Todas</option><option value="Pobre">Hogar pobre</option><option value="No pobre">Hogar no pobre</option></select></div>
+  <div class="filtro"><label for="fDep">Departamento</label>
+    <select id="fDep"><option value="">Todo el Perú</option></select></div>
+  <div class="espacio"></div>
+  <button class="boton sec" id="limpiar">Limpiar filtros</button>
+  <button class="boton" id="descargar">Descargar datos filtrados</button>
+</div>
+
+<section id="indicadores" class="kpis">
+  <div class="tarjeta kpi"><div class="icono morado-bg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="7" r="4"/><path d="M5 21v-2a7 7 0 0 1 14 0v2"/></svg></div>
+    <div class="valor" id="k1">–</div><div class="nombre">Niñas y adolescentes fuera de la escuela</div><div class="nota" id="k1n">Sin secundaria completa</div></div>
+  <div class="tarjeta kpi"><div class="icono morado-bg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+    <div class="valor" id="k2">–</div><div class="nombre">Niñas y adolescentes en esa situación</div><div class="nota" id="k2n">Población estimada con el factor de expansión</div></div>
+  <div class="tarjeta kpi"><div class="icono naranja-bg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 3v18M5 10l7-7 7 7"/></svg></div>
+    <div class="valor" id="k3">–</div><div class="nombre">Varones fuera de la escuela</div><div class="nota" id="k3n">Misma definición</div></div>
+  <div class="tarjeta kpi"><div class="icono naranja-bg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 12h18M8 7l-5 5 5 5M16 7l5 5-5 5"/></svg></div>
+    <div class="valor" id="k4">–</div><div class="nombre">Brecha de género</div><div class="nota">Mujeres menos hombres, en puntos porcentuales</div></div>
+  <div class="tarjeta kpi"><div class="icono morado-bg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></div>
+    <div class="valor" id="k5" style="font-size:22px">–</div><div class="nombre">Departamento con mayor tasa en niñas</div><div class="nota" id="k5n">–</div></div>
+</section>
+
+<section id="territorio" class="fila f-mapa">
+  <div class="tarjeta">
+    <h2>Mapa 3D de la interrupción escolar</h2>
+    <p class="sub">La altura y el color de cada departamento representan el indicador elegido. El mapa gira solo, se puede inclinar con clic derecho y, al hacer clic en un departamento, filtra todo el tablero.</p>
+    <div class="mapa-ctrl">
+      <div class="segmentado" id="mIndicador" role="group" aria-label="Indicador del mapa">
+        <button data-v="Mujer" class="on">Niñas y adolescentes</button><button data-v="Hombre">Varones</button><button data-v="brecha">Brecha de género</button></div>
+      <div class="segmentado" id="mFondo" role="group" aria-label="Fondo del mapa">
+        <button data-v="satelite" class="on">Satelital</button><button data-v="claro">Claro</button></div>
+      <button id="mGiro" class="boton sec">Pausar giro</button>
+    </div>
+    <div id="mapa"><div class="leyenda-mapa" id="leyenda"></div></div>
+    <p class="aviso">Imagen satelital de Esri World Imagery · Fondo claro de OpenStreetMap y CARTO · Relieve de AWS Terrain Tiles (Mapzen) · Límites departamentales del material del curso, sesión 06 (INEI).</p>
+  </div>
+  <div class="tarjeta">
+    <h2>Ranking departamental</h2>
+    <p class="sub">Ordenado según el indicador del mapa. Las estimaciones marcadas como «ref.» son referenciales, porque su coeficiente de variación supera el 15&nbsp;%.</p>
+    <div class="ranking"><table id="tablaDep"><thead><tr><th>Departamento</th><th>Indicador</th><th></th><th>Casos</th></tr></thead><tbody></tbody></table></div>
+  </div>
+</section>
+
+<section class="fila f-2">
+  <div class="tarjeta">
+    <h2>¿A qué edad se interrumpe la trayectoria?</h2>
+    <p class="sub">Porcentaje fuera de la escuela sin secundaria completa, por edad simple y sexo, según los filtros activos.</p>
+    <div id="gEdad" class="grafico"></div>
+  </div>
+  <div class="tarjeta">
+    <h2>La brecha cambia según el eje de desigualdad</h2>
+    <p class="sub">Niñas y adolescentes frente a varones dentro de cada categoría. Las líneas horizontales indican el intervalo de confianza al 95&nbsp;%. Como en el modelo, se excluye a quienes tienen otra lengua materna, como el portugués o la lengua de señas.</p>
+    <div id="gEjes" class="grafico"></div>
+  </div>
+</section>
+
+<section id="interseccion" class="fila">
+  <div class="tarjeta">
+    <h2>Dieciséis posiciones sociales. ¿Suma de desventajas o intersección?</h2>
+    <p class="sub">Se compara la tasa observada en cada cruce de sexo, área, lengua materna y pobreza con la que predeciría un modelo solo aditivo (Hancock, 2007; Bowleg, 2008). Si las desventajas solo se sumaran, los rombos coincidirían con los círculos.</p>
+    <div class="mapa-ctrl"><div class="segmentado" id="pSexo" role="group" aria-label="Sexo"><button data-v="Mujer" class="on">Niñas y adolescentes</button><button data-v="Hombre">Varones</button><button data-v="ambos">Comparar ambos</button></div></div>
+    <div id="gPos" class="grafico alto"></div>
+    <p class="aviso" id="avisoModelo"></p>
+  </div>
+</section>
+
+<section class="fila f-2">
+  <div class="tarjeta">
+    <h2>¿Se repite en 2024? Prueba de replicación</h2>
+    <p class="sub">Razón de momios (OR) de cada interacción con el sexo en el modelo logístico. Un valor mayor que 1 indica que el eje aumenta la salida escolar de las niñas más que la de los varones. En morado, los resultados significativos al 95&nbsp;%.</p>
+    <table id="tablaReplica"><thead><tr><th>Interacción</th><th>2024</th><th>2025</th><th>2024 y 2025</th></tr></thead><tbody></tbody></table>
+    <p class="aviso">La inversión de la brecha en la lengua materna indígena tiene la misma dirección en ambos años y es significativa al combinar 2024 y 2025. En cambio, la interacción con la pobreza observada en 2025 no se replica en 2024 y desaparece en el acumulado, por lo que no se considera un resultado robusto.</p>
+  </div>
+  <div class="tarjeta">
+    <h2>Contraste con las cifras oficiales del INEI</h2>
+    <p class="sub">Estimaciones de este estudio frente a las publicadas por el INEI con la misma encuesta. Las diferencias, en puntos porcentuales, no superan 0,31 en ningún indicador.</p>
+    <table id="tablaContraste"><thead><tr><th>Indicador</th><th>Año</th><th>Este estudio</th><th>INEI</th><th>Dif.</th></tr></thead><tbody></tbody></table>
+    <p class="aviso">Tasa neta de asistencia a secundaria de 12 a 16 años. Las cifras oficiales de 2024 corresponden al año completo (INEI, 2025), mientras que la asistencia oficial de 2025 corresponde al III trimestre, último dato disponible al cierre de este trabajo. La diferencia se expresa en puntos porcentuales.</p>
+  </div>
+</section>
+
+<section id="razones" class="fila f-2">
+  <div class="tarjeta">
+    <h2>¿Por qué no asisten?</h2>
+    <p class="sub">Principal razón declarada por quienes están fuera de la escuela sin secundaria completa (pregunta 313A), según los filtros activos.</p>
+    <div id="gRaz" class="grafico alto"></div>
+  </div>
+  <div class="tarjeta">
+    <h2>Composición de quienes están fuera</h2>
+    <p class="sub">Distribución de las niñas y adolescentes fuera de la escuela según su posición en los tres ejes, en población estimada.</p>
+    <div id="gComp" class="grafico alto"></div>
+  </div>
+</section>
+
+<section class="hallazgos">
+  <div class="tarjeta hallazgo"><div class="num">01</div><h3>El promedio nacional oculta las desigualdades</h3>
+    <p>En 2025, el 2,1&nbsp;% de las niñas y adolescentes de 6 a 17 años estaba fuera de la escuela sin haber concluido la secundaria, frente al 2,9&nbsp;% de los varones, lo que equivale a unas 54 mil niñas y adolescentes. La misma relación se observa en 2024 (2,4&nbsp;% frente a 2,9&nbsp;%) y coincide con las cifras oficiales de asistencia a secundaria (INEI, 2025). Leído de forma aislada, este dato sugeriría la ausencia de una desventaja femenina, en concordancia con estudios previos sobre el Perú (Rojas, Guerrero y Vargas, 2016).</p></div>
+  <div class="tarjeta hallazgo n2"><div class="num">02</div><h3>La lengua materna indígena invierte la brecha de género</h3>
+    <p>Entre quienes tienen el castellano como lengua materna, las niñas están menos fuera de la escuela que los varones (1,6&nbsp;% frente a 2,5&nbsp;% en 2025), mientras que entre quienes tienen una lengua indígena la relación se invierte (4,2&nbsp;% frente a 2,6&nbsp;%). El patrón se repite en 2024 (4,0&nbsp;% frente a 3,1&nbsp;%) y la interacción es significativa al combinar ambos años (OR = 1,80; p = 0,030), lo que respalda que la desventaja surge del cruce de categorías y no de su suma (Hancock, 2007; Bowleg, 2008). En cambio, la interacción con la pobreza observada en 2025 no se replica en 2024.</p></div>
+  <div class="tarjeta hallazgo"><div class="num">03</div><h3>Los quehaceres del hogar son una barrera femenina en ambos años</h3>
+    <p>Con 2024 y 2025 combinados, el 14,1&nbsp;% de las niñas y adolescentes fuera de la escuela declara dedicarse a los quehaceres del hogar, frente al 1,7&nbsp;% de los varones, y la diferencia es significativa en cada año por separado. Los problemas familiares también pesan más entre ellas (18,2&nbsp;% frente a 7,6&nbsp;%), mientras que entre ellos predominan el trabajo (24,7&nbsp;%) y el desinterés por el estudio (16,6&nbsp;%). El trabajo de cuidado no remunerado aparece así como una barrera específicamente femenina.</p></div>
+</section>
+
+<section id="metodologia" class="fila f-2">
+  <div class="tarjeta texto">
+    <h2>Metodología</h2>
+    <h3>Fuente y población</h3>
+    <p>Se emplea la Encuesta Nacional de Hogares (ENAHO) anual de 2024 y 2025 (INEI, 2025, 2026), con los módulos 02 (Miembros del hogar), 03 (Educación) y 34 (Sumaria) de cada año, procesados con la misma metodología. La población de estudio comprende a las y los residentes habituales de 6 a 17 años, rango que abarca la educación primaria y secundaria. Se conservan únicamente las entrevistas realizadas entre abril y diciembre, puesto que entre enero y marzo el 87,3&nbsp;% (2024) y el 89,3&nbsp;% (2025) de quienes no estaban matriculados declaró encontrarse de vacaciones, lo que impide medir la permanencia escolar en esos meses.</p>
+    <h3>Construcción del indicador</h3>
+    <p>Una persona interrumpe su trayectoria escolar cuando no está matriculada o no asiste actualmente (preguntas 306 y 307) y, además, no ha concluido la educación secundaria (pregunta 301A). Los ejes de desigualdad son el sexo (P207), el área de residencia según el estrato muestral (estratos 1 a 5 urbanos y 6 a 8 rurales), la lengua materna (P300A, que agrupa el quechua, el aimara y las lenguas amazónicas como lenguas indígenas) y la condición de pobreza monetaria del hogar. Todas las cifras se ponderan con el factor de expansión del módulo de educación (FACTORA07).</p>
+    <h3>Enfoque interseccional</h3>
+    <p>Se adopta el enfoque intercategorial (McCall, 2005), que utiliza provisionalmente las categorías existentes para documentar desigualdades entre grupos. Para no presuponer el resultado, la relación entre categorías se trata como una cuestión empírica abierta (Hancock, 2007). Por ello se estiman dos modelos logísticos ponderados con errores agrupados por conglomerado, uno aditivo y otro con interacciones entre el sexo y los demás ejes, y se contrasta conjuntamente si dichas interacciones son nulas. El análisis se repite en 2024 como prueba de replicación y se estima también con ambos años, controlando por el año, para ganar precisión.</p>
+    <h3>Validación</h3>
+    <div class="caja-val" id="validacion"></div>
+  </div>
+  <div class="tarjeta texto">
+    <h2>Fuentes</h2>
+    <ul>
+      <li>Ames, P. (2013). Constructing new identities? The role of gender and education in rural girls' life aspirations in Peru. <i>Gender and Education</i>, 25(3), 267-283.</li>
+      <li>Bowleg, L. (2008). When Black + Lesbian + Woman ≠ Black Lesbian Woman. The methodological challenges of qualitative and quantitative intersectionality research. <i>Sex Roles</i>, 59, 312-325.</li>
+      <li>Crenshaw, K. (1989). Demarginalizing the intersection of race and sex. <i>University of Chicago Legal Forum</i>, 1989(1), 139-167.</li>
+      <li>Hancock, A.-M. (2007). Intersectionality as a normative and empirical paradigm. <i>Politics &amp; Gender</i>, 3(2), 248-254.</li>
+      <li>Instituto Nacional de Estadística e Informática [INEI] (2025). <i>Encuesta Nacional de Hogares 2024</i>. Microdatos anuales, módulos 02, 03 y 34.</li>
+      <li>Instituto Nacional de Estadística e Informática [INEI] (2025). <a href="https://www.inei.gob.pe/media/MenuRecursivo/boletines/informe-tecnico_estadisticasdegenero_itrim2025.pdf" target="_blank" rel="noopener"><i>Estadísticas con enfoque de género. Informe técnico, enero-marzo 2025</i></a>.</li>
+      <li>Instituto Nacional de Estadística e Informática [INEI] (2025). <a href="https://www.inei.gob.pe/media/MenuRecursivo/boletines/7548592-condiciones-de-vida-en-el-peru-iii-trimestre-2025.pdf" target="_blank" rel="noopener"><i>Condiciones de vida en el Perú. III trimestre 2025</i></a>.</li>
+      <li>Instituto Nacional de Estadística e Informática [INEI] (2026). <a href="https://proyectos.inei.gob.pe/microdatos/" target="_blank" rel="noopener"><i>Encuesta Nacional de Hogares 2025</i>. Microdatos anuales, módulos 02, 03 y 34</a>.</li>
+      <li>Instituto Nacional de Estadística e Informática [INEI] (2026). <a href="https://www.gob.pe/institucion/inei/informes-publicaciones/8087825-cifras-de-pobreza-2025" target="_blank" rel="noopener"><i>Informe técnico de pobreza monetaria 2016-2025</i></a>.</li>
+      <li>McCall, L. (2005). The complexity of intersectionality. <i>Signs</i>, 30(3), 1771-1800.</li>
+      <li>Ministerio del Ambiente [MINAM] (2016). <a href="https://leap.unep.org/en/countries/pe/national-legislation/decreto-supremo-no-012-2016-minam-plan-de-accion-en-genero-y" target="_blank" rel="noopener"><i>Plan de Acción en Género y Cambio Climático del Perú</i></a>. Decreto Supremo N.° 012-2016-MINAM.</li>
+      <li>Montero, C. (2006). La exclusión educativa de las niñas del campo. ¿Pasado o presente? En P. Ames (ed.), <i>Las brechas invisibles. Desafíos para una equidad de género en la educación</i> (pp. 203-232). Instituto de Estudios Peruanos.</li>
+      <li>Plan International Perú (2026). <i>Emergencias, cambio climático y derechos</i>. Citado en <a href="https://larepublica.pe/sociedad/2026/10/16/fenomeno-el-nino-pone-en-riesgo-la-educacion-y-proteccion-de-ninas-y-adolescentes-668464" target="_blank" rel="noopener">La República, 16 de octubre de 2026</a>.</li>
+      <li>Rojas, V., Guerrero, G. y Vargas, J. (2016). <i>Gendered trajectories through education, work and parenthood in Peru</i> (Working Paper 157). Young Lives.</li>
+      <li>UNFPA (2026). Embarazo adolescente en el Perú, con datos de la ENDES 2025. Citado en <a href="https://forbes.pe/actualidad/2026-09-18/el-embarazo-adolescente-en-peru-bajo-pero-aun-presenta-grandes-diferencias-dentro-del-pais/" target="_blank" rel="noopener">Forbes Perú, 18 de septiembre de 2026</a>.</li>
+      <li>Viveros Vigoya, M. (2016). La interseccionalidad. Una aproximación situada a la dominación. <i>Debate Feminista</i>, 52, 1-17.</li>
+      <li>Young Lives (2008). <i>Young Lives. Peru Round 2 Survey. Summary</i>. Universidad de Oxford.</li>
+    </ul>
+    <h2 style="margin-top:18px">Limitaciones</h2>
+    <ul>
+      <li>La ENAHO es una encuesta transversal, por lo que los resultados expresan asociaciones y no relaciones causales.</li>
+      <li>Como la interrupción escolar es un evento poco frecuente, varias posiciones sociales y departamentos presentan coeficientes de variación superiores al 15&nbsp;%. Según el criterio del INEI, esas estimaciones son referenciales y se muestran con sus intervalos de confianza.</li>
+      <li>La razón de inasistencia es la principal declarada por la persona informante del hogar y no recoge causas múltiples.</li>
+      <li>El Plan de Acción en Género y Cambio Climático reconoce que el cambio climático afecta de manera diferenciada a mujeres y niñas e incluye la educación y la gestión del riesgo entre sus áreas prioritarias. No obstante, la pregunta de la ENAHO sobre las razones de inasistencia no contempla los desastres ni los eventos climáticos, de modo que esta dimensión no puede medirse con la principal fuente oficial, aun cuando un sondeo de Plan International Perú encontró que casi la mitad de las adolescentes consultadas vio afectada su asistencia por emergencias climáticas (Plan International Perú, 2026). Este vacío constituye en sí mismo un hallazgo sobre las fuentes.</li>
+      <li>La misma pregunta tampoco incluye el embarazo ni la maternidad entre sus opciones, pese a que en 2025 la tasa de embarazo adolescente (15 a 19 años) fue de 16,3&nbsp;% en las áreas rurales y de 5,4&nbsp;% en las urbanas, según la ENDES (UNFPA, 2026). Es posible que parte de los «problemas familiares» que declaran las niñas corresponda a esta causa.</li>
+      <li>Se consideraron las tasas de deserción interanual de ESCALE (Minedu), pero no se emplearon porque provienen de registros administrativos que no informan la pobreza ni la lengua materna del hogar, y porque miden un fenómeno distinto, la salida entre un año escolar y el siguiente.</li>
+      <li>La lengua materna aproxima la pertenencia a un pueblo indígena, aunque no equivale a la autoidentificación étnica.</li>
+    </ul>
+    <h2 style="margin-top:18px">Uso de inteligencia artificial</h2>
+    <p>Los microdatos se descargaron con Claude Code mediante el script <code>obtener_datos.py</code>. El procesamiento, el análisis y este tablero se desarrollaron con apoyo de Claude. La pregunta de investigación, el marco teórico interseccional, las decisiones metodológicas y la verificación de cada cifra contra las estadísticas oficiales del INEI estuvieron a cargo de la autora.</p>
+  </div>
+</section>
+<p class="pie">Ana Karen Zamalloa Lima · Ciencia de Datos con Python, Diplomado PUCP 2026 · Datos de la ENAHO 2024 y 2025, INEI (2025, 2026) · <a href="https://github.com/anakaren-zl/data-science-python-2026/tree/main/tarea_7" target="_blank" rel="noopener">Repositorio</a></p>
+</main>
+
+<script src="assets/plotly.min.js"></script>
+<script src="assets/maplibre-gl.js"></script>
+<script>
+const C = {morado:'#6A35B5', naranja:'#D9661F', tinta:'#221A33', tinta2:'#5A5170', tinta3:'#8C84A0', gris:'#B9B3C6', rejilla:'#EEE9F6'};
+const SEQ = ['#F3ECFC','#D7C3F2','#B394E3','#8B5FCF','#6A35B5','#3D1C73'];          // morado, claro a oscuro
+const DIV = ['#9C4108','#D9661F','#F2B48A','#E9E6EF','#B394E3','#6A35B5','#3D1C73']; // naranja, gris, morado
+// Formato del INEI, con coma decimal y espacio como separador de miles
+const fmt = (x,d=1) => isFinite(x) ? x.toFixed(d).replace('.',',') : '–';
+const fmtN = x => Math.round(x).toString().replace(/\B(?=(\d{3})+(?!\d))/g,'\u202f');
+let D, GEO, M, mapa, girando = true, estado = {indicador:'Mujer', fondo:'satelite', pSexo:'Mujer'};
+const filtro = {anio:'2025', edad:'6-17', area:'', lengua:'', pobreza:'', dep:''};
+const nAnios = () => filtro.anio==='2024-2025' ? 2 : 1;   // en el acumulado, la población se expresa como promedio anual
+
+// ---------- estadística ponderada (misma fórmula que analizar_datos.py) ----------
+function tasa(idx){
+  let sw=0, sw2=0, sx=0;
+  for (const i of idx){ const w=M.FACTORA07[i]; sw+=w; sw2+=w*w; sx+=w*M.fuera[i]; }
+  if (!sw) return {pct:NaN, casos:0, pob:0, fueraExp:0};
+  const p=sx/sw, nef=sw*sw/sw2, ee=Math.sqrt(p*(1-p)/nef);
+  return {pct:100*p, inf:100*Math.max(p-1.96*ee,0), sup:100*(p+1.96*ee), cv:p>0?100*ee/p:NaN, casos:idx.length, pob:sw/nAnios(), fueraExp:sx/nAnios()};
+}
+function indices(excluir=''){
+  const [a,b] = filtro.edad.split('-').map(Number), out=[];
+  for (let i=0;i<M.sexo.length;i++){
+    const e=M.edad[i]; if (e<a||e>b) continue;
+    if (excluir!=='anio' && filtro.anio!=='2024-2025' && M.anio[i]!==+filtro.anio) continue;
+    if (excluir!=='area' && filtro.area && M.area[i]!==filtro.area) continue;
+    if (excluir!=='lengua' && filtro.lengua && M.lengua[i]!==filtro.lengua) continue;
+    if (excluir!=='pobreza' && filtro.pobreza && M.pobreza[i]!==filtro.pobreza) continue;
+    if (excluir!=='dep' && filtro.dep && M.departamento[i]!==filtro.dep) continue;
+    out.push(i);
+  }
+  return out;
+}
+const porSexo = (idx,s) => idx.filter(i=>M.sexo[i]===s);
+
+const BASE_LAYOUT = {separators:', ',font:{family:'Montserrat',size:12,color:C.tinta2}, paper_bgcolor:'rgba(0,0,0,0)', plot_bgcolor:'rgba(0,0,0,0)',
+  margin:{l:56,r:18,t:10,b:46}, hoverlabel:{font:{family:'Montserrat',size:12},bgcolor:'#fff',bordercolor:'#E7E0F3'},
+  legend:{orientation:'h',y:1.08,x:0,font:{size:12,color:C.tinta}}, xaxis:{gridcolor:C.rejilla,zeroline:false,linecolor:C.rejilla,ticklabelstandoff:10},
+  yaxis:{gridcolor:C.rejilla,zeroline:false,linecolor:C.rejilla,ticklabelstandoff:14}};
+const CFG = {displayModeBar:false, responsive:true};
+// Combina el diseño base con el de cada gráfico sin perder las opciones de los ejes (separación de etiquetas, rejilla)
+const L = extra => { const base=JSON.parse(JSON.stringify(BASE_LAYOUT));
+  for (const k of Object.keys(extra)) base[k] = (['xaxis','yaxis','legend','margin'].includes(k)) ? Object.assign(base[k]||{}, extra[k]) : extra[k];
+  return base; };
+
+// ---------- KPIs ----------
+function kpis(){
+  const idx=indices(), m=tasa(porSexo(idx,'Mujer')), h=tasa(porSexo(idx,'Hombre'));
+  const ref = t => t.cv>15 ? ' · Estimación referencial' : '';
+  document.getElementById('k1').textContent = fmt(m.pct)+'\u00a0%';
+  // Variación respecto del otro año, con los mismos filtros
+  let variacion='';
+  if (filtro.anio!=='2024-2025'){
+    const otro = filtro.anio==='2025' ? 2024 : 2025, previo = tasa(indices('anio').filter(i=>M.anio[i]===otro&&M.sexo[i]==='Mujer'));
+    const d = m.pct-previo.pct; variacion = ` · ${d>0?'+':d<0?'−':''}${fmt(Math.abs(d))}\u00a0pp frente a ${otro}`;
+  }
+  document.getElementById('k1n').textContent = `IC 95 % ${fmt(m.inf)} a ${fmt(m.sup)}${variacion}${ref(m)}`;
+  document.getElementById('k2n').textContent = filtro.anio==='2024-2025' ? 'Promedio anual estimado con el factor de expansión' : 'Población estimada con el factor de expansión';
+  document.getElementById('k2').textContent = fmtN(m.fueraExp);
+  document.getElementById('k3').textContent = fmt(h.pct)+'\u00a0%';
+  document.getElementById('k3n').textContent = `IC 95 % ${fmt(h.inf)} a ${fmt(h.sup)}${ref(h)}`;
+  const b=m.pct-h.pct; document.getElementById('k4').textContent=(b>0?'+':b<0?'−':'')+fmt(Math.abs(b))+'\u00a0pp';
+  document.getElementById('k4').style.color = b>0 ? C.morado : C.naranja;
+  // departamento con mayor tasa en niñas (solo estimaciones con al menos 100 casos)
+  const filas=Object.keys(D.departamentos).map(c=>{const t=tasa(indices('dep').filter(i=>M.departamento[i]===c&&M.sexo[i]==='Mujer'));return {c,...t};}).filter(r=>r.casos>=100&&isFinite(r.pct));
+  filas.sort((x,y)=>y.pct-x.pct);
+  if (filas.length){ document.getElementById('k5').textContent=D.departamentos[filas[0].c]; document.getElementById('k5n').textContent=`${fmt(filas[0].pct)}\u00a0% · ${filas[0].casos} casos${filas[0].cv>15?' · Estimación referencial':''}`; }
+  const filtrado = filtro.edad!=='6-17'||filtro.area||filtro.lengua||filtro.pobreza||filtro.dep;
+  document.getElementById('metaCasos').innerHTML = `<b>Muestra:</b> ${fmtN(idx.length)} personas${filtrado?' (filtrada)':''}`;
+}
+
+// ---------- edad ----------
+function gEdad(){
+  const idx=indices(), [a,b]=filtro.edad.split('-').map(Number), edades=[]; for(let e=a;e<=b;e++) edades.push(e);
+  const trazas=['Mujer','Hombre'].map(s=>{
+    const t=edades.map(e=>tasa(idx.filter(i=>M.sexo[i]===s&&M.edad[i]===e)));
+    const col=s==='Mujer'?C.morado:C.naranja, nom=s==='Mujer'?'Niñas y adolescentes':'Varones';
+    return {x:edades,y:t.map(r=>r.pct),name:nom,mode:'lines+markers',line:{color:col,width:2.5},marker:{size:9,color:col,line:{color:'#fff',width:2}},
+      customdata:t.map(r=>[r.inf,r.sup,r.casos]),hovertemplate:`<b>${nom}</b> · %{x} años<br>%{y:.1f}\u00a0% (IC %{customdata[0]:.1f} a %{customdata[1]:.1f})<br>%{customdata[2]} casos<extra></extra>`};
+  });
+  Plotly.react('gEdad',trazas,L({xaxis:{title:{text:'Edad (años)',standoff:14},dtick:1,gridcolor:C.rejilla},yaxis:{title:{text:'% fuera de la escuela',standoff:14},rangemode:'tozero',gridcolor:C.rejilla,ticksuffix:' %'}}),CFG);
+}
+
+// ---------- brechas por eje ----------
+function gEjes(){
+  const grupos=[['area','Urbana','Área urbana'],['area','Rural','Área rural'],['lengua','Castellano','Lengua castellana'],['lengua','Indígena','Lengua indígena'],['pobreza','No pobre','Hogar no pobre'],['pobreza','Pobre','Hogar pobre']];
+  const filas=grupos.map(([eje,cat,et])=>{const idx=indices(eje).filter(i=>M[eje][i]===cat&&M.lengua[i]!=='Otra');return {et,m:tasa(porSexo(idx,'Mujer')),h:tasa(porSexo(idx,'Hombre'))};}).reverse();
+  const y=filas.map(f=>f.et);
+  const traza=(k,nom,col,sim)=>({x:filas.map(f=>f[k].pct),y,name:nom,mode:'markers',type:'scatter',
+    marker:{size:14,color:col,symbol:sim,line:{color:'#fff',width:2}},
+    error_x:{type:'data',symmetric:false,array:filas.map(f=>f[k].sup-f[k].pct),arrayminus:filas.map(f=>f[k].pct-f[k].inf),color:col,thickness:2,width:0},
+    customdata:filas.map(f=>[f[k].inf,f[k].sup,f[k].casos,f[k].cv>15?'Estimación referencial':'']),
+    hovertemplate:`<b>${nom}</b> · %{y}<br>%{x:.1f}\u00a0% (IC %{customdata[0]:.1f} a %{customdata[1]:.1f})<br>%{customdata[2]} casos<br>%{customdata[3]}<extra></extra>`});
+  const lineas=filas.map(f=>({type:'line',x0:f.m.pct,x1:f.h.pct,y0:f.et,y1:f.et,line:{color:C.gris,width:3},layer:'below'}));
+  Plotly.react('gEjes',[traza('m','Niñas y adolescentes',C.morado,'circle'),traza('h','Varones',C.naranja,'diamond')],
+    L({shapes:lineas,margin:{l:150,r:18,t:10,b:46},xaxis:{title:{text:'% fuera de la escuela',standoff:14},rangemode:'tozero',gridcolor:C.rejilla,ticksuffix:' %'},yaxis:{gridcolor:'rgba(0,0,0,0)'}}),CFG);
+}
+
+// ---------- 16 posiciones ----------
+function gPos(){
+  const P=D.posiciones.filter(p=>p.periodo===filtro.anio), nombre=p=>`${p.area==='Rural'?'Área rural':'Área urbana'} · ${p.lengua==='Indígena'?'Lengua indígena':'Lengua castellana'} · ${p.pobreza==='Pobre'?'Hogar pobre':'Hogar no pobre'}`;
+  const orden=[...new Set(P.map(nombre))];
+  const sexos = estado.pSexo==='ambos' ? ['Mujer','Hombre'] : [estado.pSexo];
+  const trazas=[];
+  sexos.forEach(s=>{
+    const col=s==='Mujer'?C.morado:C.naranja, nom=s==='Mujer'?'Niñas y adolescentes':'Varones';
+    const f=orden.map(o=>P.find(p=>p.sexo===s&&nombre(p)===o));
+    trazas.push({x:f.map(p=>p.pct),y:orden,name:`${nom} (observado)`,mode:'markers',type:'scatter',
+      marker:{size:13,color:f.map(p=>p.referencial?'#fff':col),line:{color:col,width:2.5}},
+      error_x:{type:'data',symmetric:false,array:f.map(p=>p.ic_sup-p.pct),arrayminus:f.map(p=>p.pct-p.ic_inf),color:col,thickness:1.6,width:0},
+      customdata:f.map(p=>[p.ic_inf,p.ic_sup,p.casos,p.pred_aditivo,p.referencial?'Estimación referencial (CV > 15 %)':'']),
+      hovertemplate:`<b>${nom}</b><br>%{y}<br>Observado %{x:.1f}\u00a0% (IC %{customdata[0]:.1f} a %{customdata[1]:.1f})<br>Modelo aditivo %{customdata[3]:.1f}\u00a0%<br>%{customdata[2]} casos<br>%{customdata[4]}<extra></extra>`});
+    trazas.push({x:f.map(p=>p.pred_aditivo),y:orden,name:`${nom} (si las desventajas solo se sumaran)`,mode:'markers',type:'scatter',
+      marker:{size:11,symbol:'diamond',color:s==='Mujer'?'#D7C3F2':'#F2B48A',line:{color:col,width:1.5}},hoverinfo:'skip'});
+  });
+  Plotly.react('gPos',trazas,L({margin:{l:360,r:18,t:30,b:46},xaxis:{title:{text:'% fuera de la escuela sin secundaria completa',standoff:14},rangemode:'tozero',gridcolor:C.rejilla,ticksuffix:' %'},yaxis:{gridcolor:C.rejilla,autorange:'reversed'}}),CFG);
+  const md=D.modelos[filtro.anio], per=filtro.anio==='2024-2025'?'2024 y 2025 (acumulado, con control por año)':filtro.anio;
+  document.getElementById('avisoModelo').textContent=`Prueba de Wald conjunta de las ${md.wald_gl} interacciones con el sexo, χ² = ${fmt(md.wald_chi2,2)} y p = ${fmt(md.wald_p,3)}. Interacción mujer × lengua indígena, OR = ${fmt(md.or_mujer_indigena,2)} (p = ${fmt(md.p_mujer_indigena,3)}). Interacción mujer × pobreza, OR = ${fmt(md.or_mujer_pobre,2)} (p = ${fmt(md.p_mujer_pobre,3)}). Los círculos vacíos son estimaciones referenciales. Periodo ${per}. Este gráfico responde al filtro de año y usa toda la muestra de ese periodo.`;
+}
+
+// ---------- razones ----------
+function gRaz(){
+  const idx=indices().filter(i=>M.fuera[i]===1&&M.razon[i]);
+  const cats=['Quehaceres del hogar','Problemas familiares','Problemas económicos','Trabajo','No le interesa estudiar','No hay centro educativo','Otra razón'];
+  const tr=['Mujer','Hombre'].map(s=>{
+    const sub=idx.filter(i=>M.sexo[i]===s), tot=sub.reduce((a,i)=>a+M.FACTORA07[i],0);
+    const val=cats.map(c=>{const ii=sub.filter(i=>(cats.slice(0,-1).includes(M.razon[i])?M.razon[i]:'Otra razón')===c);return [tot?100*ii.reduce((a,i)=>a+M.FACTORA07[i],0)/tot:0,ii.length];});
+    const col=s==='Mujer'?C.morado:C.naranja, nom=s==='Mujer'?'Niñas y adolescentes':'Varones';
+    return {type:'bar',orientation:'h',y:cats,x:val.map(v=>v[0]),name:`${nom} (${sub.length} casos)`,marker:{color:col,cornerradius:4},
+      customdata:val.map(v=>v[1]),text:val.map(v=>v[0]>0?fmt(v[0])+'\u00a0%':''),textposition:'outside',textfont:{size:11,color:C.tinta},
+      hovertemplate:`<b>${nom}</b><br>%{y}<br>%{x:.1f}\u00a0% · %{customdata} casos<extra></extra>`};
+  });
+  Plotly.react('gRaz',tr,L({barmode:'group',bargap:.28,bargroupgap:.08,legend:{orientation:'h',y:1.12,x:0},margin:{l:200,r:30,t:50,b:46},xaxis:{title:{text:'% de quienes están fuera',standoff:14},gridcolor:C.rejilla,ticksuffix:' %',range:[0,50]},yaxis:{autorange:'reversed',gridcolor:'rgba(0,0,0,0)'}}),CFG);
+}
+
+// ---------- composición (sunburst) ----------
+function gComp(){
+  const idx=indices().filter(i=>M.fuera[i]===1&&M.sexo[i]==='Mujer'&&M.lengua[i]!=='Otra');
+  const acc={};
+  idx.forEach(i=>{const k=[M.area[i],M.lengua[i],M.pobreza[i]];
+    for(let n=1;n<=3;n++){const id=k.slice(0,n).join(' · ');acc[id]=(acc[id]||0)+M.FACTORA07[i];}});
+  const ids=Object.keys(acc), parents=ids.map(id=>id.includes(' · ')?id.split(' · ').slice(0,-1).join(' · '):'');
+  const nom={Urbana:'Área urbana',Rural:'Área rural','Indígena':'Lengua indígena',Castellano:'Lengua castellana',Pobre:'Hogar pobre','No pobre':'Hogar no pobre'};
+  const tot=Object.keys(acc).filter(k=>!k.includes(' · ')).reduce((a,k)=>a+acc[k],0);
+  const labels=ids.map(id=>nom[id.split(' · ').pop()]);
+  const textos=ids.map((id,i)=>`${labels[i]}<br>${fmt(100*acc[id]/tot,0)}\u00a0%`);
+  const colores=ids.map(id=>{const n=id.split(' · ').length;return n===1?(id==='Rural'?'#3D1C73':'#6A35B5'):n===2?(id.endsWith('Indígena')?'#D9661F':'#8B5FCF'):(id.endsWith('No pobre')?'#D7C3F2':'#F2B48A');});
+  Plotly.react('gComp',[{type:'sunburst',ids,labels,parents,values:ids.map(i=>acc[i]),branchvalues:'total',marker:{colors:colores,line:{color:'#fff',width:2}},
+    text:textos,textinfo:'text',insidetextfont:{family:'Montserrat',size:12},customdata:ids.map(id=>[fmtN(acc[id]),fmt(100*acc[id]/tot)]),hovertemplate:'<b>%{label}</b><br>%{customdata[0]} niñas y adolescentes<br>%{customdata[1]}\u00a0% del total<extra></extra>'}],
+    L({margin:{l:4,r:4,t:4,b:4}}),CFG);
+}
+
+// ---------- mapa 3D ----------
+function valoresDep(){
+  const idx=indices('dep'), out={};
+  Object.keys(D.departamentos).forEach(c=>{
+    const ii=idx.filter(i=>M.departamento[i]===c), m=tasa(porSexo(ii,'Mujer')), h=tasa(porSexo(ii,'Hombre'));
+    const v = estado.indicador==='brecha' ? m.pct-h.pct : (estado.indicador==='Mujer'?m:h).pct;
+    const ref = estado.indicador==='brecha' ? (m.cv>15||h.cv>15) : (estado.indicador==='Mujer'?m:h).cv>15;
+    out[c]={v:isFinite(v)?v:0,m,h,ref,cero:(estado.indicador==='brecha'?false:((estado.indicador==='Mujer'?m:h).pct===0)),casos:ii.length};
+  });
+  return out;
+}
+function colorDe(v){
+  if (estado.indicador==='brecha'){const t=Math.max(-1,Math.min(1,v/4));return DIV[Math.round((t+1)*3)];}
+  const max=8, t=Math.max(0,Math.min(1,v/max)); return SEQ[Math.min(5,Math.floor(t*6))];
+}
+function actualizarMapa(){
+  const val=valoresDep();
+  GEO.features.forEach(f=>{const r=val[f.properties.codigo];f.properties.valor=r.v;f.properties.color=colorDe(r.v);
+    f.properties.altura=estado.indicador==='brecha'?Math.abs(r.v)*30000+3000:r.v*26000+3000;
+    f.properties.sel=filtro.dep===f.properties.codigo?1:0;
+    f.properties.txt=`${fmt(r.v)} ${estado.indicador==='brecha'?'pp':'%'}`;
+    f.properties.mujer=r.m.pct;f.properties.hombre=r.h.pct;f.properties.casos=r.casos;f.properties.ref=r.ref?1:0;});
+  if (mapa && mapa.getSource('dep')) mapa.getSource('dep').setData(GEO);
+  // leyenda
+  const ley=document.getElementById('leyenda');
+  if (estado.indicador==='brecha') ley.innerHTML=`<div>Brecha de género (pp)</div><div class="barra" style="background:linear-gradient(90deg,${DIV.join(',')})"></div><div class="ext"><span>◀ Varones más fuera</span><span>Niñas más fuera ▶</span></div>`;
+  else ley.innerHTML=`<div>% ${estado.indicador==='Mujer'?'de niñas y adolescentes':'de varones'} fuera de la escuela</div><div class="barra" style="background:linear-gradient(90deg,${SEQ.join(',')})"></div><div class="ext"><span>0 %</span><span>8 % o más</span></div>`;
+  // tabla
+  const filas=Object.entries(val).map(([c,r])=>({c,...r})).sort((a,b)=>b.v-a.v), max=Math.max(...filas.map(f=>Math.abs(f.v)),1);
+  document.querySelector('#tablaDep tbody').innerHTML=filas.map(f=>`<tr data-c="${f.c}" class="${filtro.dep===f.c?'sel':''}"><td>${D.departamentos[f.c]}</td><td style="color:${f.ref?'var(--tinta-3)':'inherit'}">${fmt(f.v)}${estado.indicador==='brecha'?' pp':' %'}${f.ref?' <span class="ref">ref.</span>':''}${f.cero?' <span class="ref">sin casos en la muestra</span>':''}</td><td><span class="mini" style="width:${Math.round(70*Math.abs(f.v)/max)}px;background:${colorDe(f.v)}"></span></td><td>${f.casos}</td></tr>`).join('');
+  document.querySelectorAll('#tablaDep tr[data-c]').forEach(tr=>tr.onclick=()=>elegirDep(tr.dataset.c));
+}
+function estilo(){
+  const capas=[{id:'fondo',type:'background',paint:{'background-color':'#EFEAF7'}}];
+  const fuentes={};
+  if (estado.fondo==='satelite'){
+    fuentes.sat={type:'raster',tiles:['https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'],tileSize:256,maxzoom:17,attribution:'Imagen © Esri, Maxar, Earthstar Geographics'};
+    capas.push({id:'sat',type:'raster',source:'sat',paint:{'raster-saturation':-0.25,'raster-brightness-max':0.85}});
+  } else {
+    fuentes.claro={type:'raster',tiles:['https://a.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png','https://b.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png'],tileSize:256,attribution:'© OpenStreetMap · © CARTO'};
+    capas.push({id:'claro',type:'raster',source:'claro'});
+  }
+  fuentes.dem={type:'raster-dem',tiles:['https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png'],encoding:'terrarium',tileSize:256,maxzoom:12,attribution:'Relieve AWS Terrain Tiles'};
+  fuentes.hill={type:'raster-dem',tiles:['https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png'],encoding:'terrarium',tileSize:256,maxzoom:12};
+  capas.push({id:'sombra',type:'hillshade',source:'hill',paint:{'hillshade-exaggeration':0.35,'hillshade-shadow-color':'#2a1650'}});
+  return {version:8,glyphs:'https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf',sources:fuentes,layers:capas,terrain:{source:'dem',exaggeration:1.4},sky:{}};
+}
+function capasDatos(){
+  if (!mapa.getSource('dep')) mapa.addSource('dep',{type:'geojson',data:GEO});
+  if (mapa.getLayer('dep-ext')) return;
+  mapa.addLayer({id:'dep-ext',type:'fill-extrusion',source:'dep',paint:{'fill-extrusion-color':['get','color'],'fill-extrusion-height':['get','altura'],'fill-extrusion-base':0,'fill-extrusion-opacity':0.86,'fill-extrusion-vertical-gradient':true}});
+  mapa.addLayer({id:'dep-linea',type:'line',source:'dep',paint:{'line-color':['case',['==',['get','sel'],1],'#FFB27A','#ffffff'],'line-width':['case',['==',['get','sel'],1],3.5,1.1],'line-opacity':0.9}});
+}
+function iniciarMapa(){
+  mapa=new maplibregl.Map({container:'mapa',style:estilo(),center:[-75.2,-9.4],zoom:4.55,pitch:58,bearing:-18,maxPitch:80,attributionControl:{compact:true}});
+  mapa.addControl(new maplibregl.NavigationControl({visualizePitch:true}),'top-right');
+  mapa.addControl(new maplibregl.FullscreenControl(),'top-right');
+  mapa.once('style.load',()=>{capasDatos();girar();});
+  const pop=new maplibregl.Popup({closeButton:false,closeOnClick:false,offset:8});
+  mapa.on('mousemove','dep-ext',e=>{const p=e.features[0].properties;mapa.getCanvas().style.cursor='pointer';
+    pop.setLngLat(e.lngLat).setHTML(`<b style="font-weight:800;font-size:14px">${p.nombre}</b><br><span style="color:${C.morado};font-weight:700">Niñas y adolescentes ${fmt(+p.mujer)}\u00a0%</span><br><span style="color:${C.naranja};font-weight:700">Varones ${fmt(+p.hombre)}\u00a0%</span><br><span style="color:${C.tinta3}">${p.casos} casos${+p.ref?' · Estimación referencial':''}</span>`).addTo(mapa);});
+  mapa.on('mouseleave','dep-ext',()=>{mapa.getCanvas().style.cursor='';pop.remove();});
+  mapa.on('click','dep-ext',e=>elegirDep(e.features[0].properties.codigo));
+  ['mousedown','touchstart','wheel'].forEach(ev=>mapa.on(ev,()=>{if(girando)alternarGiro();}));
+}
+function girar(){ if(!girando||!mapa) return; mapa.easeTo({bearing:mapa.getBearing()+12,duration:2400,easing:t=>t}); mapa.once('moveend',()=>girar()); }
+function alternarGiro(){ girando=!girando; document.getElementById('mGiro').textContent=girando?'Pausar giro':'Reanudar giro'; if(girando)girar(); else mapa.stop(); }
+function elegirDep(c){
+  filtro.dep = filtro.dep===c ? '' : c; document.getElementById('fDep').value=filtro.dep; todo();
+  if (filtro.dep){ const f=GEO.features.find(x=>x.properties.codigo===c); const b=new maplibregl.LngLatBounds();
+    const rec=co=>typeof co[0]==='number'?b.extend(co):co.forEach(rec); rec(f.geometry.coordinates);
+    if(girando)alternarGiro(); mapa.fitBounds(b,{padding:60,pitch:60,duration:1600}); }
+  else mapa.flyTo({center:[-75.2,-9.4],zoom:4.55,pitch:58,duration:1400});
+}
+
+// ---------- descarga ----------
+function descargar(){
+  const idx=indices(), cols=['anio','sexo','edad','area','lengua','pobreza','departamento','fuera','razon','FACTORA07'];
+  const csv=[cols.join(',')].concat(idx.map(i=>cols.map(c=>c==='departamento'?D.departamentos[M[c][i]]:M[c][i]).join(','))).join('\n');
+  const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob(['﻿'+csv],{type:'text/csv'})); a.download=`enaho_${filtro.anio}_permanencia_filtrada.csv`; a.click();
+}
+
+// ---------- contraste con cifras oficiales y replicación ----------
+function tablasRobustez(){
+  document.querySelector('#tablaContraste tbody').innerHTML = D.contraste.map(c=>`<tr><td>${c.indicador}</td><td>${c.anio}</td><td>${fmt(c.este_estudio,2)}\u00a0%</td><td>${fmt(c.inei)}\u00a0%</td><td>${c.diferencia_pp>0?'+':c.diferencia_pp<0?'−':''}${fmt(Math.abs(c.diferencia_pp),2)}</td></tr>`).join('');
+  const per=['2024','2025','2024-2025'], et={'2024':'2024','2025':'2025','2024-2025':'2024 y 2025'};
+  const fila=(nombre,clave)=>`<tr><td>${nombre}</td>${per.map(p=>{const o=D.modelos[p]['or_mujer_'+clave],pv=D.modelos[p]['p_mujer_'+clave];return `<td class="${pv<0.05?'sig':''}">${fmt(o,2)} <span class="ref">(p = ${fmt(pv,3)})</span></td>`;}).join('')}</tr>`;
+  document.querySelector('#tablaReplica tbody').innerHTML = fila('Mujer × lengua indígena','indigena') + fila('Mujer × hogar pobre','pobre') + fila('Mujer × área rural','rural')
+    + `<tr><td>Prueba de Wald conjunta</td>${per.map(p=>`<td class="${D.modelos[p].wald_p<0.05?'sig':''}">χ² = ${fmt(D.modelos[p].wald_chi2,2)} <span class="ref">(p = ${fmt(D.modelos[p].wald_p,3)})</span></td>`).join('')}</tr>`;
+}
+
+function todo(){ kpis(); gEdad(); gEjes(); gRaz(); gComp(); gPos(); actualizarMapa(); }
+
+async function iniciar(){
+  [D,GEO]=await Promise.all([fetch('data/datos.json').then(r=>r.json()),fetch('data/departamentos.geojson').then(r=>r.json())]);
+  M=D.micro;
+  const sel=document.getElementById('fDep');
+  Object.entries(D.departamentos).sort((a,b)=>a[1].localeCompare(b[1],'es')).forEach(([c,n])=>sel.insertAdjacentHTML('beforeend',`<option value="${c}">${n}</option>`));
+  document.getElementById('validacion').textContent=D.validacion.trim();
+  [['fAnio','anio'],['fEdad','edad'],['fArea','area'],['fLengua','lengua'],['fPobreza','pobreza']].forEach(([id,k])=>document.getElementById(id).onchange=e=>{filtro[k]=e.target.value;todo();});
+  document.getElementById('fDep').onchange=e=>elegirDep(e.target.value||filtro.dep);
+  document.getElementById('limpiar').onclick=()=>{Object.assign(filtro,{anio:'2025',edad:'6-17',area:'',lengua:'',pobreza:''});['fAnio','fEdad','fArea','fLengua','fPobreza'].forEach(id=>document.getElementById(id).selectedIndex=0);if(filtro.dep)elegirDep(filtro.dep);else todo();};
+  document.getElementById('descargar').onclick=descargar;
+  tablasRobustez();
+  const seg=(id,cb)=>document.querySelectorAll(`#${id} button`).forEach(b=>b.onclick=()=>{document.querySelectorAll(`#${id} button`).forEach(x=>x.classList.remove('on'));b.classList.add('on');cb(b.dataset.v);});
+  seg('mIndicador',v=>{estado.indicador=v;actualizarMapa();});
+  seg('mFondo',v=>{estado.fondo=v;mapa.once('style.load',()=>{capasDatos();mapa.getSource('dep').setData(GEO);});mapa.setStyle(estilo(),{diff:false});});
+  seg('pSexo',v=>{estado.pSexo=v;gPos();});
+  document.getElementById('mGiro').onclick=alternarGiro;
+  actualizarMapa(); iniciarMapa(); todo();
+  // resaltar la sección visible en la barra lateral
+  const enlaces=[...document.querySelectorAll('.lateral a')];
+  new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){enlaces.forEach(a=>a.classList.toggle('activo',a.getAttribute('href')==='#'+e.target.id));}}),{rootMargin:'-40% 0px -55% 0px'})
+    .observe&&['inicio','indicadores','territorio','interseccion','razones','metodologia'].forEach(id=>{const el=document.getElementById(id);if(el)new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)enlaces.forEach(a=>a.classList.toggle('activo',a.getAttribute('href')==='#'+id));}),{rootMargin:'-40% 0px -55% 0px'}).observe(el);});
+}
+iniciar();
+</script>
+</body>
+</html>

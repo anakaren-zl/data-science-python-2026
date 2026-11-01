@@ -1,0 +1,56 @@
+periodo,sexo,razon,pct,casos
+2024,Hombre,De vacaciones,2.8365,6
+2024,Hombre,No hay centro educativo,1.1419,5
+2024,Hombre,No le interesa estudiar,21.3502,52
+2024,Hombre,Otra razón,29.478,66
+2024,Hombre,Problemas económicos,22.8427,71
+2024,Hombre,Problemas familiares,10.5811,23
+2024,Hombre,Quehaceres del hogar,2.5006,9
+2024,Hombre,Terminó sus estudios,0.2734,1
+2024,Hombre,Trabajo,8.9956,30
+2024,Mujer,De vacaciones,4.9721,4
+2024,Mujer,No hay centro educativo,4.0032,11
+2024,Mujer,No le interesa estudiar,5.6439,14
+2024,Mujer,Otra razón,20.0555,37
+2024,Mujer,Problemas económicos,22.0229,58
+2024,Mujer,Problemas familiares,20.2723,39
+2024,Mujer,Quehaceres del hogar,13.8286,39
+2024,Mujer,Terminó sus estudios,0.2192,1
+2024,Mujer,Trabajo,8.9824,9
+2025,Hombre,Asiste a un CETPRO,0.7257,2
+2025,Hombre,De vacaciones,1.9472,3
+2025,Hombre,No hay centro educativo,1.7708,7
+2025,Hombre,No le interesa estudiar,11.6489,36
+2025,Hombre,Otra razón,21.4457,46
+2025,Hombre,Problemas económicos,15.7213,51
+2025,Hombre,Problemas familiares,4.5589,14
+2025,Hombre,Quehaceres del hogar,0.7882,4
+2025,Hombre,Terminó sus estudios,0.4214,1
+2025,Hombre,Trabajo,40.972,98
+2025,Mujer,De vacaciones,2.3711,1
+2025,Mujer,No hay centro educativo,3.239,6
+2025,Mujer,No le interesa estudiar,7.9381,18
+2025,Mujer,Otra razón,16.7752,30
+2025,Mujer,Problemas económicos,20.52,53
+2025,Mujer,Problemas familiares,15.7627,30
+2025,Mujer,Quehaceres del hogar,14.4392,30
+2025,Mujer,Trabajo,18.9548,36
+2024-2025,Hombre,Asiste a un CETPRO,0.3566,2
+2024-2025,Hombre,De vacaciones,2.3995,9
+2024-2025,Hombre,No hay centro educativo,1.4509,12
+2024-2025,Hombre,No le interesa estudiar,16.583,88
+2024-2025,Hombre,Otra razón,25.5309,112
+2024-2025,Hombre,Problemas económicos,19.3432,122
+2024-2025,Hombre,Problemas familiares,7.6218,37
+2024-2025,Hombre,Quehaceres del hogar,1.6591,13
+2024-2025,Hombre,Terminó sus estudios,0.3461,2
+2024-2025,Hombre,Trabajo,24.7087,128
+2024-2025,Mujer,De vacaciones,3.7931,5
+2024-2025,Mujer,No hay centro educativo,3.6568,17
+2024-2025,Mujer,No le interesa estudiar,6.6838,32
+2024-2025,Mujer,Otra razón,18.5685,67
+2024-2025,Mujer,Problemas económicos,21.3417,111
+2024-2025,Mujer,Problemas familiares,18.2281,69
+2024-2025,Mujer,Quehaceres del hogar,14.1054,69
+2024-2025,Mujer,Terminó sus estudios,0.1198,1
+2024-2025,Mujer,Trabajo,13.5028,45
