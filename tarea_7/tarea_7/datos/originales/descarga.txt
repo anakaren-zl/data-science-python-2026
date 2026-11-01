@@ -1,3 +1,0 @@
-ENAHO anual 2024 (código INEI 966) y 2025 (código INEI 1031), módulos 02, 03 y 34 en formato CSV.
-Fuente: https://proyectos.inei.gob.pe/microdatos/
-ENAHO 2025 descargada el 2026-11-01 16:01 y ENAHO 2024 descargada el 2026-11-01 17:34 (descarga manual desde el portal del INEI)
