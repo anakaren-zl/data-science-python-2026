@@ -1,0 +1,30 @@
+periodo,razon,mujeres_pct,hombres_pct,diferencia_pp,ic_inf,ic_sup,significativa_95
+2024,De vacaciones,4.9721,2.8365,2.1355,-3.1817,7.4527,False
+2024,No hay centro educativo,4.0032,1.1419,2.8613,-1.5819,7.3045,False
+2024,No le interesa estudiar,5.6439,21.3502,-15.7063,-24.1844,-7.2283,True
+2024,Otra razón,20.0555,29.478,-9.4225,-20.7969,1.9518,False
+2024,Problemas económicos,22.0229,22.8427,-0.8197,-12.0002,10.3607,False
+2024,Problemas familiares,20.2723,10.5811,9.6911,-0.1482,19.5305,False
+2024,Quehaceres del hogar,13.8286,2.5006,11.3281,3.705,18.9511,True
+2024,Terminó sus estudios,0.2192,0.2734,-0.0542,-1.3706,1.2621,False
+2024,Trabajo,8.9824,8.9956,-0.0132,-7.6886,7.6623,False
+2025,Asiste a un CETPRO,0.0,0.7257,-0.7257,-2.1404,0.689,False
+2025,De vacaciones,2.3711,1.9472,0.4239,-3.2902,4.138,False
+2025,No hay centro educativo,3.239,1.7708,1.4683,-2.5725,5.509,False
+2025,No le interesa estudiar,7.9381,11.6489,-3.7108,-11.1537,3.732,False
+2025,Otra razón,16.7752,21.4457,-4.6705,-14.5705,5.2294,False
+2025,Problemas económicos,20.52,15.7213,4.7987,-5.0313,14.6287,False
+2025,Problemas familiares,15.7627,4.5589,11.2038,3.407,19.0006,True
+2025,Quehaceres del hogar,14.4392,0.7882,13.6509,6.7599,20.542,True
+2025,Terminó sus estudios,0.0,0.4214,-0.4214,-1.5011,0.6583,False
+2025,Trabajo,18.9548,40.972,-22.0172,-33.1318,-10.9026,True
+2024-2025,Asiste a un CETPRO,0.0,0.3566,-0.3566,-1.0687,0.3555,False
+2024-2025,De vacaciones,3.7931,2.3995,1.3935,-1.8865,4.6736,False
+2024-2025,No hay centro educativo,3.6568,1.4509,2.2059,-0.8274,5.2392,False
+2024-2025,No le interesa estudiar,6.6838,16.583,-9.8992,-15.5929,-4.2055,True
+2024-2025,Otra razón,18.5685,25.5309,-6.9624,-14.5693,0.6445,False
+2024-2025,Problemas económicos,21.3417,19.3432,1.9984,-5.5105,9.5073,False
+2024-2025,Problemas familiares,18.2281,7.6218,10.6063,4.2547,16.9579,True
+2024-2025,Quehaceres del hogar,14.1054,1.6591,12.4463,7.2547,17.6379,True
+2024-2025,Terminó sus estudios,0.1198,0.3461,-0.2263,-1.0839,0.6313,False
+2024-2025,Trabajo,13.5028,24.7087,-11.2059,-18.2973,-4.1146,True
