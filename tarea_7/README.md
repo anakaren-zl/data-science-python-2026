@@ -169,10 +169,12 @@ Todos los KPIs se recalculan con cada filtro.
 | Fondo del mapa (satelital o claro) y pausa del giro | Facilita la lectura del territorio |
 | Sexo en el gráfico de posiciones (niñas, varones o ambos) | Permite comparar ambos modelos |
 | Descarga de los datos filtrados | Exporta en CSV los microdatos que cumplen los filtros activos |
+| Botón «Reproducir» del gráfico de edad | Dibuja la línea edad por edad, animación que también se activa al llegar al gráfico y al cambiar un filtro. Al pasar el cursor, una línea guía compara ambos sexos en la misma edad |
+| Clic en el gráfico solar | Amplía el segmento elegido (por ejemplo, solo el área rural) y permite volver al total |
 
 ### 6.5 Hallazgos, metodología, fuentes y limitaciones
 
-El dashboard incluye una sección con los tres hallazgos, la metodología (fuente y población, construcción del indicador, enfoque interseccional y validación contra las cifras del INEI), las fuentes en orden alfabético, las limitaciones y la declaración de uso de inteligencia artificial.
+El dashboard incluye una sección titulada «Hallazgos principales», accesible también desde la barra lateral, con los tres hallazgos numerados. A continuación presenta la metodología (fuente y población, construcción del indicador, enfoque interseccional y validación contra las cifras del INEI), las limitaciones, la declaración de uso de inteligencia artificial y, al final, las fuentes en orden alfabético.
 
 ![Dieciséis posiciones sociales frente al modelo aditivo](web/assets/capturas/dashboard_3_posiciones.png)
 

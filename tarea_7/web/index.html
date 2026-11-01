@@ -38,7 +38,7 @@ main{margin-left:108px;padding:16px 24px 40px 0;max-width:1480px}
 .tarjeta{background:var(--tarjeta);border-radius:var(--radio);box-shadow:var(--sombra);padding:22px 24px;border:1px solid var(--borde)}
 /* portada */
 .portada{display:grid;grid-template-columns:1.32fr 1fr;gap:18px;margin-bottom:18px}
-.hero{background:linear-gradient(125deg,var(--morado-osc) 0%,var(--morado) 62%,#8E4FC9 100%);color:#fff;border:none;position:relative;overflow:hidden}
+.hero{display:flex;flex-direction:column;justify-content:center;background:linear-gradient(125deg,var(--morado-osc) 0%,var(--morado) 62%,#8E4FC9 100%);color:#fff;border:none;position:relative;overflow:hidden}
 .hero:after{content:"";position:absolute;right:-60px;top:-60px;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(217,102,31,.55),transparent 70%)}
 .etiqueta{display:inline-block;font-size:11px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;background:rgba(255,255,255,.14);padding:5px 11px;border-radius:30px}
 h1{font-weight:900;font-size:40px;line-height:1.05;margin:4px 0 10px;letter-spacing:-1px}
@@ -55,6 +55,8 @@ h1 em{font-style:normal;color:#FFB27A}
 .contexto p{margin:0 0 10px;color:var(--tinta-2);font-size:13px;text-align:justify;hyphens:auto}
 h2{font-weight:900;font-size:22px;margin:0 0 4px;letter-spacing:-.3px;color:var(--morado-osc)}
 h2:after{content:"";display:block;width:42px;height:4px;border-radius:4px;background:var(--naranja);margin-top:7px}
+.leyenda-sb{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:var(--tinta-2);margin:2px 0 4px}.leyenda-sb i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.cab-graf{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}.reproducir{flex:none;font:600 12.5px Montserrat,sans-serif;border:1.5px solid var(--morado);color:var(--morado);background:#fff;border-radius:30px;padding:6px 13px;cursor:pointer;transition:.2s}.reproducir:hover{background:var(--morado);color:#fff}
 .titulo-seccion{margin:6px 0 12px 4px}
 .titulo-seccion h2{font-size:24px}
 .sub{color:var(--tinta-2);font-weight:500;font-size:13px;margin:0 0 14px;text-align:justify;hyphens:auto}
@@ -134,6 +136,7 @@ tr{cursor:pointer}
   <a href="#territorio"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2-6-2zM9 4v14M15 6v14"/></svg><span>Mapa 3D</span></a>
   <a href="#interseccion"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="12" r="6"/><circle cx="15" cy="12" r="6"/></svg><span>Interseccionalidad</span></a>
   <a href="#razones"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span>Razones</span></a>
+  <a href="#hallazgos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/></svg><span>Hallazgos</span></a>
   <a href="#metodologia"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/></svg><span>Metodología y fuentes</span></a>
 </nav>
 
@@ -209,8 +212,8 @@ tr{cursor:pointer}
 
 <section class="fila f-2">
   <div class="tarjeta">
-    <h2>¿A qué edad se interrumpe la trayectoria?</h2>
-    <p class="sub">Porcentaje fuera de la escuela sin secundaria completa, por edad simple y sexo, según los filtros activos.</p>
+    <div class="cab-graf"><h2>¿A qué edad se interrumpe la trayectoria?</h2><button class="reproducir" id="playEdad" aria-label="Reproducir la animación por edad">▶ Reproducir</button></div>
+    <p class="sub">Porcentaje fuera de la escuela sin secundaria completa, por edad simple y sexo, según los filtros activos. La línea se dibuja año a año de edad y, al pasar el cursor, se comparan ambos sexos en la misma edad.</p>
     <div id="gEdad" class="grafico"></div>
   </div>
   <div class="tarjeta">
@@ -254,11 +257,13 @@ tr{cursor:pointer}
   </div>
   <div class="tarjeta">
     <h2>Composición de quienes están fuera</h2>
-    <p class="sub">Distribución de las niñas y adolescentes fuera de la escuela según su posición en los tres ejes, en población estimada.</p>
+    <p class="sub">Distribución de las niñas y adolescentes fuera de la escuela según su posición en los tres ejes, en población estimada. El círculo central indica el área de residencia, el anillo medio la lengua materna y el anillo exterior la condición de pobreza. Al pasar el cursor se muestra cada segmento y al hacer clic se amplía.</p>
+    <div class="leyenda-sb"><span><i style="background:#3D1C73"></i>Área rural</span><span><i style="background:#6A35B5"></i>Área urbana</span><span><i style="background:#D9661F"></i>Lengua indígena</span><span><i style="background:#8B5FCF"></i>Lengua castellana</span><span><i style="background:#F2B48A"></i>Hogar pobre</span><span><i style="background:#D7C3F2"></i>Hogar no pobre</span></div>
     <div id="gComp" class="grafico alto"></div>
   </div>
 </section>
 
+<div class="titulo-seccion" id="hallazgos"><h2>Hallazgos principales</h2><p class="sub">Tres resultados que responden a la pregunta de investigación. Cada uno se sustenta en los gráficos anteriores y se verificó con ambos años de la encuesta.</p></div>
 <section class="hallazgos">
   <div class="tarjeta hallazgo"><div class="num">01</div><h3>El promedio nacional oculta las desigualdades</h3>
     <p>En 2025, el 2,1&nbsp;% de las niñas y adolescentes de 6 a 17 años estaba fuera de la escuela sin haber concluido la secundaria, frente al 2,9&nbsp;% de los varones, lo que equivale a unas 54 mil niñas y adolescentes. La misma relación se observa en 2024 (2,4&nbsp;% frente a 2,9&nbsp;%) y coincide con las cifras oficiales de asistencia a secundaria (INEI, 2025). Leído de forma aislada, este dato sugeriría la ausencia de una desventaja femenina, en concordancia con estudios previos sobre el Perú (Rojas, Guerrero y Vargas, 2016).</p></div>
@@ -408,8 +413,18 @@ function gEdad(){
     return {x:edades,y:t.map(r=>r.pct),name:nom,mode:'lines+markers',line:{color:col,width:2.5},marker:{size:9,color:col,line:{color:'#fff',width:2}},
       customdata:t.map(r=>[r.inf,r.sup,r.casos]),hovertemplate:`<b>${nom}</b> · %{x} años<br>%{y:.1f}\u00a0% (IC %{customdata[0]:.1f} a %{customdata[1]:.1f})<br>%{customdata[2]} casos<extra></extra>`};
   });
-  Plotly.react('gEdad',trazas,L({xaxis:{title:{text:'Edad (años)',standoff:14},dtick:1,gridcolor:C.rejilla},yaxis:{title:{text:'% fuera de la escuela',standoff:14},rangemode:'tozero',gridcolor:C.rejilla,ticksuffix:' %'}}),CFG);
+  const ymax=Math.max(1,...trazas.flatMap(t=>t.y.filter(isFinite)))*1.12;
+  const lay=n=>L({hovermode:'x unified',hoverlabel:{bgcolor:'#fff',bordercolor:C.rejilla,font:{family:'Montserrat',size:12,color:C.tinta}},
+    xaxis:{title:{text:'Edad (años)',standoff:14},dtick:1,gridcolor:C.rejilla,range:[a-.4,b+.4],showspikes:true,spikemode:'across',spikethickness:1,spikedash:'dot',spikecolor:'#9B8BB5',hoverformat:'d'},
+    yaxis:{title:{text:'% fuera de la escuela',standoff:14},range:[0,ymax],gridcolor:C.rejilla,ticksuffix:' %'}});
+  trazas.forEach(t=>{t.hovertemplate=t.hovertemplate.replace(/<b>(.*?)<\/b> · %\{x\} años<br>/,'<b>$1</b> ');});
+  clearInterval(estado.animEdad);
+  if(!estado.edadVista){ Plotly.react('gEdad',trazas,lay(),CFG); return; }
+  estado.edadVista=false; let k=1;
+  const paso=()=>{Plotly.react('gEdad',trazas.map(t=>({...t,x:t.x.slice(0,k),y:t.y.slice(0,k),customdata:t.customdata.slice(0,k)})),lay(),CFG); if(++k>edades.length) clearInterval(estado.animEdad);};
+  paso(); estado.animEdad=setInterval(paso,110);
 }
+function animarEdad(){ estado.edadVista=true; estado.edadYaVista=true; gEdad(); }
 
 // ---------- brechas por eje ----------
 function gEjes(){
@@ -423,7 +438,7 @@ function gEjes(){
     hovertemplate:`<b>${nom}</b> · %{y}<br>%{x:.1f}\u00a0% (IC %{customdata[0]:.1f} a %{customdata[1]:.1f})<br>%{customdata[2]} casos<br>%{customdata[3]}<extra></extra>`});
   const lineas=filas.map(f=>({type:'line',x0:f.m.pct,x1:f.h.pct,y0:f.et,y1:f.et,line:{color:C.gris,width:3},layer:'below'}));
   Plotly.react('gEjes',[traza('m','Niñas y adolescentes',C.morado,'circle'),traza('h','Varones',C.naranja,'diamond')],
-    L({shapes:lineas,margin:{l:150,r:18,t:10,b:46},xaxis:{title:{text:'% fuera de la escuela',standoff:14},rangemode:'tozero',gridcolor:C.rejilla,ticksuffix:' %'},yaxis:{gridcolor:'rgba(0,0,0,0)'}}),CFG);
+    L({transition:{duration:550,easing:'cubic-in-out'},shapes:lineas,margin:{l:150,r:18,t:10,b:46},xaxis:{title:{text:'% fuera de la escuela',standoff:14},rangemode:'tozero',gridcolor:C.rejilla,ticksuffix:' %'},yaxis:{gridcolor:'rgba(0,0,0,0)'}}),CFG);
 }
 
 // ---------- 16 posiciones ----------
@@ -460,7 +475,7 @@ function gRaz(){
       customdata:val.map(v=>v[1]),text:val.map(v=>v[0]>0?fmt(v[0])+'\u00a0%':''),textposition:'outside',textfont:{size:11,color:C.tinta},
       hovertemplate:`<b>${nom}</b><br>%{y}<br>%{x:.1f}\u00a0% · %{customdata} casos<extra></extra>`};
   });
-  Plotly.react('gRaz',tr,L({barmode:'group',bargap:.28,bargroupgap:.08,legend:{orientation:'h',y:1.12,x:0},margin:{l:200,r:30,t:50,b:46},xaxis:{title:{text:'% de quienes están fuera',standoff:14},gridcolor:C.rejilla,ticksuffix:' %',range:[0,50]},yaxis:{autorange:'reversed',gridcolor:'rgba(0,0,0,0)'}}),CFG);
+  Plotly.react('gRaz',tr,L({transition:{duration:550,easing:'cubic-in-out'},barmode:'group',bargap:.28,bargroupgap:.08,legend:{orientation:'h',y:1.12,x:0},margin:{l:200,r:30,t:50,b:46},xaxis:{title:{text:'% de quienes están fuera',standoff:14},gridcolor:C.rejilla,ticksuffix:' %',range:[0,50]},yaxis:{autorange:'reversed',gridcolor:'rgba(0,0,0,0)'}}),CFG);
 }
 
 // ---------- composición (sunburst) ----------
@@ -473,11 +488,12 @@ function gComp(){
   const nom={Urbana:'Área urbana',Rural:'Área rural','Indígena':'Lengua indígena',Castellano:'Lengua castellana',Pobre:'Hogar pobre','No pobre':'Hogar no pobre'};
   const tot=Object.keys(acc).filter(k=>!k.includes(' · ')).reduce((a,k)=>a+acc[k],0);
   const labels=ids.map(id=>nom[id.split(' · ').pop()]);
-  // Solo se rotulan los segmentos de 5 % o más; el resto se lee al pasar el cursor
-  const textos=ids.map((id,i)=>{const pc=100*acc[id]/tot;return pc>=5?`<b>${fmt(pc,0)}\u00a0%</b><br>${labels[i]}`:'';});
+  // Los segmentos grandes llevan porcentaje y nombre, los medianos solo el porcentaje y el resto se lee al pasar el cursor
+  const raices=ids.filter(id=>!id.includes(' · ')).length;
+  const textos=ids.map((id,i)=>{const pc=100*acc[id]/tot; if(raices===1&&!id.includes(' · ')) return '';return pc>=25?`<b>${fmt(pc,0)}\u00a0%</b><br>${labels[i]}`:pc>=6?`<b>${fmt(pc,0)}\u00a0%</b>`:'';});
   const colores=ids.map(id=>{const n=id.split(' · ').length;return n===1?(id==='Rural'?'#3D1C73':'#6A35B5'):n===2?(id.endsWith('Indígena')?'#D9661F':'#8B5FCF'):(id.endsWith('No pobre')?'#D7C3F2':'#F2B48A');});
   Plotly.react('gComp',[{type:'sunburst',ids,labels,parents,values:ids.map(i=>acc[i]),branchvalues:'total',marker:{colors:colores,line:{color:'#fff',width:2}},
-    text:textos,textinfo:'text',insidetextorientation:'horizontal',insidetextfont:{family:'Montserrat',size:10.5},customdata:ids.map(id=>[fmtN(acc[id]),fmt(100*acc[id]/tot)]),hovertemplate:'<b>%{label}</b><br>%{customdata[0]} niñas y adolescentes<br>%{customdata[1]}\u00a0% del total<extra></extra>'}],
+    text:textos,textinfo:'text',insidetextorientation:'horizontal',insidetextfont:{family:'Montserrat',size:11,color:ids.map(id=>id.split(' · ').length<3?'#FFFFFF':'#2A1150')},customdata:ids.map(id=>[fmtN(acc[id]),fmt(100*acc[id]/tot)]),hovertemplate:'<b>%{label}</b><br>%{customdata[0]} niñas y adolescentes<br>%{customdata[1]}\u00a0% del total<extra></extra>'}],
     L({margin:{l:4,r:4,t:4,b:4}}),CFG);
 }
 
@@ -572,7 +588,12 @@ function tablasRobustez(){
     + `<tr><td>Prueba de Wald conjunta</td>${per.map(p=>`<td><span class="${D.modelos[p].wald_p<0.05?'pill':'nopill'}">χ² ${fmt(D.modelos[p].wald_chi2,2)} · p = ${fmt(D.modelos[p].wald_p,3)}</span></td>`).join('')}</tr>`;
 }
 
-function todo(){ kpis(); gEdad(); gEjes(); gRaz(); gComp(); gPos(); actualizarMapa(); }
+// la línea de edad se dibuja al entrar en pantalla y con el botón Reproducir
+function iniciarAnimaciones(){
+  document.getElementById('playEdad').addEventListener('click',animarEdad);
+  if('IntersectionObserver' in window){const ob=new IntersectionObserver(es=>{if(es[0].isIntersecting){animarEdad();ob.disconnect();}},{threshold:.45});ob.observe(document.getElementById('gEdad'));}
+}
+function todo(){ if(estado.edadYaVista) estado.edadVista=true; kpis(); gEdad(); gEjes(); gRaz(); gComp(); gPos(); actualizarMapa(); }
 
 async function iniciar(){
   [D,GEO]=await Promise.all([fetch('data/datos.json').then(r=>r.json()),fetch('data/departamentos.geojson').then(r=>r.json())]);
@@ -590,7 +611,7 @@ async function iniciar(){
   seg('mFondo',v=>{estado.fondo=v;mapa.once('style.load',()=>{capasDatos();mapa.getSource('dep').setData(GEO);});mapa.setStyle(estilo(),{diff:false});});
   seg('pSexo',v=>{estado.pSexo=v;gPos();});
   document.getElementById('mGiro').onclick=alternarGiro;
-  actualizarMapa(); iniciarMapa(); todo();
+  actualizarMapa(); iniciarMapa(); todo(); iniciarAnimaciones();
   // resaltar la sección visible en la barra lateral
   const enlaces=[...document.querySelectorAll('.lateral a')];
   new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){enlaces.forEach(a=>a.classList.toggle('activo',a.getAttribute('href')==='#'+e.target.id));}}),{rootMargin:'-40% 0px -55% 0px'})
