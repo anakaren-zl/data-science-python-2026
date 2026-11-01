@@ -1,3 +1,8 @@
 # Tarea 4: mi voz no se sube a GitHub
 tarea_4/mi_voz.*
 tarea_4/salidas/reel.wav
+# Tarea 7: se suben los datos procesados, pero no los zip del INEI ni la nota de voz
+!tarea_7/datos/
+tarea_7/datos/originales/*.zip
+tarea_7/reel/mi_voz.*
+tarea_7/reel/prueba_escena_*
