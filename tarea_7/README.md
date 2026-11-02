@@ -184,10 +184,10 @@ El dashboard incluye una sección titulada «Hallazgos principales», accesible 
 
 | Requisito | Cómo se cumple |
 |---|---|
-| Guion de 45 a 75 segundos, entre 5 y 7 escenas | `reel/guion.json` tiene 6 escenas y unas 180 palabras, lo que equivale a unos 70 segundos de narración. El script informa la duración real al terminar y el cuaderno de Colab la verifica |
+| Guion de 45 a 75 segundos, entre 5 y 7 escenas | El reel final dura 67,9 segundos y tiene 6 escenas, según el guion de `reel/guion.json`. El cuaderno de Colab verifica la duración al terminar |
 | Inicio con gancho, desarrollo y cierre | La primera escena abre con la cifra de 54 mil niñas y una pregunta, las escenas 2 a 5 presentan los hallazgos (incluida su replicación en 2024) y la escena 6 cierra con una conclusión que invita a la reflexión, acompañada de una cita de Audre Lorde (1984) sobre la interseccionalidad |
 | Cifras sustentadas en los datos | Cada cifra del guion coincide con `datos/procesados/`. Las correcciones hechas a mano se anotan en el campo `revisado_a_mano` de cada escena |
-| Narración con IA a partir de la voz propia | Qwen3-TTS (Alibaba, licencia Apache 2.0) clona una grabación de 15 a 25 segundos de la voz de la autora. Whisper calcula la tasa de error por escena (WER) para comprobar que la narración se entienda y que las cifras se pronuncien bien |
+| Narración con IA a partir de la voz propia | Qwen3-TTS (Alibaba, licencia Apache 2.0) clona una grabación de 15 a 25 segundos de la voz de la autora. Whisper calcula la tasa de error por escena (WER) para comprobar que la narración se entienda y que las cifras se pronuncien bien. En el reel final, el WER varía entre 0 y 0,09 (registrado en `reel/guion.json`) |
 | Imágenes, gráficos y mapas | El reel combina el gráfico por edad y el mapa del dashboard con siete imágenes generadas con IA (Canva) que dan contexto a la narración, todas en `reel/recursos/`. Las imágenes se diseñaron para evitar representaciones estereotipadas de la pobreza o de la ruralidad, muestran a las niñas en la escuela y no como víctimas, y recorren la Amazonía, los Andes y la ciudad, en coherencia con los datos, según los cuales la mayoría de las niñas fuera de la escuela vive en áreas urbanas. Algunas escenas cambian de fondo a mitad de la frase y cada imagen entra con un acercamiento lento. Además, cada cifra cuenta desde cero, una barra de avance marca las seis escenas y el diseño ocupa todo el formato vertical, de modo que el video no se reduce a cifras sobre un fondo estático |
 | Música con licencia adecuada y volumen menor | La música se genera con Python a partir de ondas senoidales, por lo que no tiene derechos de autor de terceros, y se mezcla 22 dB por debajo de la voz |
 | Subtítulos sincronizados | Whisper alinea cada palabra con la narración. Los subtítulos se queman en el video, con la palabra actual resaltada, y se guardan en `reel/subtitulos.srt` |
@@ -202,7 +202,7 @@ El reel se genera con `reel/hacer_reel.py`, que reutiliza sin modificaciones el 
 - Repositorio https://github.com/anakaren-zl/data-science-python-2026/tree/main/tarea_7
 - Publicación de LinkedIn [por completar]
 
-La publicación (texto en `reel/post_linkedin.md`) incluye el reel, dos capturas del dashboard (`web/assets/capturas/`), una explicación del tema con los tres hallazgos, los enlaces al dashboard y al repositorio, y la advertencia de que algunas cifras desagregadas son referenciales, con el fin de evitar afirmaciones exageradas.
+La publicación (texto en `reel/post_linkedin.md`) incluye el reel, dos capturas del dashboard (`web/assets/capturas/`) en el primer comentario, dado que LinkedIn no permite combinar video e imágenes en una misma publicación, una explicación del tema con los tres hallazgos, los enlaces al dashboard y al repositorio, y la advertencia de que algunas cifras desagregadas son referenciales, con el fin de evitar afirmaciones exageradas.
 
 ## 9. Reproducción del proyecto
 
@@ -244,7 +244,7 @@ Si el portal del INEI no responde a la descarga automática, los zip pueden obte
 
 ## 10. Declaración sobre el uso de inteligencia artificial
 
-Los microdatos se descargaron con Claude Code mediante el script `obtener_datos.py`, conforme a la práctica del curso. El procesamiento, el análisis estadístico, el dashboard y el guion del reel se desarrollaron con apoyo de Claude, y la narración del reel se generó con Qwen3-TTS a partir de una grabación de la propia voz de la autora. La pregunta de investigación, el marco teórico interseccional, la elección de las variables, la decisión sobre el periodo de entrevista y la verificación de cada cifra contra las estadísticas oficiales del INEI estuvieron a cargo de la autora.
+Los microdatos se descargaron con Claude Code mediante el script `obtener_datos.py`, y el procesamiento de esos archivos reprodujo de manera idéntica todas las cifras del proyecto. El procesamiento, el análisis estadístico, el dashboard y el guion del reel se desarrollaron con apoyo de Claude. La narración del reel se generó con Qwen3-TTS en Google Colab a partir de una grabación de la propia voz de la autora, y las siete imágenes de contexto se generaron con la herramienta de IA de Canva. La pregunta de investigación, el marco teórico interseccional, la elección de las variables, la decisión sobre el periodo de entrevista y la verificación de cada cifra contra las estadísticas oficiales del INEI estuvieron a cargo de la autora.
 
 ## 11. Cumplimiento de los requisitos de la tarea
 
