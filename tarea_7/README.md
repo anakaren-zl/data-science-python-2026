@@ -184,15 +184,15 @@ El dashboard incluye una sección titulada «Hallazgos principales», accesible 
 
 | Requisito | Cómo se cumple |
 |---|---|
-| Guion de 45 a 75 segundos, entre 5 y 7 escenas | `reel/guion.json` tiene 6 escenas y unas 150 palabras, lo que equivale a unos 60 segundos de narración. El script informa la duración real al terminar y el cuaderno de Colab la verifica |
-| Inicio con gancho, desarrollo y cierre | La primera escena abre con la cifra de 54 mil niñas y una pregunta, las escenas 2 a 5 presentan los hallazgos (incluida su replicación en 2024) y la escena 6 invita a explorar el dashboard |
+| Guion de 45 a 75 segundos, entre 5 y 7 escenas | `reel/guion.json` tiene 6 escenas y unas 180 palabras, lo que equivale a unos 70 segundos de narración. El script informa la duración real al terminar y el cuaderno de Colab la verifica |
+| Inicio con gancho, desarrollo y cierre | La primera escena abre con la cifra de 54 mil niñas y una pregunta, las escenas 2 a 5 presentan los hallazgos (incluida su replicación en 2024) y la escena 6 cierra con una conclusión que invita a la reflexión, acompañada de una cita de Audre Lorde (1984) sobre la interseccionalidad |
 | Cifras sustentadas en los datos | Cada cifra del guion coincide con `datos/procesados/`. Las correcciones hechas a mano se anotan en el campo `revisado_a_mano` de cada escena |
 | Narración con IA a partir de la voz propia | Qwen3-TTS (Alibaba, licencia Apache 2.0) clona una grabación de 15 a 25 segundos de la voz de la autora. Whisper calcula la tasa de error por escena (WER) para comprobar que la narración se entienda y que las cifras se pronuncien bien |
-| Imágenes, gráficos y mapas | Cada escena muestra un gráfico o el mapa del dashboard (`reel/recursos/`) con un acercamiento lento y una entrada animada, de modo que el video no se reduce a cifras sobre un fondo estático |
+| Imágenes, gráficos y mapas | El reel combina el gráfico por edad y el mapa del dashboard con siete imágenes generadas con IA (Canva) que dan contexto a la narración, todas en `reel/recursos/`. Las imágenes se diseñaron para evitar representaciones estereotipadas de la pobreza o de la ruralidad, muestran a las niñas en la escuela y no como víctimas, y recorren la Amazonía, los Andes y la ciudad, en coherencia con los datos, según los cuales la mayoría de las niñas fuera de la escuela vive en áreas urbanas. Algunas escenas cambian de fondo a mitad de la frase y cada imagen entra con un acercamiento lento. Además, cada cifra cuenta desde cero, una barra de avance marca las seis escenas y el diseño ocupa todo el formato vertical, de modo que el video no se reduce a cifras sobre un fondo estático |
 | Música con licencia adecuada y volumen menor | La música se genera con Python a partir de ondas senoidales, por lo que no tiene derechos de autor de terceros, y se mezcla 22 dB por debajo de la voz |
 | Subtítulos sincronizados | Whisper alinea cada palabra con la narración. Los subtítulos se queman en el video, con la palabra actual resaltada, y se guardan en `reel/subtitulos.srt` |
 | Formato vertical | 1080 × 1920 píxeles (9:16) |
-| Transparencia | El video muestra el aviso «Voz generada con IA» durante toda su duración y un pie con la autora, la fuente (INEI, 2026) y los créditos del mapa base y de la música |
+| Transparencia | El video muestra el aviso «Voz generada con IA» durante toda su duración y un pie con la autora, la fuente (INEI, 2025, 2026) y los créditos del mapa base, de las imágenes generadas con IA y de la música |
 
 El reel se genera con `reel/hacer_reel.py`, que reutiliza sin modificaciones el código de la sesión 15 del curso y solo cambia la paleta, la tipografía y el diseño de cada escena. Para no instalar los modelos en una computadora personal, `reel/reel_colab.ipynb` permite ejecutarlo en Google Colab con GPU. La grabación de voz no se publica en el repositorio.
 
@@ -278,6 +278,7 @@ Además, el proyecto incorpora las siete mejoras opcionales sugeridas en el Issu
 - Instituto Nacional de Estadística e Informática [INEI]. (2026). *Encuesta Nacional de Hogares 2025*. Microdatos anuales, módulos 02, 03 y 34. https://proyectos.inei.gob.pe/microdatos/
 - Instituto Nacional de Estadística e Informática [INEI]. (2026). *Informe técnico de pobreza monetaria 2016-2025*. https://www.gob.pe/institucion/inei/informes-publicaciones/8087825-cifras-de-pobreza-2025
 - Jelin, E. (2014). Desigualdades de clase, género y etnicidad/raza. Realidades históricas, aproximaciones analíticas. *Revista Ensambles*, 1(1), 11-36.
+- Lorde, A. (1984). Learning from the 60s. En *Sister Outsider. Essays and speeches* (pp. 134-144). Crossing Press.
 - McCall, L. (2005). The complexity of intersectionality. *Signs*, 30(3), 1771-1800.
 - Ministerio de la Mujer y Poblaciones Vulnerables [MIMP]. (2016). *Violencia basada en género. Marco conceptual para las políticas públicas y la acción del Estado*.
 - Ministerio del Ambiente [MINAM]. (2016). *Plan de Acción en Género y Cambio Climático del Perú*. Decreto Supremo N.° 012-2016-MINAM.
