@@ -5,7 +5,7 @@ Diplomado de Ciencia de Datos para el Análisis Social y la Gestión Pública, P
 Ciencia de Datos con Python · Tarea 3 ([Issue #197](https://github.com/d2cml-ai/Data-Science-Python/issues/197)), desarrollada en la carpeta `tarea_7/` de este repositorio
 
 - **Dashboard público** https://anakaren-zl.github.io/data-science-python-2026/tarea_7/web/
-- **Publicación en LinkedIn** [por completar con el enlace de la publicación]
+- **Publicación en LinkedIn** https://www.linkedin.com/feed/update/urn:li:activity:7522842247521013760/
 - **Reel** `reel/reel.mp4` · guion en `reel/guion.json`
 
 ![Portada e indicadores del dashboard](web/assets/capturas/dashboard_1_portada_kpis.png)
@@ -200,7 +200,7 @@ El reel se genera con `reel/hacer_reel.py`, que reutiliza sin modificaciones el 
 
 - Dashboard https://anakaren-zl.github.io/data-science-python-2026/tarea_7/web/
 - Repositorio https://github.com/anakaren-zl/data-science-python-2026/tree/main/tarea_7
-- Publicación de LinkedIn [por completar]
+- Publicación de LinkedIn https://www.linkedin.com/feed/update/urn:li:activity:7522842247521013760/
 
 La publicación (texto en `reel/post_linkedin.md`) incluye el reel, dos capturas del dashboard (`web/assets/capturas/`) en el primer comentario, dado que LinkedIn no permite combinar video e imágenes en una misma publicación, una explicación del tema con los tres hallazgos, los enlaces al dashboard y al repositorio, y la advertencia de que algunas cifras desagregadas son referenciales, con el fin de evitar afirmaciones exageradas.
 
