@@ -113,6 +113,26 @@ def _formato_eje_y(ax, techo):
         etiqueta.set_color(e.TEXTO)
 
 
+def _tapar_linea(fig, ax, etiquetas, x_linea, margen_pt=4.5):
+    """Pone un fondo blanco ajustado detrás de cada valor que toca o roza la línea vertical del promedio.
+
+    El fondo cubre el número y se extiende lo justo para tapar la línea a su lado (margen_pt a cada lado), con la
+    altura del texto: así la línea se interrumpe detrás del número sin tapar las barras vecinas.
+    """
+    r = fig.canvas.get_renderer()
+    margen = margen_pt * fig.dpi / 72
+    lx = ax.transData.transform((x_linea, 0))[0]
+    inversa = ax.transData.inverted()
+    for t in etiquetas:
+        bb = t.get_window_extent(r)
+        if bb.x0 - margen <= lx <= bb.x1 + margen:
+            x0, x1 = min(bb.x0, lx - margen), max(bb.x1, lx + margen)
+            alto = 1.5 * fig.dpi / 72
+            (dx0, dy0), (dx1, dy1) = inversa.transform([(x0, bb.y0 - alto), (x1, bb.y1 + alto)])
+            ax.add_patch(Rectangle((dx0, dy0), dx1 - dx0, dy1 - dy0, facecolor=e.BLANCO, edgecolor="none",
+                                   zorder=3))
+
+
 def _nota_pocos_casos(fig, t):
     pocos = t[t.n < MINIMO_CASOS]
     if pocos.empty:
@@ -193,14 +213,15 @@ def barras_horizontales(t, nacional, titulo, subtitulo, anio, ruta):
     limite = max(t.pct.max(), nacional) * 1.12        # aire a la derecha para el valor de la barra mayor
     ax.set_xlim(0, limite)
     ax.set_ylim(-0.6, n - 0.4 + 0.8)                  # espacio arriba para la etiqueta del promedio
-    for yi, v in enumerate(t.pct):
-        ax.text(v + limite * 0.008, yi, e.pct_txt(v), ha="left", va="center", zorder=4,
-                fontproperties=e.fuente("semibold", 9.5), color=e.TEXTO,
-                bbox=dict(facecolor=e.BLANCO, edgecolor="none", pad=1.2))
+    etiquetas = [ax.text(v + limite * 0.008, yi, e.pct_txt(v), ha="left", va="center", zorder=4,
+                         fontproperties=e.fuente("semibold", 9.5), color=e.TEXTO,
+                         bbox=dict(facecolor=e.BLANCO, edgecolor="none", pad=1.2))
+                 for yi, v in enumerate(t.pct)]
 
     # la línea pasa detrás de las barras; su etiqueta va arriba, sobre la primera barra
     ax.plot([nacional, nacional], [-0.6, n - 0.4 + 0.2], color=e.AZUL_PROMEDIO, linestyle=(0, (2, 2.5)),
             linewidth=1.6, zorder=1.5)
+    _tapar_linea(fig, ax, etiquetas, nacional)
     ax.text(nacional, n - 0.4 + 0.3, f"Promedio nacional: {e.pct_txt(nacional)}", ha="center", va="bottom",
             fontproperties=e.fuente("medium", 9.5), color=e.TEXTO_PROMEDIO)
 
