@@ -1,12 +1,13 @@
-"""¿Mejora el agente con el MCP del BCRP y las skills de la ENAHO? Las mismas preguntas en dos modos, contra la cifra oficial.
+"""¿Mejora el agente con el MCP del BCRP y las skills de la ENAHO? Las mismas preguntas en tres modos, contra la cifra oficial.
 
 Adaptado de evaluar.py de la Sesión 04 (sessions/04-mcp-claude-code/proyecto). Desde la carpeta tarea_8:
 
-    uv run evaluacion/evaluar.py                     # los dos modos, con sonnet
+    uv run evaluacion/evaluar.py                     # modos A y B, con sonnet
+    uv run evaluacion/evaluar.py --modos C           # experimento complementario: solo el modo C
     uv run evaluacion/evaluar.py --modos A --paralelo 2
 
 Cada pregunta de evaluacion/preguntas.csv se hace a Claude Code en modo no interactivo (claude -p), en una sesión
-independiente (--no-session-persistence), con el mismo modelo y la misma instrucción en los dos modos:
+independiente (--no-session-persistence), con el mismo modelo y la misma instrucción en todos los modos:
 
     A  sin MCP ni skills: desde una carpeta temporal vacía fuera del repositorio, con --tools "" y
        --strict-mcp-config, de modo que no puede leer resultados ya calculados ni consultar el BCRP.
@@ -14,10 +15,19 @@ independiente (--no-session-persistence), con el mismo modelo y la misma instruc
        herramientas mcp__bcrp, Skill, Read y Bash(uv run:*). Nota: Claude Code aprueba por su cuenta las órdenes
        de solo lectura de Bash (grep, cat, head, ls) dentro de la carpeta de trabajo, de modo que en la práctica
        el modo B también puede leer archivos con Bash, igual que con Read.
+    C  con MCP y skills desde un estado limpio (experimento complementario): en una copia temporal del proyecto
+       fuera del repositorio, con mcp/, .mcp.json, pyproject.toml, uv.lock, .python-version, las tres skills y los
+       archivos de datos/, pero sin salidas/ ni la carpeta referencias/ de mapeando-enaho. Antes de cada pregunta
+       se vacían salidas/, figuras/ y mapas/ de la copia, para que ninguna pregunta aproveche resultados de otra
+       (figuras/ y mapas/ porque Read también lee imágenes). Mismas herramientas permitidas que el modo B. Solo
+       se aplica a las preguntas que involucran la ENAHO (tipo enaho y combinada); las del BCRP no dependen de
+       archivos locales. Sin referencias/, mapear.py termina con ERROR: la skill mapeando-enaho no puede
+       completarse en este modo, pero limpiando-enaho produce las cifras departamentales en indicadores.csv.
 
 La salida es stream-json (--verbose), de la que se toman las herramientas habilitadas (evento init), las que se
 usaron efectivamente (bloques tool_use) y la respuesta estructurada (evento result). Escribe
-evaluacion/resultados.csv y guarda el registro de cada llamada en evaluacion/registros/.
+evaluacion/resultados.csv (las filas de los modos que no se ejecutan se conservan tal cual) y guarda el registro
+de cada llamada en evaluacion/registros/.
 
 Criterio de corrección (fijado antes de ejecutar; ver la columna criterio de preguntas.csv):
     - Pregunta simple: acierta si |valor - esperado| <= tolerancia; si valor es null, «no sabe»; si no,
@@ -66,14 +76,48 @@ INSTRUCCION = (
     "«fuente» di de dónde sale cada cifra (serie, archivo o publicación) y en «interpretacion» interpreta "
     "brevemente las cifras en una o dos oraciones.\n\nPregunta: "
 )
+HERRAMIENTAS_B = ["--tools", "Skill,Read,Bash", "--allowedTools", "mcp__bcrp,Skill,Read,Bash(uv run:*)"]
 MODOS = {
     "A": {"cwd": None,  # carpeta temporal vacía, creada en cada llamada
           "args": ["--tools", "", "--strict-mcp-config"]},
     "B": {"cwd": PROYECTO,
-          "args": ["--mcp-config", str(PROYECTO / ".mcp.json"), "--strict-mcp-config",
-                   "--tools", "Skill,Read,Bash",
-                   "--allowedTools", "mcp__bcrp,Skill,Read,Bash(uv run:*)"]},
+          "args": ["--mcp-config", str(PROYECTO / ".mcp.json"), "--strict-mcp-config", *HERRAMIENTAS_B]},
+    "C": {"cwd": "copia",  # copia limpia del proyecto, preparada por preparar_copia()
+          "args": ["--mcp-config", "{copia}/.mcp.json", "--strict-mcp-config", *HERRAMIENTAS_B],
+          "tipos": {"enaho", "combinada"}},
 }
+SKILLS = ["limpiando-enaho", "graficando-enaho", "mapeando-enaho"]
+COPIA = {}   # "ruta" de la copia del modo C, una vez preparada
+
+
+def preparar_copia():
+    """Copia limpia del proyecto para el modo C, fuera del repositorio; sin salidas/ ni referencias/."""
+    destino = Path(tempfile.mkdtemp(prefix="eval_modoC_"))
+    basura = shutil.ignore_patterns("__pycache__", ".pytest_cache", "referencias")
+    shutil.copytree(PROYECTO / "mcp", destino / "mcp", ignore=basura)
+    for archivo in (".mcp.json", "pyproject.toml", "uv.lock", ".python-version"):
+        shutil.copy2(PROYECTO / archivo, destino / archivo)
+    for skill in SKILLS:
+        shutil.copytree(PROYECTO / ".claude/skills" / skill, destino / ".claude/skills" / skill, ignore=basura)
+    (destino / "datos").mkdir()
+    for archivo in (PROYECTO / "datos").iterdir():       # solo los archivos de datos, no subcarpetas
+        if archivo.is_file():
+            shutil.copy2(archivo, destino / "datos" / archivo.name)
+    # El entorno se instala antes de medir tiempos, para no cargarle la instalación a la primera pregunta.
+    subprocess.run(["uv", "sync", "--quiet"], cwd=destino, check=True)
+    inventario = sorted(p.relative_to(destino).as_posix() for p in destino.rglob("*")
+                        if p.is_file() and ".venv" not in p.parts)
+    REGISTROS.mkdir(exist_ok=True)
+    (REGISTROS / "copia_modoC.txt").write_text(
+        "Contenido de la copia limpia del modo C (sin .venv), al prepararla:\n" + "\n".join(inventario) + "\n",
+        encoding="utf-8")
+    COPIA["ruta"] = destino
+    return destino
+
+
+def vaciar_copia():
+    for carpeta in ("salidas", "figuras", "mapas"):
+        shutil.rmtree(COPIA["ruta"] / carpeta, ignore_errors=True)
 
 # Expresiones que atribuyen un efecto (se buscan en minúsculas). Fijadas antes de ejecutar.
 CAUSAL = re.compile(
@@ -113,6 +157,10 @@ def preguntar(fila, modo):
            "--no-session-persistence", "--model", MODELO, *cfg["args"]]
     vacia = tempfile.TemporaryDirectory(prefix="eval_modoA_") if cfg["cwd"] is None else None
     cwd = vacia.name if vacia else cfg["cwd"]
+    if cfg["cwd"] == "copia":
+        vaciar_copia()
+        cwd = COPIA["ruta"]
+        cmd = [c.replace("{copia}", str(cwd)) for c in cmd]
     t = time.time()
     error = ""
     try:
@@ -212,25 +260,28 @@ if __name__ == "__main__":
         raise SystemExit("Falta .mcp.json en tarea_8. Conecten el servidor: claude mcp add --scope project bcrp -- uv run mcp/server.py")
 
     preguntas = pd.read_csv(AQUI / "preguntas.csv", dtype={"id": str})
+    casos = [(q, m) for q in preguntas.itertuples() for m in a.modos
+             if q.tipo in MODOS[m].get("tipos", {q.tipo})]
     if a.recalificar:
         previos = pd.read_csv(AQUI / "resultados.csv").set_index(["id", "modo"]).segundos
 
         futuros = []
-        for q in preguntas.itertuples():
-            for m in a.modos:
-                f = Future()
-                salida = (REGISTROS / f"{q.id}_{m}.jsonl").read_text(encoding="utf-8")
-                f.set_result({**leer_registro(salida), "segundos": float(previos[(q.id, m)])})
-                futuros.append(((q, m), f))
+        for q, m in casos:
+            f = Future()
+            salida = (REGISTROS / f"{q.id}_{m}.jsonl").read_text(encoding="utf-8")
+            f.set_result({**leer_registro(salida), "segundos": float(previos[(q.id, m)])})
+            futuros.append(((q, m), f))
         print(f"Recalifico {len(futuros)} respuestas desde {REGISTROS.relative_to(PROYECTO).as_posix()}/", flush=True)
         ex_a = ex_b = None
     else:
-        print(f"{len(preguntas) * len(a.modos)} llamadas a claude -p con {MODELO}...", flush=True)
-        # El modo B corre de a una llamada: las skills escriben en salidas/, figuras/ y mapas/, y dos llamadas
-        # simultáneas podrían leer un archivo a medio escribir. El modo A corre en paralelo, en carpetas aisladas.
+        if "C" in a.modos:
+            print(f"Copia limpia del modo C en {preparar_copia()}", flush=True)
+        print(f"{len(casos)} llamadas a claude -p con {MODELO}...", flush=True)
+        # Los modos B y C corren de a una llamada: las skills escriben en salidas/, figuras/ y mapas/, y dos
+        # llamadas simultáneas podrían leer un archivo a medio escribir (en C, además, cada pregunta vacía la
+        # copia). El modo A corre en paralelo, en carpetas aisladas.
         ex_a, ex_b = ThreadPoolExecutor(a.paralelo), ThreadPoolExecutor(1)
-        futuros = [((q, m), (ex_a if m == "A" else ex_b).submit(preguntar, q, m))
-                   for q in preguntas.itertuples() for m in a.modos]
+        futuros = [((q, m), (ex_a if m == "A" else ex_b).submit(preguntar, q, m)) for q, m in casos]
     filas = []
     for (q, m), f in futuros:
         r = f.result()
@@ -250,9 +301,16 @@ if __name__ == "__main__":
     for ex in (ex_a, ex_b):
         if ex:
             ex.shutdown()
+    if COPIA.get("ruta"):
+        shutil.rmtree(COPIA["ruta"], ignore_errors=True)
 
     res = pd.DataFrame(filas)
-    res.to_csv(AQUI / "resultados.csv", index=False, encoding="utf-8")
+    previo = AQUI / "resultados.csv"
+    if previo.exists():   # conserva tal cual las filas de los modos que no se ejecutaron ahora
+        otras = pd.read_csv(previo, dtype={"id": str})
+        otras = otras[~otras.modo.isin(a.modos)]
+        res = pd.concat([otras, res], ignore_index=True)   # las filas nuevas van al final
+    res.to_csv(previo, index=False, encoding="utf-8")
     print("\n" + res.pivot(index="id", columns="modo", values="resultado").to_string())
     tabla = res.groupby("modo").resultado.value_counts().unstack(fill_value=0)
     tabla["segundos_promedio"] = res.groupby("modo").segundos.mean().round(1)
