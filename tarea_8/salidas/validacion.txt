@@ -1,0 +1,35 @@
+Validación de la ENAHO 2024 (INEI) · 2026-11-08 15:28
+Archivos: datos/966-Modulo34.zip:966-Modulo34/sumaria-2024.dta y datos/966-Modulo02.zip:966-Modulo02/enaho01-2024-200.dta
+Tolerancia para la pobreza: 0.1 puntos porcentuales
+
+Verificaciones esenciales
+-------------------------
+[OK] Llaves únicas en la sumaria (conglome, vivienda, hogar): 0 duplicados en 33,691 hogares (referencia: 0 duplicados)
+[OK] Llaves únicas en el módulo 02 (conglome, vivienda, hogar, codperso): 0 duplicados en 117,721 personas (referencia: 0 duplicados)
+[OK] Residentes habituales: 108,664 de 117,721 filas del módulo 02 (referencia: 108,664)
+[OK] Unión personas-hogares sin pérdidas ni duplicados (validate='m:1'): 108,664 filas tras unir 108,664 personas; 0 sin hogar (referencia: 108,664 y 0)
+[OK] Códigos departamentales (ubigeo[:2]): 25 códigos (01 a 25) (referencia: 25 (01 a 25))
+[OK] Factores de expansión presentes y positivos: facpob07: 0 vacíos, mínimo 1.12; factor07: 0 vacíos, mínimo 1.12 (referencia: 0 vacíos y mínimo > 0)
+[OK] Pobreza nacional con personas y facpob07: 27.53 % (referencia: 27.6 % ± 0.1 pp)
+[OK] Pobreza nacional con la sumaria y factor07 × mieperho: 27.58 % (referencia: 27.6 % ± 0.1 pp)
+
+Verificaciones referenciales (no detienen el script)
+----------------------------------------------------
+[OK] Pobreza extrema nacional: 5.50 % con personas y facpob07; 5.50 % con la sumaria (referencia: 5.5 % ± 0.1 pp)
+[OK] Pobreza urbana (estrato <= 5): 24.74 % con personas y facpob07; 24.81 % con la sumaria (referencia: 24.8 % ± 0.1 pp)
+[AVISO] Pobreza rural (estrato > 5): 39.44 % con personas y facpob07; 39.30 % con la sumaria (referencia: 39.3 % ± 0.1 pp)
+[AVISO] Pobreza en Lima Metropolitana (dominio == 8): 28.03 % con personas y facpob07; 28.21 % con la sumaria (referencia: 28.2 % ± 0.1 pp)
+[OK] Sexo (p207) y edad (p208a) sin vacíos: 0 sin sexo, 0 sin grupo de edad (referencia: 0 y 0)
+
+Resultado: todas las verificaciones esenciales pasaron
+
+Nota sobre los dos métodos
+--------------------------
+Con personas (27.53 %) se pondera a cada residente habitual del módulo 02 con facpob07. Con la sumaria
+(27.58 %) se pondera cada hogar con factor07 × mieperho, el número de miembros que el INEI usa para
+medir la pobreza. Ambas redondean a 27.6 %, la cifra oficial.
+En estos archivos facpob07 es igual a factor07 en todos los hogares, así que la diferencia de unas centésimas
+viene de los miembros contados: en 1,846 de 33,691 hogares, mieperho no coincide con el
+número de residentes habituales que deja el filtro de p204, p205 y p206. Por la misma razón, las cifras por
+grupo pueden diferir del INEI hasta en cinco décimas: el INEI publica con la sumaria y redondea a un decimal.
+Las salidas de esta skill usan siempre personas y facpob07.

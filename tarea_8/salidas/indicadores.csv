@@ -1,0 +1,36 @@
+anio,nivel,codigo,categoria,pobreza_pct,pobreza_extrema_pct,poblacion,n_muestra
+2024,nacional,PE,Perú,27.53,5.5,34147768,108664
+2024,area,Rural,Rural,39.44,15.6,6486385,36071
+2024,area,Urbana,Urbana,24.74,3.13,27661382,72593
+2024,sexo,Hombre,Hombre,27.37,5.37,16453003,52587
+2024,sexo,Mujer,Mujer,27.68,5.62,17694764,56077
+2024,grupo_edad,0 a 14 años,0 a 14 años,37.52,8.59,7941994,26489
+2024,grupo_edad,15 a 29 años,15 a 29 años,25.97,4.5,7512400,23122
+2024,grupo_edad,30 a 44 años,30 a 44 años,27.87,5.59,6689119,20648
+2024,grupo_edad,45 a 64 años,45 a 64 años,21.15,3.61,7803731,24735
+2024,grupo_edad,65 años a más,65 años a más,22.74,4.81,4200522,13670
+2024,departamento,01,Amazonas,26.08,6.15,430252,3911
+2024,departamento,02,Áncash,22.88,5.76,1199410,4576
+2024,departamento,03,Apurímac,24.09,5.18,474458,2500
+2024,departamento,04,Arequipa,15.77,1.62,1415224,4645
+2024,departamento,05,Ayacucho,33.04,9.24,755197,3308
+2024,departamento,06,Cajamarca,44.99,19.62,1547849,4468
+2024,departamento,07,Callao,33.77,4.98,1138852,3457
+2024,departamento,08,Cusco,18.54,2.15,1380357,3777
+2024,departamento,09,Huancavelica,33.61,11.28,525028,3244
+2024,departamento,10,Huánuco,39.47,12.4,910900,3903
+2024,departamento,11,Ica,5.91,0.15,855183,4838
+2024,departamento,12,Junín,18.61,3.81,1436462,4658
+2024,departamento,13,La Libertad,30.07,6.58,2064878,5028
+2024,departamento,14,Lambayeque,14.05,0.5,1348585,4405
+2024,departamento,15,Lima,26.89,3.12,11233286,14823
+2024,departamento,16,Loreto,42.61,15.01,1121012,5678
+2024,departamento,17,Madre de Dios,11.14,1.53,165829,2045
+2024,departamento,18,Moquegua,10.88,2.34,196788,2511
+2024,departamento,19,Pasco,39.28,8.27,323033,2746
+2024,departamento,20,Piura,31.81,4.36,1970217,5876
+2024,departamento,21,Puno,40.42,12.63,1535441,3112
+2024,departamento,22,San Martín,21.99,4.45,937167,4619
+2024,departamento,23,Tacna,23.88,2.58,375607,3622
+2024,departamento,24,Tumbes,26.6,1.06,261973,2771
+2024,departamento,25,Ucayali,27.12,3.33,544778,4143
