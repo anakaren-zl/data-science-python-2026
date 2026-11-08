@@ -1,11 +1,12 @@
-"""Mapa coroplético de la pobreza monetaria por departamento con la ENAHO (INEI), ponderada con facpob07.
+"""Mapa coroplético de la pobreza monetaria por departamento con la ENAHO (INEI), con el método oficial.
 
     uv run .claude/skills/mapeando-enaho/scripts/mapear.py      # desde tarea_8/
 
 Lee salidas/personas_<anio>.parquet (la arma la skill limpiando-enaho) y datos/peru_departamental_simple.geojson.
-Une por código, departamento (ubigeo[:2]) con FIRST_IDDP como texto de dos dígitos, nunca por nombre. Exige 25
-departamentos con dato, compara cada cifra con referencias/pobreza_departamento_2024.csv y guarda
-salidas/comparacion_mapa.csv y mapas/pobreza_departamento.png. Reutiliza el estilo de graficando-enaho.
+La pobreza departamental es un indicador de nivel hogar: se calcula con el método oficial del INEI (un registro por
+hogar, factor07 × mieperho). Une por código, departamento (ubigeo[:2]) con FIRST_IDDP como texto de dos dígitos,
+nunca por nombre. Exige 25 departamentos con dato, compara cada cifra con referencias/pobreza_departamento_2024.csv
+y guarda salidas/comparacion_mapa.csv y mapas/pobreza_departamento.png. Reutiliza el estilo de graficando-enaho.
 """
 import argparse
 import math
@@ -28,7 +29,7 @@ GEOJSON = Path("datos") / "peru_departamental_simple.geojson"
 REFERENCIA = AQUI.parent / "referencias" / "pobreza_departamento_2024.csv"
 LIMA, CALLAO = "15", "07"
 PASO = 10                        # tramos de 10 puntos desde 0
-TOLERANCIA_AVISO = 0.5           # pp: diferencias mayores se marcan como AVISO en la comparación
+TOLERANCIA = 0.1                 # pp: con el método oficial, diferencias mayores con la referencia se marcan AVISO
 
 
 def cargar_geo():
@@ -40,7 +41,8 @@ def cargar_geo():
 
 
 def pobreza_departamental(base):
-    t = e.pobreza_ponderada(base, ["departamento", "departamento_nombre"]).reset_index()
+    """Método oficial (sumaria): % de personas pobres por departamento, con factor07 × mieperho."""
+    t = e.pobreza_hogar(base, ["departamento", "departamento_nombre"]).reset_index()
     t["departamento"] = t.departamento.astype(str).str.zfill(2)
     return t
 
@@ -55,16 +57,11 @@ def unir(geo, t):
     return m
 
 
-def pobreza_sumaria(base):
-    """La misma pobreza con el método del INEI (un registro por hogar, factor07 × mieperho), solo para comparar."""
-    h = base.drop_duplicates(["conglome", "vivienda", "hogar"])
-    w = h.factor07 * h.mieperho
-    g = h.assign(_wp=h.pobre * w, _w=w).groupby("departamento")
-    return (g._wp.sum() / g._w.sum() * 100).rename("pct_sumaria")
+def comparar(t, base, salida):
+    """Compara cada departamento con la referencia del curso y guarda salidas/comparacion_mapa.csv.
 
-
-def comparar(t, salida, sumaria):
-    """Compara cada departamento con la referencia del curso y guarda salidas/comparacion_mapa.csv."""
+    Incluye, solo como diagnóstico, la cifra con el método de personas (facpob07), que no se usa en el mapa.
+    """
     if not REFERENCIA.exists():
         sys.exit(f"ERROR: falta {REFERENCIA}. Bájenlo de la Sesión 16 del curso.")
     ref = pd.read_csv(REFERENCIA, dtype={"ccdd": str})
@@ -72,24 +69,23 @@ def comparar(t, salida, sumaria):
     c = t.merge(ref, left_on="departamento", right_on="ccdd", how="outer", validate="1:1", indicator=True)
     if (c._merge != "both").any():
         sys.exit(f"ERROR: los códigos no coinciden con la referencia: {c.loc[c._merge != 'both', ['departamento', 'ccdd']]}")
+    personas = e.pobreza_personas(base, "departamento").pct
     c = pd.DataFrame({
         "ccdd": c.ccdd, "departamento": c.departamento_nombre,
-        "pobreza_calculada": c.pct.round(2), "pobreza_calculada_1d": c.pct.round(1),
-        "pobreza_referencia": c.pobreza_pct, "diferencia_pp": (c.pct.round(1) - c.pobreza_pct).round(1),
-        "pobreza_sumaria_1d": c.ccdd.map(sumaria).round(1),
-        "n_muestra": c.n,
+        "pobreza_oficial": c.pct.round(2), "pobreza_oficial_1d": c.pct.round(1),
+        "pobreza_referencia": c.pobreza_pct,
+        "diferencia_pp": (c.pct.round(1) - c.pobreza_pct).round(1) + 0.0,          # + 0.0 evita «-0.0»
+        "pobreza_personas_1d": c.ccdd.map(personas).round(1),
+        "n_hogares": c.n,
     })
-    c["diferencia_sumaria_pp"] = (c.pobreza_sumaria_1d - c.pobreza_referencia).round(1) + 0.0   # sin -0.0
-    c["diferencia_pp"] = c.diferencia_pp + 0.0
-    c["estado"] = np.where(c.diferencia_pp.abs() <= TOLERANCIA_AVISO, "OK", "AVISO")
+    c["diferencia_personas_pp"] = (c.pobreza_personas_1d - c.pobreza_referencia).round(1) + 0.0
+    c["estado"] = np.where(c.diferencia_pp.abs() <= TOLERANCIA, "OK", "AVISO")
     c = c.sort_values("ccdd").reset_index(drop=True)
     salida.parent.mkdir(exist_ok=True)
     c.to_csv(salida, index=False, encoding="utf-8")
-    exactas = int((c.diferencia_pp == 0).sum())
-    print(f"Guardé {salida.as_posix()}: con personas y facpob07, {exactas} de 25 coinciden al decimal con la "
-          f"referencia (diferencia máxima {c.diferencia_pp.abs().max():.1f} pp; "
-          f"{int((c.estado == 'AVISO').sum())} con AVISO > {TOLERANCIA_AVISO} pp). Con el método de la sumaria, "
-          f"{int((c.diferencia_sumaria_pp == 0).sum())} de 25 coinciden.")
+    print(f"Guardé {salida.as_posix()}: con el método oficial (sumaria), {int((c.diferencia_pp == 0).sum())} de 25 "
+          f"coinciden al decimal con la referencia y {int((c.estado == 'AVISO').sum())} quedan en AVISO "
+          f"(> {TOLERANCIA} pp). Con personas y facpob07 coincidirían {int((c.diferencia_personas_pp == 0).sum())}.")
     return c
 
 
@@ -102,11 +98,6 @@ def escala(vmax):
     return limites, ListedColormap(colores), BoundaryNorm(limites, k)
 
 
-def _texto_sobre(color):
-    r, g, b = color[:3]
-    return e.BLANCO if (0.299 * r + 0.587 * g + 0.114 * b) < 0.55 else e.AZUL_MARINO
-
-
 def dibujar(m, nacional, anio, per, ruta):
     limites, cmap, norm = escala(m.pct.max())
     m = m.to_crs(32718)          # UTM 18S: proporciones reales del Perú
@@ -115,7 +106,8 @@ def dibujar(m, nacional, anio, per, ruta):
 
     fig = plt.figure(figsize=(14, 9))
     W, H = fig.get_size_inches()
-    titulo = f"{top.departamento_nombre.iloc[0]} encabeza la pobreza monetaria y {bajo.departamento_nombre.iloc[0]} registra la menor"
+    alto, bajo1 = top.departamento_nombre.iloc[0], bajo.departamento_nombre.iloc[0]
+    titulo = f"{alto} encabeza la pobreza monetaria {e.conjuncion_y(bajo1)} {bajo1} registra la menor"
     subtitulo = f"Perú, {per} · Por departamento · {e.UNIDAD} · Promedio nacional: {e.pct_txt(nacional)}"
     y_fin = e.encabezado(fig, titulo, subtitulo, margen_x=0.6, margen_sup=0.5)
 
@@ -214,7 +206,7 @@ def main():
     geo = cargar_geo()
     t = pobreza_departamental(base)
     m = unir(geo, t)
-    comparar(t, e.BASE / "comparacion_mapa.csv", pobreza_sumaria(base))
+    comparar(t, base, e.BASE / "comparacion_mapa.csv")
     dibujar(m, e.promedio_nacional(base), anio, e.periodo(base), e.MAPAS / "pobreza_departamento.png")
 
 

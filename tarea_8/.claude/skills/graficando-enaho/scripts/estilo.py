@@ -70,16 +70,34 @@ def cargar_base(anio=2024):
     return pd.read_parquet(ruta)
 
 
-def pobreza_ponderada(base, por):
-    """% de personas pobres ponderado con facpob07, población expandida y tamaño muestral por grupo."""
+def pobreza_personas(base, por):
+    """Método de personas, para atributos individuales (sexo, edad): residentes habituales ponderados con facpob07.
+
+    Devuelve % de personas pobres, población expandida y tamaño muestral (personas) por grupo.
+    """
     g = base.assign(_wp=base.pobre * base.facpob07).groupby(por, observed=True)
-    t = pd.DataFrame({"pct": g._wp.sum() / g.facpob07.sum() * 100, "poblacion": g.facpob07.sum(),
-                      "n": g.size()})
-    return t
+    return pd.DataFrame({"pct": g._wp.sum() / g.facpob07.sum() * 100, "poblacion": g.facpob07.sum(),
+                         "n": g.size()})
+
+
+def pobreza_hogar(base, por=None):
+    """Método oficial del INEI, para indicadores de nivel hogar (nacional, área, dominio, departamento).
+
+    Usa una fila por hogar (hogar_rep == 1) ponderada con factor07 × mieperho (peso_hogar), como la sumaria.
+    Devuelve % de personas pobres, población expandida y tamaño muestral (hogares) por grupo.
+    """
+    if "peso_hogar" not in base or "hogar_rep" not in base:
+        sys.exit("ERROR: la base no tiene peso_hogar ni hogar_rep. Vuelve a correr la skill limpiando-enaho.")
+    h = base[base.hogar_rep == 1]
+    h = h.assign(_wp=h.pobre * h.peso_hogar, _g="Perú" if por is None else None)
+    g = h.groupby("_g" if por is None else por, observed=True)
+    return pd.DataFrame({"pct": g._wp.sum() / g.peso_hogar.sum() * 100, "poblacion": g.peso_hogar.sum(),
+                         "n": g.size()})
 
 
 def promedio_nacional(base):
-    return float((base.pobre * base.facpob07).sum() / base.facpob07.sum() * 100)
+    """Pobreza nacional oficial (método de la sumaria): la línea de referencia de todos los gráficos."""
+    return float(pobreza_hogar(base).pct.iloc[0])
 
 
 def periodo(base):
@@ -89,6 +107,12 @@ def periodo(base):
 
 def pct_txt(v):
     return f"{v:.1f} %"
+
+
+def conjuncion_y(siguiente):
+    """«y» o «e» según la palabra que sigue: «Huánuco e Ica», pero «Cusco y Hierro»."""
+    s = siguiente.strip().lower()
+    return "e" if (s.startswith(("i", "í")) or (s.startswith(("hi", "hí")) and not s.startswith("hie"))) else "y"
 
 
 def nota_fuente(anio):

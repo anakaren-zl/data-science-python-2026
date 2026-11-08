@@ -5,7 +5,9 @@
 Lee los zip de datos/, filtra a los residentes habituales, construye las variables de análisis y escribe:
     salidas/validacion.txt          cada verificación como [OK], [FALLA] o [AVISO], con valor y referencia
     salidas/personas_<anio>.parquet una fila por residente habitual, con facpob07
-    salidas/indicadores.csv         pobreza y pobreza extrema ponderadas por nivel nacional, área, sexo, edad y departamento
+    salidas/indicadores.csv         pobreza y pobreza extrema ponderadas, con la columna metodo:
+                                    sumaria (factor07 × mieperho) para nacional, área, dominio y departamento;
+                                    personas (facpob07) para sexo, grupo de edad y sexo dentro de cada área
 
 Si una verificación esencial falla, escribe validacion.txt y se detiene con un error: no fuerza resultados.
 """
@@ -41,6 +43,10 @@ DEPARTAMENTOS = {
     "16": "Loreto", "17": "Madre de Dios", "18": "Moquegua", "19": "Pasco", "20": "Piura",
     "21": "Puno", "22": "San Martín", "23": "Tacna", "24": "Tumbes", "25": "Ucayali",
 }
+DOMINIOS = {1: "Costa Norte", 2: "Costa Centro", 3: "Costa Sur", 4: "Sierra Norte", 5: "Sierra Centro",
+            6: "Sierra Sur", 7: "Selva", 8: "Lima Metropolitana"}
+METODO_HOGAR = "sumaria: factor07 x mieperho"      # método oficial del INEI, para indicadores de nivel hogar
+METODO_PERSONA = "personas: facpob07"              # para atributos individuales (sexo, edad)
 GRUPOS_EDAD = [(0, 14, "0 a 14 años"), (15, 29, "15 a 29 años"), (30, 44, "30 a 44 años"),
                (45, 64, "45 a 64 años"), (65, 200, "65 años a más")]
 
@@ -186,29 +192,51 @@ def main():
     r.check("Pobreza nacional con la sumaria y factor07 × mieperho", cerca(pob_hog, ref["pobreza"]),
             f"{pob_hog:.2f} %", f"{ref['pobreza']} % ± {TOLERANCIA} pp")
 
-    # 6. Verificaciones referenciales: no detienen el script
+    # 6. Variables de hogar para el método oficial (sumaria, factor07 × mieperho)
+    hog["departamento"] = hog.ubigeo.str[:2]
+    hog["departamento_nombre"] = hog.departamento.map(DEPARTAMENTOS)
+    hog["area"] = hog.estrato.le(5).map({True: "Urbana", False: "Rural"})
+    hog["dominio_nombre"] = hog.dominio.map(DOMINIOS)
+    hog["pobre"] = hog.pobreza.le(2).astype("int8")
+    hog["pobre_extremo"] = hog.pobreza.eq(1).astype("int8")
+    hog["peso_hogar"] = (hog.factor07 * hog.mieperho).astype(float)
+    base["dominio_nombre"] = base.dominio.map(DOMINIOS)
+    base["peso_hogar"] = (base.factor07 * base.mieperho).astype(float)
+    # una fila por hogar marcada para el método de la sumaria: el residente con el menor codperso
+    base = base.sort_values(LLAVES_PERSONA).reset_index(drop=True)
+    base["hogar_rep"] = (~base.duplicated(LLAVES_HOGAR)).astype("int8")
+    w = base.facpob07.astype(float)
+
+    # 7. Verificaciones referenciales: no detienen el script
     r.seccion("Verificaciones referenciales (no detienen el script)")
-    urb_h = hog.estrato.le(5)
-    lima_h = hog.dominio.eq(8)
+    wh = hog.peso_hogar
     referenciales = [
-        ("Pobreza extrema nacional", base.pobre_extremo, None, hog.pobreza.eq(1).astype(int), None, ref["pobreza_extrema"]),
-        ("Pobreza urbana (estrato <= 5)", base.pobre, base.area.eq("Urbana"), pobre_h, urb_h, ref["urbana"]),
-        ("Pobreza rural (estrato > 5)", base.pobre, base.area.eq("Rural"), pobre_h, ~urb_h, ref["rural"]),
-        ("Pobreza en Lima Metropolitana (dominio == 8)", base.pobre, base.dominio.eq(8), pobre_h, lima_h,
+        ("Pobreza extrema nacional", hog.pobre_extremo, None, base.pobre_extremo, None, ref["pobreza_extrema"]),
+        ("Pobreza urbana (estrato <= 5)", hog.pobre, hog.area.eq("Urbana"), base.pobre, base.area.eq("Urbana"),
+         ref["urbana"]),
+        ("Pobreza rural (estrato > 5)", hog.pobre, hog.area.eq("Rural"), base.pobre, base.area.eq("Rural"),
+         ref["rural"]),
+        ("Pobreza en Lima Metropolitana (dominio == 8)", hog.pobre, hog.dominio.eq(8), base.pobre, base.dominio.eq(8),
          ref["lima_metropolitana"]),
     ]
-    for nombre, xp, mp, xh, mh, valor_ref in referenciales:
-        mp = slice(None) if mp is None else mp
+    for nombre, xh, mh, xp, mp, valor_ref in referenciales:
         mh = slice(None) if mh is None else mh
-        vp, vh = pct(xp[mp], w[mp]), pct(xh[mh], wh[mh])
-        r.check(nombre, cerca(vp, valor_ref),
-                f"{vp:.2f} % con personas y facpob07; {vh:.2f} % con la sumaria", f"{valor_ref} % ± {TOLERANCIA} pp",
-                esencial=False)
+        mp = slice(None) if mp is None else mp
+        vh, vp = pct(xh[mh], wh[mh]), pct(xp[mp], w[mp])
+        r.check(nombre, cerca(vh, valor_ref),
+                f"{vh:.2f} % con la sumaria (método oficial); {vp:.2f} % con personas y facpob07",
+                f"{valor_ref} % ± {TOLERANCIA} pp", esencial=False)
+    rep = base[base.hogar_rep == 1]
+    pob_rep = pct(rep.pobre, rep.peso_hogar)
+    r.check("Hogares de la sumaria representados en la base (método oficial desde el parquet)",
+            len(rep) == len(hog) and abs(pob_rep - pob_hog) < 1e-6,
+            f"{len(rep):,} de {len(hog):,} hogares; pobreza desde el parquet {pob_rep:.2f} %",
+            f"{len(hog):,} y {pob_hog:.2f} %", esencial=False)
     r.check("Sexo (p207) y edad (p208a) sin vacíos", base.sexo.notna().all() and base.grupo_edad.notna().all(),
             f"{int(base.sexo.isna().sum())} sin sexo, {int(base.grupo_edad.isna().sum())} sin grupo de edad",
             "0 y 0", esencial=False)
 
-    # 7. Escribir validacion.txt (siempre, también cuando algo falla)
+    # 8. Escribir validacion.txt (siempre, también cuando algo falla)
     encabezado = [
         f"Validación de la ENAHO {anio} (INEI) · {datetime.now():%Y-%m-%d %H:%M}",
         f"Archivos: datos/{ref['codigo']}-Modulo34.zip:{f_hog} y datos/{ref['codigo']}-Modulo02.zip:{f_per}",
@@ -219,16 +247,21 @@ def main():
     n_distinto = int((por_hogar.n != por_hogar.m).sum())
     mismo_factor = bool(((por_hogar.f7 - por_hogar.fp).abs() < 1e-3).all())
     nota = [
-        "", "Nota sobre los dos métodos", "--------------------------",
-        f"Con personas ({pob_per:.2f} %) se pondera a cada residente habitual del módulo 02 con facpob07. Con la sumaria",
-        f"({pob_hog:.2f} %) se pondera cada hogar con factor07 × mieperho, el número de miembros que el INEI usa para",
-        f"medir la pobreza. Ambas redondean a {ref['pobreza']} %, la cifra oficial.",
-        ("En estos archivos facpob07 es igual a factor07 en todos los hogares, así que la diferencia de unas centésimas"
+        "", "Criterio de cálculo", "-------------------",
+        "Método oficial (sumaria): un registro por hogar, ponderado con factor07 × mieperho. Es el del INEI y el de la",
+        "referencia del curso. Se usa en los indicadores de nivel hogar: nacional, área, dominio y departamento.",
+        "Método de personas: cada residente habitual del módulo 02, ponderado con facpob07. Se usa en los atributos",
+        "individuales (sexo, grupo de edad y sexo dentro de cada área), que no existen en la sumaria.",
+        "La columna metodo de indicadores.csv indica cuál se usó en cada fila.",
+        "", "Por qué los dos métodos difieren", "--------------------------------",
+        f"A nivel nacional, la sumaria da {pob_hog:.2f} % y las personas {pob_per:.2f} %; ambas redondean a "
+        f"{ref['pobreza']} %, la cifra oficial.",
+        ("En estos archivos facpob07 es igual a factor07 en todos los hogares, así que la diferencia"
          if mismo_factor else "facpob07 y factor07 no coinciden en todos los hogares; esa es una fuente de diferencia,"),
         f"viene de los miembros contados: en {n_distinto:,} de {len(por_hogar):,} hogares, mieperho no coincide con el",
-        "número de residentes habituales que deja el filtro de p204, p205 y p206. Por la misma razón, las cifras por",
-        "grupo pueden diferir del INEI hasta en cinco décimas: el INEI publica con la sumaria y redondea a un decimal.",
-        "Las salidas de esta skill usan siempre personas y facpob07.",
+        "número de residentes habituales que deja el filtro de p204, p205 y p206. En grupos pequeños, como un",
+        "departamento, la diferencia llega a cinco décimas; por eso las cifras de nivel hogar se calculan con la",
+        "sumaria, que reproduce al decimal las del INEI.",
     ]
     resultado = ["", f"Resultado: {'todas las verificaciones esenciales pasaron' if not r.fallas else 'FALLÓ: ' + '; '.join(r.fallas)}"]
     (salidas / "validacion.txt").write_text("\n".join(encabezado + r.lineas + resultado + nota) + "\n", encoding="utf-8")
@@ -237,25 +270,31 @@ def main():
         sys.exit(f"ERROR: fallaron verificaciones esenciales ({'; '.join(r.fallas)}). Revisen salidas/validacion.txt; "
                  "no se guardó la base.")
 
-    # 8. Guardar la base y los indicadores
-    columnas = (LLAVES_PERSONA + ["ano", "mes", "ubigeo", "departamento", "departamento_nombre", "dominio", "estrato",
-                "area", "p207", "sexo", "p208a", "grupo_edad", "pobreza", "pobre", "pobre_extremo", "facpob07",
-                "factor07", "mieperho"])
-    base = base[columnas].sort_values(LLAVES_PERSONA).reset_index(drop=True)
+    # 9. Guardar la base y los indicadores
+    columnas = (LLAVES_PERSONA + ["ano", "mes", "ubigeo", "departamento", "departamento_nombre", "dominio",
+                "dominio_nombre", "estrato", "area", "p207", "sexo", "p208a", "grupo_edad", "pobreza", "pobre",
+                "pobre_extremo", "facpob07", "factor07", "mieperho", "peso_hogar", "hogar_rep"])
+    base = base[columnas]
     base.to_parquet(salidas / f"personas_{anio}.parquet", index=False)
 
     filas = []
-    def agregar(nivel, grupos):
+
+    def agregar(nivel, grupos, metodo):
+        peso, unidad = ("peso_hogar", "hogares") if metodo == METODO_HOGAR else ("facpob07", "personas")
         for (codigo, categoria), g in grupos:
-            filas.append({"nivel": nivel, "codigo": codigo, "categoria": categoria,
-                          "pobreza_pct": round(pct(g.pobre, g.facpob07), 2),
-                          "pobreza_extrema_pct": round(pct(g.pobre_extremo, g.facpob07), 2),
-                          "poblacion": int(round(g.facpob07.sum())), "n_muestra": len(g)})
-    agregar("nacional", [(("PE", "Perú"), base)])
-    agregar("area", base.groupby(["area", "area"]))
-    agregar("sexo", base.groupby(["sexo", "sexo"]))
-    agregar("grupo_edad", base.groupby(["grupo_edad", "grupo_edad"], observed=True))
-    agregar("departamento", base.groupby(["departamento", "departamento_nombre"]))
+            filas.append({"nivel": nivel, "codigo": codigo, "categoria": categoria, "metodo": metodo,
+                          "pobreza_pct": round(pct(g.pobre, g[peso]), 2),
+                          "pobreza_extrema_pct": round(pct(g.pobre_extremo, g[peso]), 2),
+                          "poblacion": int(round(g[peso].sum())), "n_muestra": len(g), "unidad_muestral": unidad})
+
+    agregar("nacional", [(("PE", "Perú"), hog)], METODO_HOGAR)
+    agregar("area", hog.groupby(["area", "area"]), METODO_HOGAR)
+    agregar("dominio", hog.groupby(["dominio", "dominio_nombre"]), METODO_HOGAR)
+    agregar("departamento", hog.groupby(["departamento", "departamento_nombre"]), METODO_HOGAR)
+    agregar("sexo", base.groupby(["sexo", "sexo"]), METODO_PERSONA)
+    agregar("grupo_edad", base.groupby(["grupo_edad", "grupo_edad"], observed=True), METODO_PERSONA)
+    sa = base.assign(_c=base.sexo + "-" + base.area, _n=base.sexo + " · " + base.area)
+    agregar("sexo_area", sa.groupby(["_c", "_n"]), METODO_PERSONA)
     ind = pd.DataFrame(filas)
     ind.insert(0, "anio", anio)
     ind.to_csv(salidas / "indicadores.csv", index=False, encoding="utf-8")
