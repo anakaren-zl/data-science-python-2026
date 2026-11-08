@@ -1,0 +1,884 @@
+ ▐▛███▛█   Claude Code v2.1.319
+▝▜██████▀  Opus 5.5 · Claude Pro
+ ▝▝   ▝▝   ~\Documents\GitHub\data-science-python-2026\tarea_8
+
+
+❯ /skills 
+  ⎿  No changes
+
+❯ /skills 
+  ⎿  No changes
+
+❯ Haz un mapa de la pobreza monetaria por departamento con ENAHO 2024           
+
+● Skill(mapeando-enaho)
+  ⎿  Successfully loaded skill
+
+  Read 1 file (ctrl+o to expand)
+
+● Skill(limpiando-enaho)
+  ⎿  Successfully loaded skill
+
+  Read 1 file, ran 1 shell command (ctrl+o to expand)
+
+● Limpieza lista (todas las verificaciones en OK). Ahora genero el mapa.
+
+  Read 1 file, ran 1 shell command (ctrl+o to expand)
+
+● Hice el mapa: está en mapas/pobreza_departamento.png. Los 25 departamentos
+  coinciden al decimal con la referencia del curso.
+
+  Cómo lo calculé. Primero tuve que limpiar la ENAHO 2024 porque no existía
+  salidas/personas_2024.parquet. Todas las verificaciones esenciales salieron en
+  [OK], y la pobreza nacional da 27.6 %. La pobreza de cada departamento sale
+  con el método oficial del INEI: la sumaria ponderada con factor07 × mieperho.
+
+  Comparación con la referencia. Ningún departamento quedó en AVISO. Si usara el
+  factor de personas (facpob07), solo 6 de los 25 coincidirían.
+
+  Resultados:
+  - Mayor pobreza: Cajamarca (45.0 %), Loreto (43.0 %), Puno (39.9 %), Pasco
+    (39.0 %) y Huánuco (39.0 %).
+  - Menor pobreza: Ica (6.0 %), Moquegua (11.0 %), Madre de Dios (11.1 %),
+    Lambayeque (14.0 %) y Arequipa (15.8 %).
+  - Lima y Callao: aparecen separados en el recuadro ampliado, Lima con 27.1 % y
+    Callao con 33.9 %. Callao está por encima del promedio nacional de 27.6 %.
+
+  Revisé la imagen y no hay textos superpuestos. La tabla completa por
+  departamento está en salidas/comparacion_mapa.csv.
+
+✻ Sautéed for 59s · done 3:48 PM
+
+❯ Grafica cómo varía la pobreza monetaria entre el área urbana y el área rural  
+  según la ENAHO 2024                                                           
+
+● Skill(graficando-enaho)
+  ⎿  Successfully loaded skill
+
+  Read 1 file, ran 1 shell command (ctrl+o to expand)
+
+● Hice el gráfico de barras por área: está en figuras/pobreza_area.png. En 2024,
+  la pobreza monetaria rural supera a la urbana en 14.5 puntos porcentuales.
+
+  ┌────────┬───────────────────┐
+  │  Área  │ Pobreza monetaria │
+  ├────────┼───────────────────┤
+  │ Rural  │ 39.3 %            │
+  ├────────┼───────────────────┤
+  │ Urbana │ 24.8 %            │
+  └────────┴───────────────────┘
+
+  - Método: es el oficial del INEI (la sumaria, ponderada con factor07 × 
+    mieperho). Las dos cifras coinciden con las referencias que el script de
+    limpieza revisó antes.
+  - Promedio nacional: la línea punteada marca el 27.6 % oficial. El área rural
+    queda bastante por encima y la urbana algo por debajo.
+  - Revisión visual: abrí la imagen y no hay textos superpuestos ni cortados.
+
+✻ Crunched for 17s · done 3:49 PM
+
+❯ /limpiando-enaho 2024                                                         
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Volví a limpiar la ENAHO 2024 y las 8 verificaciones esenciales salieron en
+  [OK], sin ningún [AVISO]. La base final tiene 108,664 residentes habituales,
+  unidos a 33,691 hogares sin pérdidas ni duplicados.
+
+  Estas cifras usan el método oficial del INEI, con la sumaria ponderada por
+  factor07 × mieperho:
+
+  ┌──────────┬─────────┬─────────────────┐
+  │  Nivel   │ Pobreza │ Pobreza extrema │
+  ├──────────┼─────────┼─────────────────┤
+  │ Nacional │ 27.6 %  │ 5.5 %           │
+  ├──────────┼─────────┼─────────────────┤
+  │ Rural    │ 39.3 %  │ 15.5 %          │
+  ├──────────┼─────────┼─────────────────┤
+  │ Urbana   │ 24.8 %  │ 3.1 %           │
+  └──────────┴─────────┴─────────────────┘
+
+  Por dominio:
+  - La pobreza más alta está en la Sierra Norte, con 45.7 % (21.8 % en pobreza
+    extrema).
+  - Le siguen la Sierra Centro con 30.1 % y la Selva con 30.0 %.
+  - Lima Metropolitana tiene 28.2 %.
+  - La más baja está en la Costa Centro, con 14.0 %.
+
+  Por departamento: van de 6.0 % en Ica a 45.0 % en Cajamarca, que también tiene
+  la mayor pobreza extrema (19.7 %). Las cifras son las mismas del mapa
+  anterior.
+
+  Estas otras usan el método de personas, ponderado con facpob07:
+
+  ┌─────────────────┬─────────┐
+  │      Grupo      │ Pobreza │
+  ├─────────────────┼─────────┤
+  │ Mujeres         │ 27.7 %  │
+  ├─────────────────┼─────────┤
+  │ Hombres         │ 27.4 %  │
+  ├─────────────────┼─────────┤
+  │ 0 a 14 años     │ 37.5 %  │
+  ├─────────────────┼─────────┤
+  │ 15 a 29 años    │ 26.0 %  │
+  ├─────────────────┼─────────┤
+  │ 30 a 44 años    │ 27.9 %  │
+  ├─────────────────┼─────────┤
+  │ 45 a 64 años    │ 21.1 %  │
+  ├─────────────────┼─────────┤
+  │ 65 años a más   │ 22.7 %  │
+  ├─────────────────┼─────────┤
+  │ Mujeres rurales │ 40.0 %  │
+  ├─────────────────┼─────────┤
+  │ Hombres rurales │ 38.8 %  │
+  ├─────────────────┼─────────┤
+  │ Mujeres urbanas │ 24.8 %  │
+  ├─────────────────┼─────────┤
+  │ Hombres urbanos │ 24.6 %  │
+  └─────────────────┴─────────┘
+
+  - Edad: la pobreza más alta está entre los menores de 15 años, con 37.5 %.
+  - Sexo: la diferencia entre mujeres y hombres es pequeña, de unos 0.3 pp a
+    nivel nacional y 1.2 pp en el área rural.
+
+  Todos los grupos tienen más de 17,000 casos en la muestra, así que ninguna
+  cifra tiene problemas de precisión. Los resultados están en
+  salidas/indicadores.csv y salidas/personas_2024.parquet.
+
+✻ Baked for 20s · done 3:50 PM
+
+❯ /graficando-enaho sexo_area                                                   
+
+  Read 1 file, ran 1 shell command (ctrl+o to expand)
+
+● Hice el gráfico de barras agrupadas: está en figuras/pobreza_sexo_area.png. En
+  las dos áreas la pobreza es algo mayor en las mujeres, y la diferencia es más
+  amplia en el área rural.
+
+  ┌────────┬─────────┬─────────┬────────────┐
+  │  Área  │ Mujeres │ Hombres │ Diferencia │
+  ├────────┼─────────┼─────────┼────────────┤
+  │ Rural  │ 40.0 %  │ 38.8 %  │ 1.2 pp     │
+  ├────────┼─────────┼─────────┼────────────┤
+  │ Urbana │ 24.8 %  │ 24.6 %  │ 0.2 pp     │
+  └────────┴─────────┴─────────┴────────────┘
+
+  - Método: estas cifras usan el método de personas, ponderado con facpob07. La
+    línea punteada marca el promedio nacional oficial de 27.6 %.
+  - Tamaño de muestra: cada grupo tiene entre 17,813 y 37,819 casos, así que el
+    gráfico no tiene la nota de «menos de 100 casos».
+  - Revisión visual: abrí la imagen y no hay textos superpuestos ni cortados.
+
+  Las dos diferencias son pequeñas, sobre todo la urbana. El script no calcula
+  intervalos de confianza, así que no está comprobado que alguna sea
+  estadísticamente significativa. Por eso conviene leer el título como una
+  diferencia descriptiva y no como algo probado.
+
+✻ Churned for 16s · done 3:51 PM
+
+❯ ❯ /mapeando-enaho                                                             
+
+● Skill(mapeando-enaho)
+  ⎿  Successfully loaded skill
+
+  Read 1 file, ran 1 shell command (ctrl+o to expand)
+
+● Volví a generar el mapa de la pobreza monetaria por departamento: está en
+  mapas/pobreza_departamento.png y salió igual que la vez anterior.
+
+  - Comparación con la referencia: los 25 departamentos coinciden al decimal con
+    referencias/pobreza_departamento_2024.csv, sin ninguna fila en AVISO. Las
+    cifras usan el método oficial del INEI (la sumaria, ponderada con factor07 ×
+    mieperho).
+  - Lima y Callao: aparecen separados en el recuadro ampliado, Lima con 27.1 % y
+    Callao con 33.9 %.
+  - Revisión visual: abrí la imagen y no hay textos superpuestos.
+  - Mayor pobreza: Cajamarca (45.0 %), Loreto (43.0 %), Puno (39.9 %), Pasco
+    (39.0 %) y Huánuco (39.0 %).
+  - Menor pobreza: Ica (6.0 %), Moquegua (11.0 %), Madre de Dios (11.1 %),
+    Lambayeque (14.0 %) y Arequipa (15.8 %).
+
+  Pasco y Huánuco figuran con 39.0 % porque se redondea a un decimal. Sin
+  redondear, Pasco tiene 38.97 % y Huánuco 38.96 %.
+
+✻ Cooked for 20s · done 3:51 PM
+
+❯ Resume en una tabla qué skills se activaron en cada uno de los pedidos        
+  anteriores, en qué orden, si la activación fue automática o manual y qué      
+  archivos generó cada una.                                                     
+
+● Hubo cinco pedidos y se activaron tres skills distintas. Cuento como
+  automática la activación que hice yo a partir de un pedido en lenguaje
+  natural, y como manual la que pediste escribiendo /nombre-de-la-skill.
+
+  #: 1
+  Pedido: «Haz un mapa de la pobreza monetaria por departamento con ENAHO 2024»
+  Orden de activación: 1. mapeando-enaho<br>2. limpiando-enaho
+  Activación: 1. Automática<br>2. Automática, porque mapeando-enaho lo pide
+    cuando falta la base
+  Archivos generados: limpiando-enaho: salidas/personas_2024.parquet,
+    salidas/indicadores.csv, salidas/validacion.txt<br>mapeando-enaho:
+    salidas/comparacion_mapa.csv, mapas/pobreza_departamento.png
+  ────────────────────────────────────────
+  #: 2
+  Pedido: «Grafica cómo varía la pobreza monetaria entre el área urbana y el
+  área
+    rural…»
+  Orden de activación: graficando-enaho con --indicador area
+  Activación: Automática
+  Archivos generados: figuras/pobreza_area.png
+  ────────────────────────────────────────
+  #: 3
+  Pedido: /limpiando-enaho 2024
+  Orden de activación: limpiando-enaho con --anio 2024
+  Activación: Manual
+  Archivos generados: Volvió a escribir salidas/personas_2024.parquet,
+    salidas/indicadores.csv y salidas/validacion.txt
+  ────────────────────────────────────────
+  #: 4
+  Pedido: /graficando-enaho sexo_area
+  Orden de activación: graficando-enaho con --indicador sexo_area
+  Activación: Manual
+  Archivos generados: figuras/pobreza_sexo_area.png
+  ────────────────────────────────────────
+  #: 5
+  Pedido: ❯ /mapeando-enaho
+  Orden de activación: mapeando-enaho
+  Activación: Manual (ver la nota 3)
+  Archivos generados: Volvió a escribir salidas/comparacion_mapa.csv y
+    mapas/pobreza_departamento.png
+
+  1. Orden en el pedido 1: mapeando-enaho se activó primero, pero el primer
+     script en correr fue el de limpiando-enaho. mapeando-enaho exige que exista
+     salidas/personas_2024.parquet, y ese archivo todavía no existía.
+  2. Comandos /skills del inicio: los dos que corriste no activaron ninguna
+     skill. Solo abrieron el administrador de skills, que respondió «No
+     changes».
+  3. Activación del pedido 5: llegó como texto del mensaje y no como un comando
+     slash. Lo trato como manual porque tú nombraste la skill, aunque fui yo
+     quien la llamó con la herramienta Skill. El sistema avisó que ya estaba
+     cargada desde el pedido 1, así que seguí sus mismas instrucciones.
+  4. Archivos que se sobrescribieron: los pedidos 3 y 5 reemplazaron archivos
+     que ya existían, no crearon nuevos. En los dos casos los resultados fueron
+     los mismos: 27.6 % de pobreza nacional y 25 de 25 departamentos
+     coincidiendo con la referencia.
+
+✻ Brewed for 14s · done 3:52 PM
+❯ /export evidencias_ia/skills/02_activacion_skills.txt                         
+  ⎿  Conversation exported to: C:\Users\anaza\Documents\GitHub\data-science-pyth
+     on-2026\tarea_8\evidencias_ia\skills\02_activacion_skills.txt
+
+※ recap: Estás analizando la pobreza monetaria de la ENAHO 2024 para la Tarea 8, y ya están listos el mapa por departamento, los gráficos por área y por sexo y área, y la tabla de skills. Lo siguiente sería hacer commit del trabajo, si quieres. (disable recaps in /config)
+
+❯ A continuación desarrollaremos la Parte 3, que corresponde al agente de       
+  investigación. Te pido resolver en esta misma ejecución la siguiente          
+  pregunta, utilizando el servidor MCP bcrp y las skills del proyecto.          
+                                                                                
+  Pregunta de investigación: ¿Cómo se configuró la pobreza monetaria en el Perú 
+  en 2024 según departamento, área de residencia y sexo, en un contexto         
+  macroeconómico marcado por la evolución de la inflación y del crecimiento     
+  económico entre 2019 y 2024?                                                  
+                                                                                
+  1. Plan. Antes de ejecutar, presenta un plan de análisis breve con los        
+  indicadores, las fuentes, las herramientas MCP y las skills que usarás.       
+  2. BCRP. Con el MCP bcrp identifica mediante buscar_series las series de      
+  inflación interanual de Lima Metropolitana y de crecimiento anual del PBI     
+  real, y obtén sus cifras con resumen, serie y comparar_series para el periodo 
+  2019-2024, añadiendo como contexto el último dato disponible de inflación     
+  de 2026. No calcules a mano.                                                  
+  3. Gráfico del BCRP. Crea el script informes/grafico_bcrp.py, que obtenga los 
+  datos llamando a las herramientas del servidor (fastmcp.Client sobre          
+  mcp/server.py, sin copiar cifras a mano) y que grafique la inflación          
+  interanual mensual de 2019 a 2024 con el estilo de                            
+  .claude/skills/graficando-enaho/scripts/estilo.py (Montserrat, escala de      
+  azules, título analítico, periodo, unidad y fuente con el código de la        
+  serie). Guárdalo en figuras/bcrp_inflacion_2019_2024.png.                     
+  4. ENAHO. Usa las skills graficando-enaho y mapeando-enaho (y limpiando-enaho 
+  si hace falta) para obtener la pobreza por área, por sexo, por sexo y área,   
+  y por departamento, con sus figuras y el mapa.                                
+  5. Verificación. Comprueba manualmente al menos tres cifras, al menos una de  
+  cada fuente: la inflación de setiembre de 2026 (PN01273PM) contra la API      
+  oficial del BCRP, la pobreza nacional de 2024 contra la cifra publicada por   
+  el INEI (27.6 %) y la pobreza de Cajamarca contra la referencia del curso.    
+  Para cada una registra la afirmación, el valor calculado, la fuente o el      
+  procedimiento, si coincide y la diferencia. Si una herramienta falla o no hay 
+  datos, infórmalo y no inventes resultados.                                    
+  6. Informe. Redacta informes/informe_final.md en español con redacción 100 %  
+  académica, prosa formal con conectores académicos y sin dos puntos ni guiones 
+  dobles dentro de los párrafos. Debe tener estas secciones. 1. Pregunta de     
+  investigación (tema, objetivo y delimitación). 2. Fuentes y metodología       
+  (datos, procesamiento, indicadores y método oficial del INEI frente al de     
+  personas). 3. Resultados con al menos tres hallazgos sustentados, cada cifra  
+  con su fuente (código y periodo de la serie, o archivo y método de la         
+  ENAHO). 4. Visualizaciones con el gráfico del BCRP, al menos un gráfico de la 
+  ENAHO y el mapa departamental, insertados con rutas relativas. 5.             
+  Interpretación, sin afirmar causalidad. 6. Limitaciones (distintos niveles de 
+  agregación y periodos, inflación medida en Lima Metropolitana, diferencias    
+  descriptivas sin pruebas de significancia, y la fecha de actualización del    
+  catálogo del BCRP, que no refleja el último periodo publicado). 7.            
+  Reproducibilidad (scripts, archivos, series y comandos). Incluye una tabla de 
+  verificación manual con las tres cifras.                                      
+                                                                                
+  Al terminar, enumera qué herramientas MCP y qué skills usaste en esta         
+  ejecución, en qué orden y para qué. No hagas commit.                          
+
+● Plan de análisis
+
+  Indicadores.
+  - Inflación interanual de Lima Metropolitana, mensual de 2019 a 2024, con el
+    último dato de 2026 como contexto.
+  - Crecimiento anual del PBI real de 2019 a 2024.
+  - Pobreza monetaria de la ENAHO 2024 a nivel nacional, por área, por sexo, por
+    sexo y área, y por departamento.
+
+  Fuentes. La API del BCRP, a través del MCP bcrp, y los módulos 34 y 02 de la
+  ENAHO 2024 del INEI.
+
+  Herramientas MCP. Usaré buscar_series para encontrar los códigos, resumen para
+  variaciones y extremos, serie para los datos y comparar_series para
+  contrastar la inflación con el PBI.
+
+  Skills.
+  - limpiando-enaho, solo si falta la base.
+  - graficando-enaho, para los gráficos por área, sexo y sexo por área.
+  - mapeando-enaho, para el mapa departamental.
+
+  Productos. El script informes/grafico_bcrp.py, la figura del BCRP, la
+  verificación manual de tres cifras y el informe informes/informe_final.md.
+
+  Primero reviso la estructura del proyecto.
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+● Ahora consulto el servidor MCP bcrp.
+
+  Called bcrp 2 times (ctrl+o to expand)
+
+● Las series son PN01273PM para la inflación y PM04923AA para el PBI. Ahora pido
+  sus cifras al servidor.
+
+  Called bcrp 5 times (ctrl+o to expand)
+
+● Tengo las cifras del BCRP: la inflación llegó a 8.81 % en junio de 2022 y
+  cerró 2024 en 1.97 %, mientras el PBI real cayó 10.9 % en 2020 y creció 3.5 %
+  en 2024. Ahora reviso la API de fastmcp para escribir el script del gráfico.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Write(informes\grafico_bcrp.py)
+  ⎿  Wrote 108 lines to informes\grafico_bcrp.py
+       1 """Gráfico de la inflación interanual de Lima Metropolitana (BCR
+         P, PN01273PM), enero 2019 a diciembre 2024.
+       2 
+       3 Los datos no se copian a mano: el script levanta el servidor MCP
+          del proyecto (mcp/server.py) con fastmcp.Client
+       4 y llama a sus herramientas serie y resumen. El estilo (Montserra
+         t, azules, encabezado) sale de
+       5 .claude/skills/graficando-enaho/scripts/estilo.py.
+       6 
+       7 Uso, desde la carpeta tarea_8:
+     … +101 lines (ctrl+o to expand)
+
+● Bash(cd "C:/Users/anaza/Documents/GitHub/data-science-python-2026/tarea_8" &&
+      uv run informes/grafico_bcrp.py 2>&1 | grep -v VIRTUAL_ENV)
+  ⎿  +---------------------------------------------------------------------
+     --------+
+     |
+     … +25 lines (ctrl+o to expand)
+  ⎿  1 file changed (binary, mode only or too large to show)
+  ⎿  (timeout 5m)
+
+  Read 1 file (ctrl+o to expand)
+
+● El gráfico tiene dos detalles por corregir. La etiqueta del rango meta se
+  cruza con la línea en 2019 y el eje muestra un 2025 que sobra. Los ajusto.
+
+● Bash(cd "C:/Users/anaza/Documents/GitHub/data-science-python-2026/tarea_8" &&
+      python - <<'EOF'
+      from pathlib import Path…)
+  ⎿  Guardé C:/Users/anaza/Documents/GitHub/data-science-python-2026/tarea_
+     8/figuras/bcrp_inflacion_2019_2024.png
+  ⎿  Updated informes\grafico_bcrp.py (+107 -108)
+        1 -"""Gráfico de la inflación interanual de Lima Metropolitana (B
+          -CRP, PN01273PM), enero 2019 a diciembre 2024.                 
+        2 -                                                              
+        3 -Los datos no se copian a mano: el script levanta el servidor M
+          -CP del proyecto (mcp/server.py) con fastmcp.Client            
+        4 -y llama a sus herramientas serie y resumen. El estilo (Montser
+          -rat, azules, encabezado) sale de                              
+        5 -.claude/skills/graficando-enaho/scripts/estilo.py.            
+        6 -                                                              
+        7 -Uso, desde la carpeta tarea_8:                                
+        8 -    uv run informes/grafico_bcrp.py                           
+        9 -"""                                                           
+       10 -import asyncio                                                
+       11 -import sys                                                    
+       12 -from pathlib import Path                                      
+       13 -                                                              
+       14 -from fastmcp import Client                                    
+       15 -from fastmcp.client.transports import StdioTransport          
+       16 -                                                              
+       17 -RAIZ = Path(__file__).resolve().parents[1]                    
+       18 -sys.path.insert(0, str(RAIZ / ".claude" / "skills" / "grafican
+          -do-enaho" / "scripts"))                                       
+       19 -import estilo as e  # noqa: E402                              
+       20 -import matplotlib.dates as mdates  # noqa: E402               
+       21 -import matplotlib.pyplot as plt  # noqa: E402                 
+       22 -import pandas as pd  # noqa: E402                             
+       23 -                                                              
+       24 -CODIGO = "PN01273PM"                                          
+       25 -DESDE, HASTA = "2019-01", "2024-12"                           
+       26 -META = (1, 3)   # rango meta de inflación del BCRP, en %: es l
+          -a política monetaria, no un dato de la serie                  
+       27 -SALIDA = RAIZ / "figuras" / "bcrp_inflacion_2019_2024.png"    
+       28 -MESES = ["enero", "febrero", "marzo", "abril", "mayo", "junio"
+          -, "julio", "agosto", "setiembre", "octubre",                  
+       29 -         "noviembre", "diciembre"]                            
+       30 -                                                              
+       31 -                                                              
+       32 -def _contenido(resultado):                                    
+       33 -    """El dict que devolvió la herramienta (fastmcp lo da en .
+          -data o en .structured_content)."""                            
+       34 -    datos = getattr(resultado, "data", None)                  
+       35 -    if isinstance(datos, dict):                               
+       36 -        return datos                                          
+       37 -    return resultado.structured_content                       
+       38 -                                                              
+       39 -                                                              
+       40 -async def pedir_datos():                                      
+     … 175 more lines (ctrl+o to expand)
+  ⎿  … 1 more file changed
+  ⎿  (timeout 5m)
+
+  Read 1 file (ctrl+o to expand)
+
+● La figura del BCRP ya está bien. Ahora corro las skills de la ENAHO, que ya
+  estaban cargadas en esta sesión: graficando-enaho para área, sexo y sexo por
+  área, y mapeando-enaho para el mapa.
+
+  Read 1 file, ran 1 shell command (ctrl+o to expand)
+
+● Las figuras de la ENAHO están bien. Ahora hago la verificación manual.
+  Consulto la API oficial del BCRP directamente, sin pasar por el servidor MCP.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Las tres cifras coinciden. Ahora redacto el informe.
+
+● Write(informes\informe_final.md)
+  ⎿  Wrote 120 lines to informes\informe_final.md
+      1 # La pobreza monetaria en el Perú en 2024 y su contexto macroecon
+        ómico entre 2019 y 2024
+      2 
+      3 ## 1. Pregunta de investigación
+      4 
+      5 **Pregunta.** ¿Cómo se configuró la pobreza monetaria en el Perú 
+        en 2024 según departamento, área de residencia y sexo, en un cont
+        exto macroeconómico marcado por la evolución de la inflación y de
+        l crecimiento económico entre 2019 y 2024?
+      6 
+     … +114 lines (ctrl+o to expand)
+
+● Bash(cd "C:/Users/anaza/Documents/GitHub/data-science-python-2026/tarea_8" &&
+      sed -i 's/efectuan/efectúan/' informes/informe_final.md && grep -n ":"
+      informes/informe…)
+  ⎿  106:uv run .claude/skills/limpiando-enaho/scripts/limpiar.py --anio 20
+     24
+     107:uv run .claude/skills/graficando-enaho/scripts/graficar.py --indic
+     … +5 lines (ctrl+o to expand)
+  ⎿  Updated informes\informe_final.md (+1 -1)
+      14  
+      15  **Datos.** En primer lugar, se emplearon los módulos 34 (sumari
+          a) y 02 (características de los miembros del hogar) de la ENAHO
+           2024, correspondientes al código 966 del portal de microdatos 
+          del INEI. En segundo lugar, se utilizaron dos series oficiales 
+          del BCRP, a saber, la variación porcentual en doce meses del ín
+          dice de precios al consumidor de Lima Metropolitana (PN01273PM,
+           mensual) y la variación porcentual real del producto bruto int
+          erno por tipo de gasto (PM04923AA, anual). Por último, la delim
+          itación departamental procede del archivo `datos/peru_departame
+          ntal_simple.geojson`, y la referencia de pobreza por departamen
+          to, del archivo `.claude/skills/mapeando-enaho/referencias/pobr
+          eza_departamento_2024.csv`.
+      16  
+      17 -**Procesamiento.** Las series del BCRP se obtuvieron mediante e
+         -l servidor MCP del proyecto (`mcp/server.py`), cuyas herramient
+         -as `buscar_series`, `resumen`, `serie` y `comparar_series` desc
+         -argan los valores directamente de la API oficial y efectuan los
+         - cálculos en Python, de modo que ninguna cifra se transcribió n
+         -i se calculó manualmente. Por su parte, los microdatos de la EN
+         -AHO se procesaron con tres skills del proyecto. La skill `limpi
+         -ando-enaho` unió ambos módulos, restringió la población a los r
+         -esidentes habituales (108 664 personas en 33 691 hogares) y val
+         -idó los resultados frente a las cifras publicadas. A continuaci
+         -ón, la skill `graficando-enaho` generó los gráficos por área, s
+         -exo y sexo según área, mientras que la skill `mapeando-enaho` e
+         -laboró el mapa coroplético departamental.                      
+      17 +**Procesamiento.** Las series del BCRP se obtuvieron mediante e
+         +l servidor MCP del proyecto (`mcp/server.py`), cuyas herramient
+         +as `buscar_series`, `resumen`, `serie` y `comparar_series` desc
+         +argan los valores directamente de la API oficial y efectúan los
+         + cálculos en Python, de modo que ninguna cifra se transcribió n
+         +i se calculó manualmente. Por su parte, los microdatos de la EN
+         +AHO se procesaron con tres skills del proyecto. La skill `limpi
+         +ando-enaho` unió ambos módulos, restringió la población a los r
+         +esidentes habituales (108 664 personas en 33 691 hogares) y val
+         +idó los resultados frente a las cifras publicadas. A continuaci
+         +ón, la skill `graficando-enaho` generó los gráficos por área, s
+         +exo y sexo según área, mientras que la skill `mapeando-enaho` e
+         +laboró el mapa coroplético departamental.                      
+      18  
+      19  **Indicadores.** Se analizaron la incidencia de la pobreza mone
+          taria, entendida como el porcentaje de personas cuyo gasto per 
+          cápita es inferior al valor de la canasta básica, y, de manera 
+          complementaria, la incidencia de la pobreza extrema. En el ámbi
+          to macroeconómico, se consideraron la inflación interanual mens
+          ual y el crecimiento anual del PBI real.
+      20  
+
+● Terminé la Parte 3 sin hacer commit. El informe está en
+  informes/informe_final.md, y la verificación manual de las tres cifras
+  coincide al decimal.
+
+  Respuesta a la pregunta. En 2024 la pobreza monetaria fue de 27.6 % y fue
+  sobre todo territorial.
+  - Por departamento: la diferencia llega a 39.0 pp, entre Cajamarca (45.0 %) e
+    Ica (6.0 %).
+  - Por área: la pobreza rural fue de 39.3 % y la urbana de 24.8 %, una brecha
+    de 14.5 pp.
+  - Por sexo: la diferencia es pequeña, de 27.7 % en mujeres frente a 27.4 % en
+    hombres, y llega a 1.2 pp en el área rural.
+  - Contexto del BCRP:
+    - El PBI cayó 10.9 % en 2020, subió 13.4 % en 2021 y creció 3.5 % en 2024.
+    - La inflación de Lima Metropolitana llegó a 8.8 % en junio de 2022 y bajó a
+      2.0 % en diciembre de 2024.
+    - En 2026 el último dato es de octubre, con 5.3 %.
+    - La correlación entre los promedios anuales de inflación y crecimiento es
+      de 0.23, con solo 6 años, así que es una asociación débil y no prueba
+      causalidad.
+
+  Verificación manual:
+
+  ┌───────────────────┬────────────┬─────────────────────────┬─────────────┐
+  │       Cifra       │   Valor    │      Comparado con      │ ¿Coincide?  │
+  │                   │ calculado  │                         │             │
+  ├───────────────────┼────────────┼─────────────────────────┼─────────────┤
+  │ Inflación de      │            │ API oficial del BCRP,   │ Sí,         │
+  │ setiembre de 2026 │ 4.548655 % │ consultada con curl sin │ diferencia  │
+  │  (PN01273PM)      │            │  pasar por el servidor  │ de 0        │
+  │                   │            │ MCP                     │             │
+  ├───────────────────┼────────────┼─────────────────────────┼─────────────┤
+  │ Pobreza nacional  │ 27.58 %    │ Cifra publicada por el  │ Sí, al      │
+  │ 2024              │            │ INEI, 27.6 %            │ decimal     │
+  ├───────────────────┼────────────┼─────────────────────────┼─────────────┤
+  │ Pobreza de        │ 45.01 %    │ Referencia del curso,   │ Sí, al      │
+  │ Cajamarca         │            │ 45.0 %                  │ decimal     │
+  └───────────────────┴────────────┴─────────────────────────┴─────────────┘
+
+  Productos:
+  - informes/grafico_bcrp.py: obtiene la serie llamando a serie y resumen con
+    fastmcp.Client sobre mcp/server.py, sin cifras escritas a mano. El título
+    también se arma con esos datos.
+  - figuras/bcrp_inflacion_2019_2024.png: sombrea el rango meta del BCRP (1 % a
+    3 %). Ese es el único valor fijo del script, porque viene de la política
+    monetaria y no de la serie.
+  - Gráficos de la ENAHO: figuras/pobreza_area.png, pobreza_sexo.png y
+    pobreza_sexo_area.png.
+  - Mapa: mapas/pobreza_departamento.png.
+
+  Abrí cada figura. En el gráfico del BCRP tuve que corregir dos cosas: la
+  etiqueta del rango meta, que se cruzaba con la línea, y un 2025 que sobraba en
+  el eje. Después de eso no quedaron textos superpuestos en ninguna. El informe
+  tiene las 7 secciones pedidas, y revisé que no haya dos puntos ni guiones
+  dobles dentro de los párrafos.
+
+  Herramientas MCP y skills que usé, en orden:
+
+  ┌─────┬─────────────────────────────┬──────────────────────────────────────┐
+  │  #  │     Herramienta o skill     │               Para qué               │
+  ├─────┼─────────────────────────────┼──────────────────────────────────────┤
+  │     │                             │ Encontrar PN01273PM (IPC de Lima     │
+  │ 1   │ MCP buscar_series (2        │ Metropolitana, variación en 12       │
+  │     │ llamadas)                   │ meses) y PM04923AA (PBI real,        │
+  │     │                             │ variación anual)                     │
+  ├─────┼─────────────────────────────┼──────────────────────────────────────┤
+  │ 2   │ MCP resumen (PN01273PM,     │ Primer y último valor, máximo,       │
+  │     │ 2019-01 a 2024-12)          │ mínimo y promedio de la inflación    │
+  ├─────┼─────────────────────────────┼──────────────────────────────────────┤
+  │ 3   │ MCP resumen (PM04923AA,     │ Extremos y promedio del crecimiento  │
+  │     │ 2019 a 2024)                │ del PBI                              │
+  ├─────┼─────────────────────────────┼──────────────────────────────────────┤
+  │ 4   │ MCP serie (PM04923AA, 2019  │ Crecimiento del PBI año por año      │
+  │     │ a 2024)                     │                                      │
+  ├─────┼─────────────────────────────┼──────────────────────────────────────┤
+  │     │ MCP comparar_series         │ Promedios anuales de inflación y su  │
+  │ 5   │ (PN01273PM y PM04923AA,     │ correlación con el PBI               │
+  │     │ 2019 a 2024)                │                                      │
+  ├─────┼─────────────────────────────┼──────────────────────────────────────┤
+  │ 6   │ MCP serie (PN01273PM, 2026) │ Datos de 2026, incluidos setiembre y │
+  │     │                             │  octubre                             │
+  ├─────┼─────────────────────────────┼──────────────────────────────────────┤
+  │     │ Servidor mcp/server.py vía  │ Herramientas serie y resumen para    │
+  │ 7   │ fastmcp.Client, desde       │ hacer el gráfico de inflación        │
+  │     │ grafico_bcrp.py             │                                      │
+  ├─────┼─────────────────────────────┼──────────────────────────────────────┤
+  │ 8   │ Skill graficando-enaho      │ Gráficos de pobreza por área, sexo y │
+  │     │ (area, sexo, sexo_area)     │  sexo según área                     │
+  ├─────┼─────────────────────────────┼──────────────────────────────────────┤
+  │ 9   │ Skill mapeando-enaho        │ Mapa departamental y comparación con │
+  │     │                             │  la referencia                       │
+  └─────┴─────────────────────────────┴──────────────────────────────────────┘
+
+  - limpiando-enaho: no la usé en esta parte porque
+    salidas/personas_2024.parquet ya existía de los pedidos anteriores, que
+    pasaron todas las verificaciones.
+  - Skills cargadas antes: graficando-enaho y mapeando-enaho ya estaban cargadas
+    desde los pedidos anteriores, así que no volví a llamarlas con la
+    herramienta Skill. Corrí sus scripts siguiendo sus instrucciones.
+
+✻ Churned for 4m 1s · done 3:59 PM
+
+❯ Revisé informes/informe_final.md y te pido cuatro ajustes de forma, sin       
+  modificar las cifras ni volver a ejecutar las skills.                         
+                                                                                
+  1. Pies de figura. Reemplaza la fórmula «Fuente, ...» por «Fuente.            
+  Elaboración propia con datos de ...», por ejemplo «Fuente. Elaboración propia 
+  con datos del BCRP (serie PN01273PM), obtenidos mediante el servidor MCP del  
+  proyecto».                                                                    
+  2. Verificación manual. En la fila de la pobreza nacional cita como fuente la 
+  publicación oficial del INEI «Cifras de pobreza 2024» (https://www.gob.pe/in  
+  stitucion/inei/informes-publicaciones/6749463-cifras-de-pobreza-2024). En la  
+  fila de Cajamarca añade que el INEI también reporta 45.0 % en esa misma       
+  publicación, además de la referencia del curso.                               
+  3. Matiz metodológico de género. Incorpora en la interpretación del hallazgo  
+  3 y en las limitaciones que la pobreza monetaria se mide a nivel del hogar y  
+  se asigna por igual a todos sus miembros, de modo que las diferencias por     
+  sexo reflejan la composición de los hogares y no la distribución de recursos  
+  dentro de ellos. Por ello, este indicador no permite captar desigualdades de  
+  género intrahogar, que requerirían otras fuentes o enfoques.                  
+  4. Referencias. Agrega al final una sección «Referencias» en formato APA 7    
+  con la ENAHO 2024 del INEI (portal de microdatos), la publicación «Cifras de  
+  pobreza 2024» del INEI, el portal de series estadísticas del BCRP y el        
+  repositorio del curso (https://github.com/d2cml-ai/Data-Science-Python).      
+                                                                                
+  Mantén la redacción 100 % académica, sin dos puntos ni guiones dobles dentro  
+  de los párrafos. No hagas commit.                                             
+
+  Read 1 file (ctrl+o to expand)
+
+● Hago los cuatro ajustes en el informe.
+
+● Bash(cd "C:/Users/anaza/Documents/GitHub/data-science-python-2026/tarea_8" &&
+      python - <<'EOF'
+      from pathlib import Path…)
+  ⎿  126:Banco Central de Reserva del Perú. (s. f.). *BCRPData. Series esta
+     dísticas* [Base de datos]. Recuperado el 8 de noviembre de 2026, de ht
+     tps://estadisticas.bcrp.gob.pe/estadisticas/series/
+     … +10 lines (ctrl+o to expand)
+  ⎿  Updated informes\informe_final.md (+132 -120)
+        1 -# La pobreza monetaria en el Perú en 2024 y su contexto macroe
+          -conómico entre 2019 y 2024                                    
+        2 -                                                              
+        3 -## 1. Pregunta de investigación                               
+        4 -                                                              
+        5 -**Pregunta.** ¿Cómo se configuró la pobreza monetaria en el Pe
+          -rú en 2024 según departamento, área de residencia y sexo, en u
+          -n contexto macroeconómico marcado por la evolución de la infla
+          -ción y del crecimiento económico entre 2019 y 2024?           
+        6 -                                                              
+        7 -**Tema.** El presente informe aborda la distribución territori
+          -al y demográfica de la pobreza monetaria en el Perú, en relaci
+          -ón con la trayectoria de los precios y de la actividad económi
+          -ca durante el periodo que comprende la etapa previa a la pande
+          -mia, el choque sanitario de 2020, la recuperación posterior y 
+          -el episodio inflacionario de 2022 y 2023.                     
+        8 -                                                              
+        9 -**Objetivo.** El objetivo consiste en describir, con cifras of
+          -iciales y reproducibles, las brechas de pobreza monetaria entr
+          -e departamentos, entre el área urbana y el área rural, y entre
+          - mujeres y hombres en 2024, y en situar dichas brechas en el c
+          -ontexto de la inflación de Lima Metropolitana y del crecimient
+          -o del producto bruto interno real entre 2019 y 2024.          
+       10 -                                                              
+       11 -**Delimitación.** El análisis de la pobreza se circunscribe a 
+          -la Encuesta Nacional de Hogares (ENAHO) de 2024 del Instituto 
+          -Nacional de Estadística e Informática (INEI), mientras que el 
+          -contexto macroeconómico se limita a dos series del Banco Centr
+          -al de Reserva del Perú (BCRP) para el periodo 2019 a 2024. Asi
+          -mismo, se incorpora como referencia el último dato de inflació
+          -n disponible en 2026, sin que ello amplíe el periodo de anális
+          -is de la pobreza.                                             
+       12 -                                                              
+       13 -## 2. Fuentes y metodología                                   
+       14 -                                                              
+       15 -**Datos.** En primer lugar, se emplearon los módulos 34 (sumar
+          -ia) y 02 (características de los miembros del hogar) de la ENA
+          -HO 2024, correspondientes al código 966 del portal de microdat
+          -os del INEI. En segundo lugar, se utilizaron dos series oficia
+          -les del BCRP, a saber, la variación porcentual en doce meses d
+          -el índice de precios al consumidor de Lima Metropolitana (PN01
+          -273PM, mensual) y la variación porcentual real del producto br
+          -uto interno por tipo de gasto (PM04923AA, anual). Por último, 
+          -la delimitación departamental procede del archivo `datos/peru_
+          -departamental_simple.geojson`, y la referencia de pobreza por 
+          -departamento, del archivo `.claude/skills/mapeando-enaho/refer
+          -encias/pobreza_departamento_2024.csv`.                        
+       16 -                                                              
+       17 -**Procesamiento.** Las series del BCRP se obtuvieron mediante 
+          -el servidor MCP del proyecto (`mcp/server.py`), cuyas herramie
+          -ntas `buscar_series`, `resumen`, `serie` y `comparar_series` d
+          -escargan los valores directamente de la API oficial y efectúan
+          - los cálculos en Python, de modo que ninguna cifra se transcri
+          -bió ni se calculó manualmente. Por su parte, los microdatos de
+          - la ENAHO se procesaron con tres skills del proyecto. La skill
+          - `limpiando-enaho` unió ambos módulos, restringió la población
+          - a los residentes habituales (108 664 personas en 33 691 hogar
+          -es) y validó los resultados frente a las cifras publicadas. A 
+          -continuación, la skill `graficando-enaho` generó los gráficos 
+          -por área, sexo y sexo según área, mientras que la skill `mapea
+          -ndo-enaho` elaboró el mapa coroplético departamental.         
+       18 -                                                              
+       19 -**Indicadores.** Se analizaron la incidencia de la pobreza mon
+          -etaria, entendida como el porcentaje de personas cuyo gasto pe
+          -r cápita es inferior al valor de la canasta básica, y, de mane
+          -ra complementaria, la incidencia de la pobreza extrema. En el 
+          -ámbito macroeconómico, se consideraron la inflación interanual
+          - mensual y el crecimiento anual del PBI real.                 
+       20 -                                                              
+       21 -**Método oficial del INEI frente al método de personas.** Los 
+          -indicadores cuyo nivel de agregación es el hogar (nacional, ár
+          -ea, dominio y departamento) se estimaron con el método oficial
+          - del INEI, que utiliza una observación por hogar de la sumaria
+          - ponderada por el producto del factor de expansión del hogar y
+          - el número de miembros (`factor07 × mieperho`). En cambio, los
+          - atributos individuales, como el sexo, el grupo de edad y el s
+          -exo dentro de cada área, requieren la base de personas pondera
+          -da con el factor de expansión poblacional (`facpob07`). Ambos 
+          -métodos arrojan resultados muy próximos a escala nacional (27.
+          -58 % y 27.53 %, respectivamente); no obstante, únicamente el m
+          -étodo oficial reproduce al decimal la pobreza publicada para l
+          -os 25 departamentos, mientras que el método de personas coinci
+          -de solo en seis de ellos (`salidas/comparacion_mapa.csv`).    
+       22 -                                                              
+       23 -## 3. Resultados                                              
+       24 -                                                              
+       25 -**Hallazgo 1. La pobreza monetaria presenta una marcada hetero
+          -geneidad territorial.** En 2024, la incidencia nacional de la 
+          -pobreza monetaria ascendió a 27.6 % y la de la pobreza extrema
+          - a 5.5 % (`salidas/indicadores.csv`, método oficial). Sin emba
+          -rgo, este promedio encubre diferencias considerables entre dep
+          -artamentos, puesto que Cajamarca registró la incidencia más el
+          -evada (45.0 %), seguida de Loreto (43.0 %) y Puno (39.9 %), en
+          - tanto que Ica presentó la más baja (6.0 %), seguida de Moqueg
+          -ua (11.0 %) y Madre de Dios (11.1 %). En consecuencia, la dist
+          -ancia entre el departamento con mayor y el de menor pobreza as
+          -ciende a 39.0 puntos porcentuales (`salidas/comparacion_mapa.c
+          -sv`, método oficial). De igual modo, Callao (33.9 %) superó ta
+          -nto a Lima (27.1 %) como al promedio nacional. Por dominio geo
+          -gráfico, la Sierra Norte alcanzó la mayor incidencia (45.7 %) 
+          -y la mayor pobreza extrema (21.8 %), mientras que la Costa Cen
+          -tro registró la menor (14.0 %).                               
+       26 -                                                              
+       27 -**Hallazgo 2. La pobreza rural supera ampliamente a la urbana.
+          -** La incidencia de la pobreza monetaria fue de 39.3 % en el á
+          -rea rural y de 24.8 % en el área urbana, lo que representa una
+          - brecha de 14.5 puntos porcentuales (`salidas/indicadores.csv`
+          -, método oficial). Esta diferencia se acentúa en el caso de la
+          - pobreza extrema, que alcanzó 15.5 % en el área rural frente a
+          - 3.1 % en el área urbana. Cabe señalar, además, que la poblaci
+          -ón rural representa alrededor de una quinta parte de la poblac
+          -ión expandida (6.6 millones de un total de 34.5 millones), por
+          - lo que la mayoría de las personas pobres reside, en términos 
+          -absolutos, en zonas urbanas.                                  
+       28 -                                                              
+       29 -**Hallazgo 3. Las diferencias por sexo son reducidas y algo ma
+          -yores en el área rural.** A escala nacional, la pobreza moneta
+          -ria afectó al 27.7 % de las mujeres y al 27.4 % de los hombres
+          - (`salidas/indicadores.csv`, método de personas con `facpob07`
+          -). Dentro del área rural, la incidencia fue de 40.0 % entre la
+          -s mujeres y de 38.8 % entre los hombres, con una diferencia de
+          - 1.2 puntos porcentuales, en tanto que en el área urbana las c
+          -ifras fueron de 24.8 % y 24.6 %, respectivamente. Por consigui
+          -ente, el área de residencia se asocia con diferencias de pobre
+          -za mucho mayores que el sexo.                                 
+       30 -                                                              
+       31 -**Hallazgo 4. El contexto macroeconómico de 2019 a 2024 combin
+          -ó un choque recesivo, un rebote y un episodio inflacionario tr
+          -ansitorio.** De acuerdo con la serie PM04923AA, el PBI real cr
+          -eció 2.2 % en 2019, se contrajo 10.9 % en 2020, se expandió 13
+          -.4 % en 2021, creció 2.8 % en 2022, retrocedió 0.4 % en 2023 y
+          - creció 3.5 % en 2024, con un promedio simple de 1.8 % anual e
+          -n el periodo (BCRP, PM04923AA, 2019 a 2024, herramientas `seri
+          -e` y `resumen`). Paralelamente, la inflación interanual de Lim
+          -a Metropolitana pasó de 2.1 % en enero de 2019 a un mínimo de 
+          -1.6 % en junio de 2020, alcanzó un máximo de 8.8 % en junio de
+          - 2022 y descendió hasta 2.0 % en diciembre de 2024, con un pro
+          -medio de 4.1 % en los 72 meses (BCRP, PN01273PM, 2019-01 a 202
+          -4-12, herramienta `resumen`). En promedios anuales, la inflaci
+          -ón fue de 7.9 % en 2022 y de 6.3 % en 2023, y retornó a 2.4 % 
+          -en 2024 (BCRP, PN01273PM, herramienta `comparar_series`). A tí
+          -tulo de contexto, la inflación interanual se situó en 4.5 % en
+          - setiembre de 2026 y en 5.3 % en octubre de 2026, último perio
+          -do disponible (BCRP, PN01273PM, 2026-09 y 2026-10, herramienta
+          - `serie`).                                                    
+       32 -                                                              
+       33 -**Hallazgo 5. La asociación entre inflación y crecimiento en e
+          -l periodo es débil.** La correlación de Pearson entre el prome
+          -dio anual de la inflación y el crecimiento del PBI real fue de
+          - 0.23 para los seis años comunes (BCRP, PN01273PM y PM04923AA,
+          - 2019 a 2024, herramienta `comparar_series`). Dado que este co
+          -eficiente se basa en solo seis observaciones y que ambas serie
+          -s responden a choques comunes, el resultado únicamente indica 
+          -una asociación lineal débil y no permite inferir relación caus
+          -al alguna.                                                    
+       34 -                                                              
+       35 -## 4. Visualizaciones                                         
+       36 -                                                              
+       37 -![Figura 1. Inflación interanual de Lima Metropolitana, 2019 a
+          - 2024](../figuras/bcrp_inflacion_2019_2024.png)               
+       38 -                                                              
+       39 -*Figura 1.* Inflación interanual mensual de Lima Metropolitana
+          - entre enero de 2019 y diciembre de 2024. Fuente, BCRP, serie 
+          -PN01273PM, obtenida mediante el servidor MCP con `informes/gra
+          -fico_bcrp.py`.                                                
+       40 -                                                              
+     … 212 more lines (ctrl+o to expand)
+
+● Hice los cuatro ajustes en informes/informe_final.md, sin cambiar cifras ni
+  volver a correr las skills, y sin commit.
+
+  1. Pies de figura: los cinco pies de figura ahora dicen «Fuente. Elaboración
+     propia con datos de…». El de la figura 1 sigue tu ejemplo, y los de la
+     ENAHO indican el método de cada figura.
+  2. Verificación manual:
+     - La fila de la pobreza nacional ahora cita «Cifras de pobreza 2024» del
+       INEI con su enlace.
+     - La fila de Cajamarca añade que el INEI también reporta 45.0 % en esa
+       publicación, además de la referencia del curso.
+  3. Matiz de género: lo incorporé en tres lugares.
+     - Al final del hallazgo 3 agregué que la pobreza se asigna por igual a
+       todos los miembros del hogar.
+     - En la interpretación agregué que una diferencia pequeña por sexo no
+       significa que no haya desigualdad de género.
+     - En las limitaciones hay un párrafo nuevo, «En cuarto lugar». Explica que
+       el indicador no capta la desigualdad dentro del hogar y menciona otros
+       enfoques posibles, como las encuestas de uso del tiempo. La limitación
+       del catálogo del BCRP pasó a ser la quinta.
+  4. Referencias: agregué la sección al final con cuatro entradas en APA 7, en
+     orden alfabético. Las dos obras del INEI llevan 2025a y 2025b.
+
+  Revisé el texto y los únicos dos puntos que quedan son los de las URL.
+
+  Hay tres datos que tomé de tus indicaciones o que puse yo, sin comprobarlos en
+  la fuente:
+  - Cajamarca en la publicación del INEI: no abrí «Cifras de pobreza 2024», así
+    que el 45.0 % de Cajamarca en ese documento viene de lo que me indicaste. El
+    27.6 % nacional, en cambio, ya estaba en tu pedido anterior.
+  - Año 2025 de las obras del INEI: lo puse porque la ENAHO 2024 y su informe de
+    pobreza se publican al año siguiente. Si el documento indica otra fecha,
+    hay que corregirlo.
+  - Repositorio del curso y portal del BCRP: no tienen fecha de publicación
+    clara, así que los cité con «(s. f.)» y fecha de consulta. Para la ENAHO usé
+    la dirección general del portal de microdatos.
+
+✻ Crunched for 44s · done 4:02 PM
