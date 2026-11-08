@@ -1,8 +1,16 @@
-"""Servidor MCP del BCRP. Empiecen aquí: buscar_series ya funciona; completen los TODO hasta que pasen las pruebas.
+"""Servidor MCP del BCRP: da acceso a las series oficiales del Banco Central de Reserva del Perú.
 
-    uv run pytest                                           # el contrato: las 8 pruebas deben pasar
-    uv run server.py                                        # el servidor, por stdio
-    claude mcp add --scope project bcrp -- uv run server.py # conectarlo a Claude Code
+Componentes:
+    buscar_series            herramienta: encuentra el código de una serie en el catálogo oficial
+    serie                    herramienta: descarga los valores de una serie, período a período
+    resumen                  herramienta: primer y último valor, cambio, variación %, promedio y extremos
+    comparar_series          herramienta: alinea dos series en una frecuencia común y calcula su correlación
+    bcrp://serie/{codigo}    recurso: ficha de una serie (nombre, frecuencia, inicio, actualización, enlaces)
+    informe                  prompt: pide un informe breve con cada cifra citada (código, periodo y fuente)
+
+Uso, desde la carpeta tarea_8:
+    uv run pytest            # corre las pruebas de mcp/test_server.py
+    uv run mcp/server.py     # levanta el servidor por stdio (Claude Code lo conecta vía .mcp.json)
 
 Las cuentas las hace Python, no el modelo: así cada cifra sale de una llamada que se puede repetir.
 """
@@ -26,7 +34,8 @@ SOLO_LECTURA = {"readOnlyHint": True, "openWorldHint": True}
 
 mcp = FastMCP("bcrp", instructions=(
     "Series oficiales del Banco Central de Reserva del Perú (BCRP). Primero busca el código con buscar_series; "
-    "luego usa resumen para variaciones, promedios y extremos, y serie para los datos. No calcules a mano: "
+    "luego usa resumen para variaciones, promedios y extremos, serie para los datos y comparar_series para "
+    "contrastar dos indicadores en los mismos periodos (su correlación no prueba causalidad). No calcules a mano: "
     "cita siempre el código de la serie y el periodo."))
 
 
@@ -81,7 +90,7 @@ def buscar_series(texto: str, frecuencia: str | None = None, limite: int = 10) -
 
 
 # ---------------------------------------------------------------------------------------------------------------
-# TODO 1 · serie
+# Herramienta serie: descarga de valores oficiales desde la API del BCRP
 # ---------------------------------------------------------------------------------------------------------------
 MESES = {"ene": 1, "feb": 2, "mar": 3, "abr": 4, "may": 5, "jun": 6,
          "jul": 7, "ago": 8, "set": 9, "sep": 9, "oct": 10, "nov": 11, "dic": 12}
@@ -212,7 +221,7 @@ def serie(codigo: str, desde: str, hasta: str) -> dict:
 
 
 # ---------------------------------------------------------------------------------------------------------------
-# TODO 2 · resumen
+# Herramienta resumen: variaciones, promedios y extremos de una serie
 # ---------------------------------------------------------------------------------------------------------------
 def _r(x, cifras=6):
     return round(float(x), cifras)
@@ -253,7 +262,7 @@ def resumen(codigo: str, desde: str, hasta: str) -> dict:
 
 
 # ---------------------------------------------------------------------------------------------------------------
-# TODO 3 · Herramienta propia: comparar_series
+# Herramienta comparar_series: dos series alineadas en una frecuencia común y su correlación
 # ---------------------------------------------------------------------------------------------------------------
 def _a_frecuencia(periodo, frecuencia):
     """Lleva un periodo a la clave de una frecuencia igual o menor: "2026-10-01" -> "2026-10" -> "2026-T4" -> "2026"."""
@@ -334,7 +343,7 @@ def comparar_series(codigo_a: str, codigo_b: str, desde: str, hasta: str) -> dic
 
 
 # ---------------------------------------------------------------------------------------------------------------
-# TODO 4 · Recurso: la ficha de una serie
+# Recurso bcrp://serie/{codigo}: la ficha descriptiva de una serie
 # ---------------------------------------------------------------------------------------------------------------
 @mcp.resource("bcrp://serie/{codigo}", name="ficha_serie", mime_type="application/json")
 def ficha_serie(codigo: str) -> str:
@@ -353,7 +362,7 @@ def ficha_serie(codigo: str) -> str:
 
 
 # ---------------------------------------------------------------------------------------------------------------
-# TODO 5 · Prompt: informe
+# Prompt informe: informe breve con cada cifra citada
 # ---------------------------------------------------------------------------------------------------------------
 @mcp.prompt
 def informe(tema: str) -> str:
