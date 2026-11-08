@@ -80,9 +80,12 @@ def test_comparar_series_misma_frecuencia():
     assert r["n_comunes"] == 12
     assert [d["periodo"] for d in r["datos"]] == [f"2025-{m:02d}" for m in range(1, 13)]
     assert r["sin_dato"] == {"a": [], "b": []}
-    assert r["correlacion"] is None or -1 <= r["correlacion"] <= 1
+    assert r["correlacion"] is not None and -1 <= r["correlacion"] <= 1
     assert r["series"]["a"]["codigo"] == "PN01273PM" and r["series"]["b"]["codigo"] == "PN01271PM"
     assert all(s["fuente"].startswith("https://estadisticas.bcrp.gob.pe") for s in r["series"].values())
+    # comparar una serie consigo misma no tiene sentido: error claro, aunque el código venga en minúsculas
+    with pytest.raises(ToolError, match="misma serie.*PN01273PM"):
+        llamar("comparar_series", codigo_a="PN01273PM", codigo_b=" pn01273pm", desde="2025-01", hasta="2025-12")
 
 
 def test_comparar_series_agrega_la_diaria_a_mensual():

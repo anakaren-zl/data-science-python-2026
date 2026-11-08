@@ -301,8 +301,14 @@ def comparar_series(codigo_a: str, codigo_b: str, desde: str, hasta: str) -> dic
     otra sí tiene), correlacion (None si hay menos de 3 periodos comunes o una serie es constante) y, en
     series {a, b}, el código, nombre, frecuencia original, fuente y el resumen de cada una ya alineada.
 
+    codigo_a y codigo_b deben ser series distintas: si son la misma (sin importar mayúsculas ni espacios), se
+    devuelve un ToolError en lugar de una correlación trivial de 1.
+
     La correlación describe una asociación lineal entre los periodos comunes; no demuestra causalidad.
     """
+    if str(codigo_a).strip().upper() == str(codigo_b).strip().upper():
+        raise ToolError(f"codigo_a y codigo_b son la misma serie ({str(codigo_a).strip().upper()}): comparar_series "
+                        f"necesita dos series distintas. Para describir una sola serie usen resumen.")
     a, b = _serie(codigo_a, desde, hasta), _serie(codigo_b, desde, hasta)
     frecuencia = max(a["frecuencia"], b["frecuencia"], key=ORDEN_FRECUENCIA.__getitem__)
 
