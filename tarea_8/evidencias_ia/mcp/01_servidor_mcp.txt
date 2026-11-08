@@ -1,0 +1,636 @@
+ ▐▛███▛█   Claude Code v2.1.316
+▝▜██████▀  Opus 5.5 · Claude Pro
+ ▝▝   ▝▝   ~\Documents\GitHub\data-science-python-2026\tarea_8\datos
+
+
+❯ Voy a hacer la 2026_Tarea_4                                                   
+  (https://github.com/d2cml-ai/Data-Science-Python/issues/201) en la carpeta    
+  tarea_8/, en la rama tarea-8-agente-bcrp-enaho (issue #33). Uso tarea_8/      
+  porque tarea_4/ ya existe.                                                    
+                                                                                
+  Por ahora solo prepara el proyecto:                                           
+  1. Resume el enunciado en una tabla con las partes, sus puntos y los archivos 
+  obligatorios.                                                                 
+  2. Crea en tarea_8/ la estructura de carpetas que pide el enunciado.          
+  3. Copia sin cambios server.py y test_server.py de                            
+  sessions/04-mcp-claude-code/proyecto del repo del profesor a tarea_8/mcp/.    
+  4. Inicia uv con fastmcp>=4,<5, httpx, pandas, pyarrow, geopandas, matplotlib 
+  y pytest, con las pruebas en mcp/.                                            
+  5. Crea un .gitignore que excluya datos/, .venv/ y salidas/*.parquet.         
+  6. Corre uv run pytest -q (lo esperado es 1 passed y 7 failed) y muéstrame el 
+  árbol de carpetas.                                                            
+                                                                                
+  No completes todavía los TODO de server.py.                                   
+
+  Read 1 file, ran 4 shell commands (ctrl+o to expand)
+
+● Ya leí el enunciado. Ahora descargo server.py y test_server.py del repo del
+  profesor.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Bash(mkdir -p tarea_8/mcp && B=https://raw.githubusercontent.com/d2cml-ai/Data
+      -Science-Python/main/sessions/04-mcp-claude-code/proyecto && curl -sf
+      $B/server.py -o t…)
+  ⎿  [project]
+     name = "mcp-bcrp"
+     version = "0.1.0"
+     … +99 lines (ctrl+o to expand)
+  ⎿  Created
+     ~\Documents\GitHub\data-science-python-2026\tarea_8\mcp\server.py
+     (+107 -0)
+        1 +"""Servidor MCP del BCRP. Empiecen aquí: buscar_series ya func
+          +iona; completen los TODO hasta que pasen las pruebas.         
+        2 +                                                              
+        3 +    uv run pytest                                           # 
+          +el contrato: las 8 pruebas deben pasar                        
+        4 +    uv run server.py                                        # 
+          +el servidor, por stdio                                        
+        5 +    claude mcp add --scope project bcrp -- uv run server.py # 
+          +conectarlo a Claude Code                                      
+        6 +                                                              
+        7 +Las cuentas las hace Python, no el modelo: así cada cifra sale
+          + de una llamada que se puede repetir.                         
+        8 +"""                                                           
+        9 +import re                                                     
+       10 +import unicodedata                                            
+       11 +from functools import cache                                   
+       12 +from pathlib import Path                                      
+       13 +                                                              
+       14 +import httpx                                                  
+       15 +import pandas as pd                                           
+       16 +from fastmcp import FastMCP                                   
+       17 +from fastmcp.exceptions import ToolError                      
+       18 +                                                              
+       19 +AQUI = Path(__file__).parent                                  
+       20 +CATALOGO = AQUI / "datos" / "catalogo_bcrp.csv"               
+       21 +URL_CATALOGO = "https://estadisticas.bcrp.gob.pe/estadisticas/
+          +series/metadata"                                              
+       22 +API = "https://estadisticas.bcrp.gob.pe/estadisticas/series/ap
+          +i"                                                            
+       23 +SOLO_LECTURA = {"readOnlyHint": True, "openWorldHint": True}  
+       24 +                                                              
+       25 +mcp = FastMCP("bcrp", instructions=(                          
+       26 +    "Series oficiales del Banco Central de Reserva del Perú (B
+          +CRP). Primero busca el código con buscar_series; "            
+       27 +    "luego usa resumen para variaciones, promedios y extremos,
+          + y serie para los datos. No calcules a mano: "                
+       28 +    "cita siempre el código de la serie y el periodo."))      
+       29 +                                                              
+       30 +                                                              
+       31 +def _sin_tildes(s):                                           
+       32 +    return unicodedata.normalize("NFD", str(s).lower()).encode
+          +("ascii", "ignore").decode()                                  
+       33 +                                                              
+       34 +                                                              
+       35 +@cache                                                        
+       36 +def catalogo():                                               
+       37 +    """El catálogo oficial: 17 mil series en unos 7 MB. Se baj
+          +a una vez y queda en datos/."""                               
+       38 +    if not CATALOGO.exists():                                 
+       39 +        CATALOGO.parent.mkdir(exist_ok=True)                  
+       40 +        r = httpx.get(URL_CATALOGO, timeout=120)              
+     … 67 more lines (ctrl+o to expand)
+  ⎿  Created
+     ~\Documents\GitHub\data-science-python-2026\tarea_8\mcp\test_server.py
+     (+71 -0)
+       1 +"""El contrato del servidor: si estas pruebas pasan, Claude Cod
+         +e y evaluar.py pueden usarlo.                                  
+       2 +                                                               
+       3 +    uv run pytest -q                                           
+       4 +                                                               
+       5 +Llaman al servidor en memoria, igual que lo haría Claude Code, 
+         +y piden datos reales al BCRP.                                  
+       6 +"""                                                            
+       7 +import asyncio                                                 
+       8 +                                                               
+       9 +import pytest                                                  
+      10 +from fastmcp import Client                                     
+      11 +from fastmcp.exceptions import ToolError                       
+      12 +                                                               
+      13 +from server import mcp                                         
+      14 +                                                               
+      15 +                                                               
+      16 +async def _con_cliente(f):                                     
+      17 +    async with Client(mcp) as c:                               
+      18 +        return await f(c)                                      
+      19 +                                                               
+      20 +                                                               
+      21 +def llamar(herramienta, **args):                               
+      22 +    return asyncio.run(_con_cliente(lambda c: c.call_tool(herra
+         +mienta, args))).data                                           
+      23 +                                                               
+      24 +                                                               
+      25 +def test_buscar_encuentra_el_ipc():                            
+      26 +    r = llamar("buscar_series", texto="ipc 12 meses", limite=5)
+      27 +    assert "PN01273PM" in [x["codigo"] for x in r]             
+      28 +    assert {"codigo", "nombre", "frecuencia"} <= r[0].keys()   
+      29 +                                                               
+      30 +                                                               
+      31 +def test_cuatro_herramientas_como_minimo():                    
+      32 +    nombres = {t.name for t in asyncio.run(_con_cliente(lambda 
+         +c: c.list_tools()))}                                           
+      33 +    assert {"buscar_series", "serie", "resumen"} <= nombres    
+      34 +    assert len(nombres) >= 4, "falta su herramienta propia"    
+      35 +                                                               
+      36 +                                                               
+      37 +def test_serie_mensual():                                      
+      38 +    r = llamar("serie", codigo="PN01271PM", desde="2025-01", ha
+         +sta="2025-12")                                                 
+      39 +    assert len(r["datos"]) == 12                               
+      40 +    assert r["datos"][0]["periodo"] == "2025-01"               
+     … 31 more lines (ctrl+o to expand)
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Archivos copiados. Ahora inicio uv y agrego las dependencias.
+
+● Bash(cd /c/Users/anaza/Documents/GitHub/data-science-python-2026/tarea_8 && uv
+      init --bare --name agente-bcrp-enaho --python ">=3.11" 2>&1 && uv add
+      "fastmcp>=4,<5"…)
+  ⎿  Initialized project `agente-bcrp-enaho`
+     hint: `pyyaml` (v6.0.3) was included because `agente-bcrp-enaho` (v0.1
+     .0) depends on `fastmcp` (v4.1.6) which depends on `fastmcp-slim[serve
+     … +10 lines (ctrl+o to expand)
+  ⎿  Created
+     ~\Documents\GitHub\data-science-python-2026\tarea_8\pyproject.toml
+     (+10 -0)
+       1 +[project]                                                      
+       2 +name = "agente-bcrp-enaho"                                     
+       3 +version = "0.1.0"                                              
+       4 +requires-python = ">=3.11"                                     
+       5 +dependencies = []                                              
+       6 +                                                               
+       7 +[dependency-groups]                                            
+       8 +dev = [                                                        
+       9 +    "pytest>=9.2.0",                                           
+      10 +]                                                              
+  ⎿  Created ~\Documents\GitHub\data-science-python-2026\tarea_8\uv.lock
+     (+79 -0)
+       1 +version = 1                                                    
+       2 +revision = 5                                                   
+       3 +requires-python = ">=3.11"                                     
+       4 +                                                               
+       5 +[[package]]                                                    
+       6 +name = "agente-bcrp-enaho"                                     
+       7 +version = "0.1.0"                                              
+       8 +source = { virtual = "." }                                     
+       9 +                                                               
+      10 +[package.dev-dependencies]                                     
+      11 +dev = [                                                        
+      12 +    { name = "pytest" },                                       
+      13 +]                                                              
+      14 +                                                               
+      15 +[package.metadata]                                             
+      16 +                                                               
+      17 +[package.metadata.requires-dev]                                
+      18 +dev = [{ name = "pytest", specifier = ">=9.2.0" }]             
+      19 +                                                               
+      20 +[[package]]                                                    
+      21 +name = "colorama"                                              
+      22 +version = "0.4.6"                                              
+      23 +source = { registry = "https://pypi.org/simple" }              
+      24 +sdist = { url = "https://files.pythonhosted.org/packages/d8/53/
+         +6f443c9a4a8358a93a6792e2acffb9d9d5cb0a5cfd8802644b7b1c9a02e4/co
+         +lorama-0.4.6.tar.gz", hash = "sha256:08695f5cb7ed6e0531a2057269
+         +7297273c47b8cae5a63ffc6d6ed5c201be6e44", size = 27697, upload-t
+         +ime = "2022-10-25T02:36:22.414Z" }                             
+      25 +wheels = [                                                     
+      26 +    { url = "https://files.pythonhosted.org/packages/d1/d6/3965
+         +ed04c63042e047cb6a3e6ed1a63a35087b6a609aa3a15ed8ac56c221/colora
+         +ma-0.4.6-py2.py3-none-any.whl", hash = "sha256:4f1d9991f5acc0ca
+         +119f9d443620b77f9d6b33703e51011c16baf57afb285fc6", size = 25335
+         +, upload-time = "2022-10-25T02:36:20.889Z" },                  
+      27 +]                                                              
+      28 +                                                               
+      29 +[[package]]                                                    
+      30 +name = "iniconfig"                                             
+      31 +version = "2.3.1"                                              
+      32 +source = { registry = "https://pypi.org/simple" }              
+      33 +sdist = { url = "https://files.pythonhosted.org/packages/01/e1/
+         +2069291243c926a2ff1cd706c7f3eeb9b62144bf60f77c9fb9ff2fb26bd3/in
+         +iconfig-2.3.1.tar.gz", hash = "sha256:67f4b9c50da0dedf52af349e7
+         +749a80a9057a5031199791b906c3bb3ae878960", size = 21209, upload-
+         +time = "2026-10-06T22:48:38.076Z" }                            
+      34 +wheels = [                                                     
+      35 +    { url = "https://files.pythonhosted.org/packages/56/43/4ca9
+         +e49d27a1fcf6bece6f6aec0ea46bb9112489b93d4b688fb415457bdb/inicon
+         +fig-2.3.1-py3-none-any.whl", hash = "sha256:9121e2c1fdb35523249
+         +5be3194c8dfe87ccc2d5dee45947b78e68f499790d7a7", size = 7552, up
+         +load-time = "2026-10-06T22:48:36.959Z" },                      
+      36 +]                                                              
+      37 +                                                               
+      38 +[[package]]                                                    
+      39 +name = "packaging"                                             
+      40 +version = "26.3"                                               
+     … 39 more lines (ctrl+o to expand)
+  ⎿  (timeout 6m 40s)
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Usó Python 3.15, que aún no tiene wheels de pyyaml. Fijo Python 3.12 (ya
+  instalado) y reintento.
+
+● Bash(rm -rf .venv && uv python pin 3.12 && unset VIRTUAL_ENV && uv add
+      "fastmcp>=4,<5" httpx pandas pyarrow geopandas matplotlib 2>&1 | tail -4
+      && cat pyproject.toml)
+  ⎿  Pinned `.python-version` to `3.12`
+      + uncalled-for==0.6.0
+      + uvicorn==0.54.0
+     … +19 lines (ctrl+o to expand)
+  ⎿  Created
+     ~\Documents\GitHub\data-science-python-2026\tarea_8\.python-version
+     (+1 -0)
+      1 +3.12                                                            
+  ⎿  Updated
+     ~\Documents\GitHub\data-science-python-2026\tarea_8\pyproject.toml (+8
+     -1)
+       2  name = "agente-bcrp-enaho"
+       3  version = "0.1.0"
+       4  requires-python = ">=3.11"
+       5 -dependencies = []                                              
+       5 +dependencies = [                                               
+       6 +    "fastmcp>=4,<5",                                           
+       7 +    "geopandas>=1.2.0",                                        
+       8 +    "httpx>=0.28.1",                                           
+       9 +    "matplotlib>=3.11.2",                                      
+      10 +    "pandas>=3.1.1",                                           
+      11 +    "pyarrow>=26.0.1",                                         
+      12 +]                                                              
+      13  
+      14  [dependency-groups]
+      15  dev = [
+  ⎿  … 1 more file changed
+  ⎿  (timeout 6m 40s)
+
+● Ahora la configuración de pytest, el .gitignore y las carpetas.
+
+● Bash(cat >> pyproject.toml <<'EOF'…)
+  ⎿  E        +  where 0 = len([])
+     E        +    where [] = <function run at 0x000001A99727E020>(<corouti
+     ne object _con_cliente at 0x000001A9AC7AE5C0>)
+     … +18 lines (ctrl+o to expand)
+  ⎿  Created ~\Documents\GitHub\data-science-python-2026\tarea_8\.claude\sk
+     ills\graficando-enaho\scripts\.gitkeep (+0 -0)
+  ⎿  Created ~\Documents\GitHub\data-science-python-2026\tarea_8\.claude\sk
+     ills\limpiando-enaho\scripts\.gitkeep (+0 -0)
+  ⎿  Created ~\Documents\GitHub\data-science-python-2026\tarea_8\.claude\sk
+     ills\mapeando-enaho\scripts\.gitkeep (+0 -0)
+  ⎿  Created ~\Documents\GitHub\data-science-python-2026\tarea_8\evaluacion
+     \.gitkeep (+0 -0)
+  ⎿  Created ~\Documents\GitHub\data-science-python-2026\tarea_8\evidencias
+     _ia\evaluacion\.gitkeep (+0 -0)
+  ⎿  … 9 more files changed
+  ⎿  (timeout 5m)
+
+● 1 passed, 7 failed, como esperabas. Verifico que los archivos sigan idénticos
+  al original y muestro el árbol.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● El proyecto ya está preparado en tarea_8/. Al correr uv run pytest -q salió 1 
+  passed, 7 failed, como esperabas. No toqué los TODO de server.py ni hice
+  commit.
+
+  ▎ ⚠️ Plazo: según el enunciado, la entrega vence hoy, domingo 8 de noviembre 
+  ▎ de 2026, a las 11:59 p. m. (hora de Perú).
+
+  1. Resumen del enunciado
+
+  Parte: 1. Servidor MCP del BCRP
+  Pts: 5
+  Qué se pide: buscar_series, serie, resumen y una herramienta tuya; un recurso
+  y
+  un prompt MCP; conexión con Claude Code; 10 pruebas aprobadas (8 originales
+  sin modificar y 2 tuyas)
+  Archivos obligatorios: mcp/server.py, mcp/test_server.py, .mcp.json
+  ────────────────────────────────────────
+  Parte: 2. Skills de ENAHO
+  Pts: 6
+  Qué se pide: limpiando-enaho: lee los módulos 34 y 02, filtra residentes, une
+  con validate="m:1", aplica factores de expansión y valida (pobreza ≈27.6 %
+  ±0.1 pp, 108,664 residentes, 25 códigos). graficando-enaho: gráficos por
+  área, sexo y departamento. mapeando-enaho: mapa coroplético con ubigeo[:2] ↔
+  FIRST_IDDP, Lima y Callao separados
+  Archivos obligatorios: .claude/skills/*/SKILL.md,
+  limpiando-enaho/reference.md,
+  scripts/limpiar.py, salidas/validacion.txt, salidas/indicadores.csv,
+  figuras/, mapas/
+  ────────────────────────────────────────
+  Parte: 3. Agente integrador
+  Pts: 5
+  Qué se pide: Una pregunta propia que use BCRP y ENAHO; una sola ejecución con
+  al menos 2 herramientas MCP y 2 Skills; informe con 3 hallazgos, un gráfico
+  del BCRP, uno de ENAHO y un mapa; verificar a mano 3 cifras
+  Archivos obligatorios: informes/informe_final.md
+  ────────────────────────────────────────
+  Parte: 4. Evaluación y documentación
+  Pts: 4
+  Qué se pide: 10 preguntas (4 del BCRP, 4 de ENAHO, 2 mixtas), cada una
+  respondida sin y con MCP/Skills, comparando aciertos y tiempos; README de 12
+  puntos; historial completo de conversaciones con IA
+  Archivos obligatorios: evaluacion/preguntas.csv, resultados.csv,
+  comparacion.md, README.md, evidencias_ia/{mcp,skills,integracion,evaluacion}/
+
+  2 a 5. Lo que hice
+
+  - Carpetas: creé la estructura que pide el enunciado. Las carpetas vacías
+    llevan un .gitkeep para que Git las registre, menos datos/, que está
+    ignorada.
+  - Archivos del profesor: copié server.py y test_server.py a mcp/ y los comparé
+    con cmp contra el original: son idénticos.
+  - uv: las dependencias quedaron en pyproject.toml, con pytest como dependencia
+    de desarrollo. Agregué testpaths y pythonpath = ["mcp"] para que las
+    pruebas se ejecuten desde mcp/.
+  - Python 3.12: uv eligió primero Python 3.15, y la instalación falló porque
+    pyyaml (que necesita fastmcp) todavía no tiene versión precompilada para
+    3.15. Por eso fijé Python 3.12 en .python-version.
+  - .gitignore: excluye datos/, .venv/ y salidas/*.parquet, y además
+    __pycache__/ y .pytest_cache/. Como datos/ está escrito sin / al inicio,
+    también ignora mcp/datos/catalogo_bcrp.csv, el catálogo de unos 7 MB que el
+    servidor descargó en la primera ejecución.
+  - Variable VIRTUAL_ENV: tu terminal tiene activo el entorno de tarea_5. uv lo
+    ignora y usa el .venv de tarea_8, pero conviene que corras deactivate.
+
+  6. Pruebas y árbol
+
+  La prueba que pasa es test_buscar_encuentra_el_ipc. Las 7 que fallan dependen
+  de los TODO.
+
+  tarea_8/
+  ├── .gitignore
+  ├── .python-version
+  ├── pyproject.toml
+  ├── uv.lock
+  ├── mcp/
+  │   ├── server.py
+  │   ├── test_server.py
+  │   └── datos/catalogo_bcrp.csv     (ignorado)
+  ├── .claude/skills/
+  │   ├── limpiando-enaho/scripts/
+  │   ├── graficando-enaho/scripts/
+  │   └── mapeando-enaho/scripts/
+  ├── datos/                          (ignorado)
+  ├── salidas/
+  ├── figuras/
+  ├── mapas/
+  ├── evaluacion/
+  ├── informes/
+  └── evidencias_ia/
+      ├── mcp/
+      ├── skills/
+      ├── integracion/
+      └── evaluacion/
+
+  Los archivos que se llenan después (README.md, .mcp.json, los SKILL.md, etc.)
+  los iremos creando en cada parte.
+
+✻ Cooked for 4m 3s · done 2:21 PM
+
+※ recap: Estamos preparando la Tarea 4 en tarea_8/: ya están las carpetas, uv, el .gitignore y los archivos del profesor, con 1 passed y 7 failed. Lo siguiente es completar los TODO de server.py, que vence hoy a las 11:59 p. m. (disable recaps in /config)
+
+❯ A continuación desarrollaremos la Parte 1 de la tarea, correspondiente al     
+  servidor MCP del BCRP. Te pido que leas tarea_8/mcp/server.py y               
+  test_server.py y que completes los TODO 1 a 5, respetando las convenciones    
+  del material del curso, es decir, nombres en español, docstrings que precisen 
+  cuándo corresponde usar cada herramienta, mensajes de error claros mediante   
+  ToolError y la ejecución de todos los cálculos en Python y no por estimación  
+  del modelo.                                                                   
+                                                                                
+  1. La herramienta serie(codigo, desde, hasta) debe seguir las indicaciones    
+  del TODO 1, admitir fechas en los formatos "2025-01", "2026-10-01", "2025-T1" 
+  y "2025", reintentar la consulta cuando la API responda con HTML y conservar  
+  en caché los datos descargados.                                               
+  2. La herramienta resumen(codigo, desde, hasta) debe reportar el primer y el  
+  último valor, el cambio absoluto, la variación porcentual, el promedio y los  
+  valores máximo y mínimo junto con su periodo.                                 
+  3. Como herramienta propia, propongo comparar_series(codigo_a, codigo_b,      
+  desde, hasta), cuyo propósito es contrastar dos indicadores en los mismos     
+  periodos. Para ello debe alinear las series, agregar la de mayor frecuencia a 
+  la de menor frecuencia mediante promedios cuando ambas difieran, identificar  
+  los periodos sin dato, calcular la correlación de Pearson (o devolver None    
+  cuando existan menos de tres periodos comunes) y presentar un resumen de cada 
+  serie con sus respectivas fuentes.                                            
+  4. El recurso bcrp://serie/{codigo} debe exponer la ficha descriptiva de cada 
+  serie.                                                                        
+  5. El prompt informe(tema) debe orientar la elaboración de informes que citen 
+  el código, el periodo y la fuente de cada cifra y que no incorporen datos     
+  inventados.                                                                   
+                                                                                
+  Posteriormente, sin alterar las ocho pruebas originales, añade al final de    
+  test_server.py dos pruebas para comparar_series. La primera debe contrastar   
+  PN01273PM y PN01271PM entre 2025-01 y 2025-12 y verificar doce periodos       
+  comunes. La segunda debe contrastar PD04638PD, de frecuencia diaria, con      
+  PN01273PM, de frecuencia mensual, entre 2026-01 y 2026-09, y verificar una    
+  frecuencia común mensual con nueve periodos. Asimismo, crea tarea_8/.mcp.json 
+  con el servidor bcrp ejecutado mediante "uv run mcp/server.py" y corre uv     
+  run pytest -q hasta obtener 10 passed.                                        
+                                                                                
+  Finalmente, descarga en tarea_8/datos/ los siguientes archivos e indícame el  
+  tamaño de cada uno.                                                           
+  https://proyectos.inei.gob.pe/iinei/srienaho/descarga/STATA/966-Modulo34.zip  
+  https://proyectos.inei.gob.pe/iinei/srienaho/descarga/STATA/966-Modulo02.zip  
+  https://raw.githubusercontent.com/d2cml-ai/Data-Science-Python/main/sessions/ 
+  06-geoespacial/lab/Data/peru_departamental_simple.geojson                     
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Leí ambos archivos. Mientras reviso la API de fastmcp, inicio las descargas de
+  los datos en segundo plano.
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+● Background command "Download ENAHO modules and GeoJSON to datos" completed
+(exit code 0)
+
+● Las descargas terminaron. Ahora escribo la implementación de los TODO.
+
+● Update(~\Documents\GitHub\data-science-python-2026\tarea_8\mcp\server.py)
+  ⎿  Added 2 lines
+       6  
+       7  Las cuentas las hace Python, no el modelo: así cada cifra sale 
+          de una llamada que se puede repetir.
+       8  """
+       9 +import json                                                    
+      10  import re
+      11 +import time                                                    
+      12  import unicodedata
+      13  from functools import cache
+      14  from pathlib import Path
+
+● Update(~\Documents\GitHub\data-science-python-2026\tarea_8\mcp\server.py)
+  ⎿  Added 1 line, removed 1 line
+      16  import httpx
+      17  import pandas as pd
+      18  from fastmcp import FastMCP
+      19 -from fastmcp.exceptions import ToolError                       
+      19 +from fastmcp.exceptions import ResourceError, ToolError        
+      20  
+      21  AQUI = Path(__file__).parent
+      22  CATALOGO = AQUI / "datos" / "catalogo_bcrp.csv"
+
+  Made 1 scratchpad edit +299 (ctrl+o to expand)
+
+● Bash(unset VIRTUAL_ENV && uv run python - <<'EOF'
+      from pathlib import Path…)
+  ⎿  1:"""Servidor MCP del BCRP. Empiecen aquí: buscar_series ya funciona;
+     completen los TODO hasta que pasen las pruebas.
+     84:# TODO 1 · serie
+     … +4 lines (ctrl+o to expand)
+  ⎿  1 file changed (binary, mode only or too large to show)
+
+● Ahora agrego las dos pruebas, el .mcp.json, y corro pytest.
+
+● Bash(cat >> mcp/test_server.py <<'EOF'…)
+  ⎿  ..........
+        [100%]
+     10 passed in 12.42s
+  ⎿  Created ~\Documents\GitHub\data-science-python-2026\tarea_8\.mcp.json
+     (+8 -0)
+      1 +{                                                               
+      2 +  "mcpServers": {                                               
+      3 +    "bcrp": {                                                   
+      4 +      "command": "uv",                                          
+      5 +      "args": ["run", "mcp/server.py"]                          
+      6 +    }                                                           
+      7 +  }                                                             
+      8 +}                                                               
+  ⎿  Updated
+     ~\Documents\GitHub\data-science-python-2026\tarea_8\mcp\test_server.py
+     (+26 -0)
+      69  
+      70  def test_un_prompt():
+      71      assert len(asyncio.run(_con_cliente(lambda c: c.list_prompt
+          s()))) >= 1
+      72 +                                                               
+      73 +                                                               
+      74 +# --- Pruebas propias: comparar_series ------------------------
+         +---------------------------------------------------            
+      75 +                                                               
+      76 +def test_comparar_series_misma_frecuencia():                   
+      77 +    r = llamar("comparar_series", codigo_a="PN01273PM", codigo_
+         +b="PN01271PM", desde="2025-01", hasta="2025-12")               
+      78 +    assert r["frecuencia_comun"] == "Mensual"                  
+      79 +    assert r["agregacion"] is None                             
+      80 +    assert r["n_comunes"] == 12                                
+      81 +    assert [d["periodo"] for d in r["datos"]] == [f"2025-{m:02d
+         +}" for m in range(1, 13)]                                      
+      82 +    assert r["sin_dato"] == {"a": [], "b": []}                 
+      83 +    assert r["correlacion"] is None or -1 <= r["correlacion"] <
+         += 1                                                            
+      84 +    assert r["series"]["a"]["codigo"] == "PN01273PM" and r["ser
+         +ies"]["b"]["codigo"] == "PN01271PM"                            
+      85 +    assert all(s["fuente"].startswith("https://estadisticas.bcr
+         +p.gob.pe") for s in r["series"].values())                      
+      86 +                                                               
+      87 +                                                               
+      88 +def test_comparar_series_agrega_la_diaria_a_mensual():         
+      89 +    r = llamar("comparar_series", codigo_a="PD04638PD", codigo_
+         +b="PN01273PM", desde="2026-01", hasta="2026-09")               
+      90 +    assert r["frecuencia_comun"] == "Mensual"                  
+      91 +    assert r["n_comunes"] == 9                                 
+      92 +    assert [d["periodo"] for d in r["datos"]] == [f"2026-{m:02d
+         +}" for m in range(1, 10)]                                      
+      93 +    assert r["agregacion"] and "PD04638PD" in r["agregacion"][0
+         +]                                                              
+      94 +    assert r["series"]["a"]["frecuencia"] == "Diaria" and r["se
+         +ries"]["a"]["resumen"]["n"] == 9                               
+      95 +    # el valor mensual del tipo de cambio es el promedio de sus
+         + días, calculado aquí por separado                             
+      96 +    dias = llamar("serie", codigo="PD04638PD", desde="2026-01",
+         + hasta="2026-01")["datos"]                                     
+      97 +    assert r["datos"][0]["valor_a"] == pytest.approx(sum(d["val
+         +or"] for d in dias) / len(dias), abs=1e-6)                     
+  ⎿  (timeout 6m 40s)
+● 10 passed. Compruebo que las 8 pruebas originales siguen idénticas y pruebo
+  los casos límite (formatos de fecha, errores, recurso y prompt).
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Todo responde bien. Para terminar, compruebo que el servidor arranque por
+  stdio con el comando de .mcp.json y reviso las descargas.
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+● La Parte 1 quedó lista: uv run pytest -q da 10 passed, y las 8 pruebas
+  originales son idénticas a las del repo del profesor (lo comprobé con cmp). No
+  hice commit.
+
+  Las cinco piezas de mcp/server.py
+
+  TODO: 1
+  Pieza: serie
+  Qué hace: Acepta fechas "2025", "2025-T1", "2025-01" y "2026-10-01" con
+  cualquier frecuencia ("2025" en una serie mensual va de enero a diciembre).
+  Traduce los nombres de periodo del BCRP (Ene.2025, 01.Oct.26, T1.25, Set) y
+  omite los "n.d.". Si la API responde con HTML, reintenta hasta 4 veces
+  esperando 1, 2 y 4 s. Guarda en caché las descargas que salen bien.
+  ────────────────────────────────────────
+  TODO: 2
+  Pieza: resumen
+  Qué hace: Primer y último valor, cambio absoluto, variación porcentual,
+  promedio, y máximo y mínimo con su periodo.
+  ────────────────────────────────────────
+  TODO: 3
+  Pieza: comparar_series
+  Qué hace: Usa la frecuencia más baja de las dos y promedia la otra hacia ella,
+
+  indicándolo en agregacion. Lista los periodos sin dato de cada serie. Da la
+  correlación de Pearson, o None si hay menos de 3 periodos comunes o una serie
+   es constante. Incluye un resumen de cada serie con su fuente.
+  ────────────────────────────────────────
+  TODO: 4
+  Pieza: bcrp://serie/{codigo}
+  Qué hace: Ficha de la serie: nombre, categoría, frecuencia, inicio, última
+  actualización y enlaces a la página oficial y a la API.
+  ────────────────────────────────────────
+  TODO: 5
+  Pieza: informe(tema)
+  Qué hace: Pide un plan, cifras solo de las herramientas, citas con código,
+  periodo y fuente, cambios en puntos porcentuales para las tasas, cautela con
+  la causalidad y una tabla de fuentes al final.
+
+  - Errores: un código inexistente, una fecha mal escrita (por ejemplo 2025-13),
+    un rango al revés o un periodo sin datos dan un ToolError que dice qué
+    falló. En el recurso, un código inexistente da un ResourceError.
+  - Variación porcentual: se calcula como cambio / |primero| × 100. En series
+    que ya son tasas, como el IPC, la docstring indica reportar el cambio en
+    puntos porcentuales: de 2025-12 a 2026-09 son +3.04 pp, que es más claro que
+    "+201 %".
+
+  Pruebas nuevas y .mcp.json
+
+  - test_comparar_series_misma_frecuencia: compara PN01273PM y PN01271PM en 2025
+    y verifica 12 periodos comunes, que no haya agregación ni periodos
+    faltantes, y las fuentes.
+  - test_comparar_series_agrega_la_diaria_a_mensual: compara PD04638PD y
+    PN01273PM entre 2026-01 y 2026-09 y verifica frecuencia mensual y 9
+    periodos. Además recalcula por separado el promedio de enero del tipo de
+    cambio diario y lo compara con el resultado de la herramienta.
+  - .mcp.json: registra el servidor bcrp con uv run mcp/server.py. Lo lancé por
+    stdio con ese mismo comando y expone las 4 herramientas, el recurso y el
+    prompt.
+
+  Descargas en tarea_8/datos/ (ignoradas por Git)
+
+  ┌───────────────────────────────────┬────────────┬────────────────────────┐
+  │              Archivo              │   Tamaño   │       Contenido        │
+  ├───────────────────────────────────┼────────────┼────────────────────────┤
+  │                                   │ 15,935,617 │ sumaria-2024.dta y     │
+  │ 966-Modulo34.zip                  │     bytes  │ sumaria-2024-12g.dta,  │
+  │                                   │  (15.2 MB) │ más PDFs               │
+  ├───────────────────────────────────┼────────────┼────────────────────────┤
+  │                                   │ 5,793,097  │ enaho01-2024-200.dta,  │
+  │ 966-Modulo02.zip                  │ bytes (5.5 │ más tablas y PDFs      │
+  │                                   │        MB) │                        │
+  ├───────────────────────────────────┼────────────┼────────────────────────┤
+  │                                   │   139,681  │ 25 departamentos, con  │
+  │ peru_departamental_simple.geojson │ bytes (136 │ la llave FIRST_IDDP    │
+  │                                   │        KB) │                        │
+  └───────────────────────────────────┴────────────┴────────────────────────┘
+
+  Para la Parte 2: el módulo 34 trae dos archivos de sumaria (la versión normal
+  y la de 12 grupos de gasto). Tendremos que elegir el que reproduzca el 27.6 %
+  de pobreza.
+
+✻ Cooked for 4m 45s · done 2:41 PM
