@@ -1,0 +1,3043 @@
+ ▐▛███▛█   Claude Code v2.1.319
+▝▜██████▀  Opus 5.5 · Claude Pro
+ ▝▝   ▝▝   ~\Documents\GitHub\data-science-python-2026\tarea_8
+
+
+❯ Responde mediante el agente del proyecto, en esta única ejecución, la         
+  pregunta de investigación de informes/informe_final.md. ¿Cómo se configuró la 
+  pobreza monetaria en el Perú en 2024 según departamento, área de residencia   
+  y sexo, en un contexto macroeconómico marcado por la evolución de la          
+  inflación y del crecimiento económico entre 2019 y 2024?                      
+                                                                                
+  Para ello, invoca las skills del proyecto mediante la herramienta Skill, de   
+  modo que queden registradas en esta sesión. Usa limpiando-enaho, porque la    
+  base procesada no existe, luego graficando-enaho (area, sexo y sexo_area) y   
+  finalmente mapeando-enaho. Consulta además el servidor MCP bcrp con           
+  buscar_series, resumen, serie y comparar_series para la inflación interanual  
+  de Lima Metropolitana y el crecimiento del PBI real entre 2019 y 2024, y      
+  ejecuta uv run informes/grafico_bcrp.py para regenerar la figura del BCRP.    
+                                                                                
+  Luego contrasta cada cifra obtenida con las que figuran en                    
+  informes/informe_final.md. No modifiques el informe salvo que alguna cifra    
+  difiera, en cuyo caso explícalo. Al final, presenta una tabla con cada        
+  herramienta MCP y cada skill utilizada en esta ejecución, en orden, con sus   
+  argumentos principales y su resultado. No hagas commit.                       
+
+● Empiezo con la skill de limpieza y leo el informe en paralelo.
+
+● Skill(limpiando-enaho)
+  ⎿  Successfully loaded skill
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Bash(cd "C:/Users/anaza/Documents/GitHub/data-science-python-2026/tarea_8" &&
+      uv run C:/Users/anaza/Documents/GitHub/data-science-python-2026/tarea_8/.c
+      laude/skills/…)
+  ⎿  warning: `VIRTUAL_ENV=C:\Users\anaza\Documents\GitHub\data-science-pyt
+     hon-2026\tarea_5\.venv` does not match the project environment path `.
+     venv` and will be ignored; use `--active` to target the active environ
+     … +141 lines (ctrl+o to expand)
+  ⎿  Updated salidas\validacion.txt (+1 -1)
+      1 -Validación de la ENAHO 2024 (INEI) · 2026-11-08 15:50           
+      1 +Validación de la ENAHO 2024 (INEI) · 2026-11-08 16:07           
+      2  Archivos: datos/966-Modulo34.zip:966-Modulo34/sumaria-2024.dta y
+          datos/966-Modulo02.zip:966-Modulo02/enaho01-2024-200.dta
+      3  Tolerancia para la pobreza: 0.1 puntos porcentuales
+      4  
+  ⎿  (timeout 10m)
+
+● Skill(graficando-enaho)
+  ⎿  Successfully loaded skill
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Skill(graficando-enaho)
+  ⎿  Successfully loaded skill
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Llevo dos de los tres gráficos (área y sexo). Sigo con sexo_area, el mapa y
+  las series del BCRP.
+
+● Skill(graficando-enaho)
+  ⎿  Successfully loaded skill
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Reviso las tres figuras y paso al mapa.
+
+  Read 3 files (ctrl+o to expand)
+
+● Skill(mapeando-enaho)
+  ⎿  Successfully loaded skill
+
+  Read 1 file, ran 1 shell command (ctrl+o to expand)
+
+● Mapa correcto (Lima y Callao separados, sin solapamientos). Paso al BCRP.
+
+  Called bcrp 7 times (ctrl+o to expand)
+
+● Todas las cifras del BCRP coinciden. Regenero la figura 1.
+
+  Read 1 file, ran 1 shell command (ctrl+o to expand)
+
+● Respuesta a la pregunta de investigación
+
+  En 2024, la pobreza monetaria en el Perú dependió sobre todo del territorio.
+  El sexo influyó mucho menos.
+
+  - Nacional: 27.6 % de pobreza monetaria y 5.5 % de pobreza extrema (método
+    oficial: sumaria con factor07 × mieperho).
+  - Departamento: Cajamarca tuvo la cifra más alta (45.0 %), seguida de Loreto
+    (43.0 %) y Puno (39.9 %). Ica tuvo la más baja (6.0 %), seguida de Moquegua
+    (11.0 %) y Madre de Dios (11.1 %). Entre el más alto y el más bajo hay 39.0
+    pp. Callao (33.9 %) superó a Lima (27.1 %). Los 25 departamentos coinciden
+    al decimal con la referencia.
+  - Área: 39.3 % en el área rural y 24.8 % en la urbana, una brecha de 14.5 pp.
+    En pobreza extrema, 15.5 % frente a 3.1 %.
+  - Sexo (método de personas con facpob07): 27.7 % en mujeres y 27.4 % en
+    hombres. En el área rural, 40.0 % frente a 38.8 % (1.2 pp). En la urbana,
+    24.8 % frente a 24.6 %. Ningún grupo tiene menos de 100 casos.
+  - Contexto macroeconómico 2019–2024:
+    - PBI real (PM04923AA): 2.2 % en 2019, −10.9 % en 2020, 13.4 % en 2021, 2.8
+      % en 2022, −0.4 % en 2023 y 3.5 % en 2024. El promedio fue 1.8 %.
+    - Inflación de Lima Metropolitana (PN01273PM): 2.1 % en enero de 2019,
+      mínimo de 1.6 % en junio de 2020, máximo de 8.8 % en junio de 2022 y 2.0 %
+      en diciembre de 2024. El promedio de los 72 meses fue 4.1 %. Los
+      promedios anuales fueron 7.9 % en 2022, 6.3 % en 2023 y 2.4 % en 2024. El
+      último dato es 5.3 % en octubre de 2026.
+    - La correlación entre ambas series es 0.23 con solo 6 años, una asociación
+      débil que no indica causalidad.
+
+  Contraste con informes/informe_final.md
+
+  Comparé cada cifra de los hallazgos 1 a 5, de la interpretación y de la tabla
+  de verificación con lo que se obtuvo en esta ejecución. Todas coinciden al 
+  decimal, así que no modifiqué el informe. Dos redondeos que convenía revisar:
+  - Madre de Dios: 11.15 aparece como 11.1, igual que en la referencia.
+  - PBI 2023: −0.3507 se redondea a −0.4.
+
+  Las validaciones de la limpieza salieron todas en [OK]. En el árbol de trabajo
+  solo cambió salidas/validacion.txt, por su sello de fecha y hora. Las figuras
+  regeneradas quedaron idénticas, ya que git no las marca como modificadas. No
+  hice commit.
+
+  Herramientas usadas, en orden
+
+  #: 1
+  Herramienta: Skill limpiando-enaho
+  Argumentos principales: limpiar.py --anio 2024
+  Resultado: 108 664 personas en 33 691 hogares; todas las validaciones en [OK];
+
+    nacional 27.58 % (oficial) y 27.53 % (personas); indicadores.csv con 47
+  filas
+  ────────────────────────────────────────
+  #: 2
+  Herramienta: Skill graficando-enaho
+  Argumentos principales: --indicador area
+  Resultado: figuras/pobreza_area.png: rural 39.3 %, urbana 24.8 %
+  ────────────────────────────────────────
+  #: 3
+  Herramienta: Skill graficando-enaho
+  Argumentos principales: --indicador sexo
+  Resultado: figuras/pobreza_sexo.png: mujeres 27.7 %, hombres 27.4 %
+  ────────────────────────────────────────
+  #: 4
+  Herramienta: Skill graficando-enaho
+  Argumentos principales: --indicador sexo_area
+  Resultado: figuras/pobreza_sexo_area.png: rural 40.0 % y 38.8 %; urbana 24.8 %
+
+    y 24.6 % (mujeres y hombres)
+  ────────────────────────────────────────
+  #: 5
+  Herramienta: Skill mapeando-enaho
+  Argumentos principales: mapear.py
+  Resultado: mapas/pobreza_departamento.png; 25 de 25 departamentos coinciden
+  con
+    la referencia y ninguno queda en AVISO
+  ────────────────────────────────────────
+  #: 6
+  Herramienta: MCP buscar_series
+  Argumentos principales: "ipc lima 12 meses", Mensual
+  Resultado: PN01273PM (catálogo actualizado al 2026-10-08)
+  ────────────────────────────────────────
+  #: 7
+  Herramienta: MCP buscar_series
+  Argumentos principales: "pbi tipo de gasto variaciones reales", Anual
+  Resultado: PM04923AA (catálogo actualizado al 2026-08-20)
+  ────────────────────────────────────────
+  #: 8
+  Herramienta: MCP resumen
+  Argumentos principales: PN01273PM, 2019-01 a 2024-12
+  Resultado: n = 72; primer dato 2.13; último 1.97; promedio 4.08; máximo 8.81
+    (2022-06); mínimo 1.60 (2020-06)
+  ────────────────────────────────────────
+  #: 9
+  Herramienta: MCP resumen
+  Argumentos principales: PM04923AA, 2019 a 2024
+  Resultado: n = 6; promedio 1.78; máximo 13.42 (2021); mínimo −10.93 (2020)
+  ────────────────────────────────────────
+  #: 10
+  Herramienta: MCP serie
+  Argumentos principales: PM04923AA, 2019 a 2024
+  Resultado: 2.24, −10.93, 13.42, 2.82, −0.35, 3.52
+  ────────────────────────────────────────
+  #: 11
+  Herramienta: MCP serie
+  Argumentos principales: PN01273PM, 2026-09 a 2026-10
+  Resultado: 4.55 y 5.25
+  ────────────────────────────────────────
+  #: 12
+  Herramienta: MCP comparar_series
+  Argumentos principales: PN01273PM frente a PM04923AA, 2019 a 2024
+  Resultado: Promedios anuales de inflación: 2.14, 1.83, 3.97, 7.86, 6.31, 2.35;
+
+    correlación 0.2323 (n = 6)
+  ────────────────────────────────────────
+  #: 13
+  Herramienta: uv run informes/grafico_bcrp.py (usa el servidor MCP con
+    fastmcp.Client)
+  Argumentos principales: PN01273PM, 2019-01 a 2024-12
+  Resultado: figuras/bcrp_inflacion_2019_2024.png regenerada, con máximo 8.8 % y
+
+    cierre en 2.0 %
+
+  Abrí todas las figuras y el mapa. No hay textos superpuestos ni cortados, y
+  Lima y Callao aparecen separados en el recuadro ampliado.
+
+✻ Churned for 1m 35s · done 4:09 PM
+
+❯ /export evidencias_ia/integracion/02_ejecucion_integrada.txt                  
+  ⎿  Conversation exported to: C:\Users\anaza\Documents\GitHub\data-science-pyth
+     on-2026\tarea_8\evidencias_ia\integracion\02_ejecucion_integrada.txt
+
+❯ Copia a evidencias_ia/historial_completo/ los archivos .jsonl de todas las    
+  sesiones de Claude Code de este proyecto, que están en la carpeta de          
+  proyectos de ~/.claude/projects/ correspondiente a tarea_8 y a la carpeta     
+  raíz del repositorio. Nómbralos en orden cronológico como sesion_01.jsonl,    
+  sesion_02.jsonl, etcétera. Antes de copiarlos, revisa que no contengan claves 
+  API, tokens, contraseñas ni correos electrónicos, y reemplaza cualquiera que  
+  encuentres por [OCULTO]. Por último, crea                                     
+  evidencias_ia/historial_completo/LEEME.md con una tabla que indique, para     
+  cada archivo, la fecha, la parte de la tarea que cubre y su exportación en    
+  texto equivalente. No hagas commit.                                           
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Encontré 5 sesiones: 2 en la raíz y 3 en tarea_8. Reviso las fechas y el
+  primer pedido de cada una, y busco datos sensibles.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Las coincidencias de @mcp.tool son decoradores de Python y no correos, así que
+  los reales son los de la usuaria y noreply@anthropic.com. Ahora reviso qué
+  exportaciones en texto hay y a qué sesión corresponde cada una.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Las sesiones 2686754a, 8f2d36c9, 17d456e5 y la actual corresponden a las
+  exportaciones de mcp, skills e integración; dejo fuera 833cee71 por ser de la
+  tarea 7 y copio las sesiones con los correos ocultos.
+
+  Ran 1 shell command (ctrl+o to expand)
+● Quedan dos coincidencias en sesion_04. Reviso qué son.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Esas dos coincidencias son patrones de búsqueda de mis scripts de revisión, no
+  secretos reales. Ahora reviso los pedidos de cada sesión para ver qué parte
+  de la tarea cubre cada una.
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+● Write(evidencias_ia\historial_completo\LEEME.md)
+  ⎿  Wrote 21 lines to evidencias_ia\historial_completo\LEEME.md
+       1 # Historial completo de las sesiones de Claude Code
+       2 
+       3 Esta carpeta contiene los registros originales (`.jsonl`) de las
+          sesiones de Claude Code en que se desarrolló la Tarea 8 (issue 
+         #33, rama `tarea-8-agente-bcrp-enaho`). Los archivos proceden de
+          `~/.claude/projects/`, de las carpetas correspondientes a la ra
+         íz del repositorio y a `tarea_8`, y están numerados en orden cro
+         nológico según el primer mensaje de cada sesión.
+       4 
+       5 ## Sesiones
+     … +16 lines (ctrl+o to expand)
+
+● Compruebo que la exportación duplicada sea idéntica, como dice la nota.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Copié 4 sesiones a evidencias_ia/historial_completo/, con los correos
+  reemplazados por [OCULTO], y creé el LEEME.md con su tabla. No hice commit.
+
+  Archivo: sesion_01.jsonl
+  Sesión original: 2686754a… (raíz)
+  Hora (Lima, 8 nov 2026): 14:17–14:44
+  Parte de la tarea: Preparación del proyecto y servidor MCP
+  Exportación en texto: mcp/01_servidor_mcp.txt
+  ────────────────────────────────────────
+  Archivo: sesion_02.jsonl
+  Sesión original: 8f2d36c9… (tarea_8)
+  Hora (Lima, 8 nov 2026): 14:48–15:44
+  Parte de la tarea: Demostración del MCP y desarrollo de las 3 skills
+  Exportación en texto: mcp/02_demostracion_mcp.txt y
+    skills/01_desarrollo_skills.txt
+  ────────────────────────────────────────
+  Archivo: sesion_03.jsonl
+  Sesión original: 17d456e5… (tarea_8)
+  Hora (Lima, 8 nov 2026): 15:46–16:04
+  Parte de la tarea: Activación de skills, agente e informe final
+  Exportación en texto: skills/02_activacion_skills.txt e
+    integracion/01_agente_investigacion.txt
+  ────────────────────────────────────────
+  Archivo: sesion_04.jsonl
+  Sesión original: a3903f2e… (esta sesión)
+  Hora (Lima, 8 nov 2026): desde 16:07
+  Parte de la tarea: Ejecución integrada
+  Exportación en texto: integracion/02_ejecucion_integrada.txt
+
+  Datos sensibles: busqué claves API (Anthropic, OpenAI, GitHub, AWS, Google),
+  tokens Bearer y JWT, contraseñas y correos.
+  - No había claves, tokens ni contraseñas.
+  - Los únicos correos eran el tuyo y noreply@anthropic.com, de la línea de
+    coautoría de los commits. Reemplacé ambos por [OCULTO].
+  - Dejé @mcp.tool, @mcp.resource y @mcp.prompt, que son decoradores de Python y
+    no correos.
+  - Comprobé que todas las líneas de los cuatro archivos siguen siendo JSON
+    válido.
+
+  Tres puntos que debes revisar:
+  1. Dejé fuera una sesión de la raíz. La sesión 833cee71…, del 1 de noviembre,
+     está en la carpeta raíz pero corresponde a la tarea 7: ahí se descargó la
+     ENAHO para tarea_7/. Por eso no la incluí, aunque pediste copiar las
+     sesiones de la raíz. Si la quieres, puedo agregarla como sesion_01 y correr
+     la numeración.
+  2. sesion_04.jsonl está incompleta. La copié mientras esta sesión seguía
+     abierta, así que termina antes de la creación del LEEME.md y de esta
+     respuesta. Si quieres el registro completo, vuelve a copiarla al cerrar la
+     sesión.
+  3. Hay una exportación duplicada.
+     datos/tarea_8/evidencias_ia/mcp/01_servidor_mcp.txt es idéntica a
+     evidencias_ia/mcp/01_servidor_mcp.txt. Se creó al ejecutar /export desde
+     otra carpeta. Lo anoté en el LEEME.md y no la borré.
+
+  Cambios sin commit: la carpeta historial_completo/, la exportación
+  integracion/02_ejecucion_integrada.txt y salidas/validacion.txt, que solo
+  cambió en su fecha y hora.
+
+✻ Brewed for 2m 13s · done 4:11 PM
+
+※ recap: Estás reuniendo la evidencia de la Tarea 8. Ya copié las cuatro sesiones sin correos, con su LEEME.md, y el informe no necesitó cambios. Falta decidir si incluyes la sesión de la tarea 7 y luego hacer el commit. (disable recaps in /config)
+
+❯ A continuación desarrollaremos la Parte 4, que corresponde a la evaluación    
+  del agente. Te pido seguir el diseño del archivo evaluar.py de la Sesión 04   
+  (https://github.com/d2cml-ai/Data-Science-Python/tree/main/sessions/04-mcp-cl 
+  aude-code/proyecto), adaptado a esta tarea.                                   
+                                                                                
+  1. Preguntas. Crea evaluacion/preguntas.csv con las columnas id, tipo (bcrp,  
+  enaho o combinada), pregunta, valor_esperado, unidad, tolerancia,             
+  valor_esperado_2, tolerancia_2, fuente_verificacion y criterio. Las           
+  respuestas esperadas proceden de fuentes oficiales independientes del agente  
+  y no deben modificarse después de ver los resultados.                         
+     - bcrp_1. Inflación interanual de Lima Metropolitana en octubre de 2026,   
+  en %. Esperado 5.2510, tolerancia 0.05 (API del BCRP, PN01273PM, verificada   
+  en el navegador).                                                             
+     - bcrp_2. Tasa de referencia de la política monetaria del BCRP en          
+  setiembre de 2026, en %. Esperado 4.25, tolerancia 0.01 (BCRP, PD04722MM,     
+  preguntas.csv de la Sesión 04).                                               
+     - bcrp_3. Tipo de cambio interbancario venta del 15 de octubre de 2026, en 
+  soles por dólar. Esperado 3.4282, tolerancia 0.002 (BCRP, PD04638PD, Sesión   
+  04).                                                                          
+     - bcrp_4. Crecimiento del PBI real del Perú en 2025, en %. Esperado        
+  3.4306, tolerancia 0.05 (BCRP, PM04923AA, Sesión 04).                         
+     - enaho_1. Pobreza monetaria nacional en 2024, en % de personas. Esperado  
+  27.6, tolerancia 0.1 (INEI, Cifras de pobreza 2024).                          
+     - enaho_2. Pobreza monetaria rural en 2024, en %. Esperado 39.3,           
+  tolerancia 0.1 (INEI, Cifras de pobreza 2024).                                
+     - enaho_3. Pobreza monetaria de Cajamarca en 2024, en %. Esperado 45.0,    
+  tolerancia 0.1 (INEI y referencia de la Sesión 16).                           
+     - enaho_4. Pobreza monetaria de Ica en 2024, en %. Esperado 6.0,           
+  tolerancia 0.1 (referencia de la Sesión 16).                                  
+     - combinada_1. Pobreza monetaria nacional de 2024 según la ENAHO y         
+  crecimiento del PBI real de 2024 según el BCRP. Esperados 27.6 y 3.52,        
+  tolerancias 0.1 y 0.05.                                                       
+     - combinada_2. Brecha en puntos porcentuales entre la pobreza rural y la   
+  urbana en 2024 según la ENAHO, e inflación interanual de Lima Metropolitana   
+  en diciembre de 2024 según el BCRP. Esperados 14.5 y 1.97, tolerancias 0.2 y  
+  0.05.                                                                         
+     Antes de ejecutar el experimento, verifica los dos valores del BCRP de las 
+  preguntas combinadas (PBI 2024 y la inflación de diciembre de 2024)           
+  consultando directamente la API oficial, sin usar el servidor MCP, y registra 
+  la URL en fuente_verificacion. Si alguno difiere, detente y avísame.          
+                                                                                
+  2. Criterio de corrección, definido antes de ejecutar y documentado en el     
+  archivo. Una respuesta acierta si el valor está dentro de la tolerancia. En   
+  las combinadas acierta si ambos valores están dentro de su tolerancia y la    
+  interpretación es coherente, es decir, no afirma causalidad. Si devuelve      
+  null, se clasifica como «no sabe»; en cualquier otro caso, «se equivoca».     
+                                                                                
+  3. Script. Crea evaluacion/evaluar.py, que haga cada pregunta con claude -p   
+  en una sesión independiente (--no-session-persistence), con el mismo modelo   
+  (sonnet) y la misma instrucción en ambos modos, y que pida un JSON con valor, 
+  valor_2, unidad, fuente e interpretacion.                                     
+     - Modo A (sin MCP ni skills). Ejecuta desde una carpeta temporal vacía     
+  fuera del repositorio, con --tools "" y --strict-mcp-config, para impedir el  
+  acceso indirecto a resultados ya calculados.                                  
+     - Modo B (con MCP y skills). Ejecuta desde tarea_8 con --mcp-config        
+  .mcp.json y --strict-mcp-config, permitiendo solo mcp__bcrp, Skill, Read y    
+  Bash(uv run:*).                                                               
+     Usa --output-format stream-json --verbose para registrar qué herramientas  
+  se usaron efectivamente.                                                      
+                                                                                
+  4. Resultados. Guarda evaluacion/resultados.csv con, para cada pregunta y     
+  modo, la pregunta, la respuesta esperada, la respuesta generada, la fuente    
+  utilizada, las herramientas efectivamente usadas, la corrección, el tiempo en 
+  segundos y los errores o la ausencia de respuesta. Documenta en               
+  evaluacion/comparacion.md qué herramientas estaban habilitadas en cada modo.  
+                                                                                
+  5. Análisis. Redacta evaluacion/comparacion.md en español con redacción 100 % 
+  académica, sin dos puntos ni guiones dobles en los párrafos. Debe incluir el  
+  número de respuestas correctas en cada modo, las respuestas incorrectas o     
+  sin respuesta, el tiempo promedio de ejecución, las preguntas que mejoraron o 
+  empeoraron, los principales errores y una conclusión sobre la utilidad del    
+  MCP y las skills. Incluye además una figura figuras/evaluacion_modos.png con  
+  el estilo del proyecto (Montserrat y escala de azules) que compare los        
+  aciertos por modo.                                                            
+                                                                                
+  Ejecuta el experimento completo y muéstrame la tabla de resultados por modo.  
+  No hagas commit.                                                              
+
+● Primero reviso el diseño de la Sesión 04 y la configuración local.
+
+  Ran 3 shell commands (ctrl+o to expand)
+
+● Verifico los dos valores del BCRP de las preguntas combinadas consultando
+  directamente la API oficial, sin el MCP.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Ambos valores cuadran con la API oficial: PBI 2024 da 3.5153 frente a 3.52
+  esperado, e inflación de diciembre 1.9663 frente a 1.97, ambos dentro de
+  tolerancia. Ahora reviso el estilo del proyecto y la configuración local antes
+  de escribir el script.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Ahora creo evaluacion/preguntas.csv. Las respuestas esperadas y las URLs de
+  verificación quedan fijadas antes de ejecutar.
+
+● Bash(cd "C:/Users/anaza/Documents/GitHub/data-science-python-2026/tarea_8" &&
+      python - <<'EOF'
+      import csv…)
+  ⎿  ok
+  ⎿  Created evaluacion\preguntas.csv (+11 -0)
+       1 +id,tipo,pregunta,valor_esperado,unidad,tolerancia,valor_esperad
+         +o_2,tolerancia_2,fuente_verificacion,criterio                  
+       2 +bcrp_1,bcrp,"¿Cuál fue la inflación interanual (variación del I
+         +PC en 12 meses) de Lima Metropolitana en octubre de 2026 según 
+         +el BCRP, en %?",5.251,%,0.05,,,"API del BCRP, serie PN01273PM, 
+         +2026-10, verificada en el navegador (https://estadisticas.bcrp.
+         +gob.pe/estadisticas/series/api/PN01273PM/json/2026-10/2026-10)"
+         +,"Acierta si |valor - valor_esperado| <= tolerancia; si valor e
+         +s null, no sabe; en otro caso, se equivoca"                    
+       3 +bcrp_2,bcrp,"¿Cuál era la tasa de referencia de la política mon
+         +etaria del BCRP en setiembre de 2026, en %?",4.25,%,0.01,,,"BCR
+         +P, serie PD04722MM, 2026-09 (preguntas.csv de la Sesión 04)","A
+         +cierta si |valor - valor_esperado| <= tolerancia; si valor es n
+         +ull, no sabe; en otro caso, se equivoca"                       
+       4 +bcrp_3,bcrp,"¿Cuál fue el tipo de cambio interbancario venta de
+         +l 15 de octubre de 2026 según el BCRP, en soles por dólar?",3.4
+         +282,S/ por US$,0.002,,,"BCRP, serie PD04638PD, 2026-10-15 (preg
+         +untas.csv de la Sesión 04)","Acierta si |valor - valor_esperado
+         +| <= tolerancia; si valor es null, no sabe; en otro caso, se eq
+         +uivoca"                                                        
+       5 +bcrp_4,bcrp,"¿Cuánto creció el PBI real del Perú en 2025 según 
+         +el BCRP, en %?",3.4306,%,0.05,,,"BCRP, serie PM04923AA, 2025 (p
+         +reguntas.csv de la Sesión 04)","Acierta si |valor - valor_esper
+         +ado| <= tolerancia; si valor es null, no sabe; en otro caso, se
+         + equivoca"                                                     
+       6 +enaho_1,enaho,"¿Cuál fue la incidencia de la pobreza monetaria 
+         +nacional del Perú en 2024 según la ENAHO del INEI, en % de pers
+         +onas?",27.6,% de personas,0.1,,,"INEI, Cifras de pobreza 2024 (
+         +https://www.gob.pe/institucion/inei/informes-publicaciones/6749
+         +463-cifras-de-pobreza-2024)","Acierta si |valor - valor_esperad
+         +o| <= tolerancia; si valor es null, no sabe; en otro caso, se e
+         +quivoca"                                                       
+       7 +enaho_2,enaho,"¿Cuál fue la incidencia de la pobreza monetaria 
+         +en el área rural del Perú en 2024 según la ENAHO del INEI, en %
+         + de personas?",39.3,% de personas,0.1,,,"INEI, Cifras de pobrez
+         +a 2024 (https://www.gob.pe/institucion/inei/informes-publicacio
+         +nes/6749463-cifras-de-pobreza-2024)","Acierta si |valor - valor
+         +_esperado| <= tolerancia; si valor es null, no sabe; en otro ca
+         +so, se equivoca"                                               
+       8 +enaho_3,enaho,"¿Cuál fue la incidencia de la pobreza monetaria 
+         +en el departamento de Cajamarca en 2024 según la ENAHO del INEI
+         +, en % de personas?",45.0,% de personas,0.1,,,"INEI, Cifras de 
+         +pobreza 2024 (https://www.gob.pe/institucion/inei/informes-publ
+         +icaciones/6749463-cifras-de-pobreza-2024) y referencia de la Se
+         +sión 16 (.claude/skills/mapeando-enaho/referencias/pobreza_depa
+         +rtamento_2024.csv)","Acierta si |valor - valor_esperado| <= tol
+         +erancia; si valor es null, no sabe; en otro caso, se equivoca" 
+       9 +enaho_4,enaho,"¿Cuál fue la incidencia de la pobreza monetaria 
+         +en el departamento de Ica en 2024 según la ENAHO del INEI, en %
+         + de personas?",6.0,% de personas,0.1,,,referencia de la Sesión 
+         +16 (.claude/skills/mapeando-enaho/referencias/pobreza_departame
+         +nto_2024.csv),"Acierta si |valor - valor_esperado| <= toleranci
+         +a; si valor es null, no sabe; en otro caso, se equivoca"       
+      10 +combinada_1,combinada,"¿Cuál fue la incidencia de la pobreza mo
+         +netaria nacional del Perú en 2024 según la ENAHO del INEI, en %
+         + de personas (valor), y cuánto creció el PBI real del Perú en 2
+         +024 según el BCRP, en % (valor_2)?",27.6,% de personas; %,0.1,3
+         +.52,0.05,"INEI, Cifras de pobreza 2024 (https://www.gob.pe/inst
+         +itucion/inei/informes-publicaciones/6749463-cifras-de-pobreza-2
+         +024); PBI 2024 = 3.5152749172251 según https://estadisticas.bcr
+         +p.gob.pe/estadisticas/series/api/PM04923AA/json/2024/2024, cons
+         +ultada directamente el 2026-11-08","Acierta si |valor - valor_e
+         +sperado| <= tolerancia, |valor_2 - valor_esperado_2| <= toleran
+         +cia_2 y la interpretacion no afirma causalidad entre ambas cifr
+         +as; si algún valor queda fuera de su tolerancia o la interpreta
+         +ción afirma causalidad, se equivoca; si no ocurre lo anterior y
+         + algún valor es null, no sabe"                                 
+      11 +combinada_2,combinada,"¿Cuál fue la brecha, en puntos porcentua
+         +les, entre la pobreza monetaria rural y la urbana del Perú en 2
+         +024 según la ENAHO del INEI (valor), y cuál fue la inflación in
+         +teranual (variación del IPC en 12 meses) de Lima Metropolitana 
+         +en diciembre de 2024 según el BCRP, en % (valor_2)?",14.5,pp; %
+         +,0.2,1.97,0.05,"INEI, Cifras de pobreza 2024 (https://www.gob.p
+         +e/institucion/inei/informes-publicaciones/6749463-cifras-de-pob
+         +reza-2024) (rural 39.3 % y urbana 24.8 %); inflación de dic. 20
+         +24 = 1.96630270142824 según https://estadisticas.bcrp.gob.pe/es
+         +tadisticas/series/api/PN01273PM/json/2024-12/2024-12, consultad
+         +a directamente el 2026-11-08","Acierta si |valor - valor_espera
+         +do| <= tolerancia, |valor_2 - valor_esperado_2| <= tolerancia_2
+         + y la interpretacion no afirma causalidad entre ambas cifras; s
+         +i algún valor queda fuera de su tolerancia o la interpretación 
+         +afirma causalidad, se equivoca; si no ocurre lo anterior y algú
+         +n valor es null, no sabe"                                      
+
+● Ahora el script. Antes de escribirlo completo, compruebo con una llamada
+  mínima cómo se ven los eventos de stream-json junto con --json-schema.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● La estructura funciona: el evento init lista las herramientas habilitadas y el
+  evento result trae la salida estructurada. Escribo el script.
+
+● Write(evaluacion\evaluar.py)
+  ⎿  Wrote 223 lines to evaluacion\evaluar.py
+      1 """¿Mejora el agente con el MCP del BCRP y las skills de la ENAHO
+        ? Las mismas preguntas en dos modos, contra la cifra oficial.
+      2 
+      3 Adaptado de evaluar.py de la Sesión 04 (sessions/04-mcp-claude-co
+        de/proyecto). Desde la carpeta tarea_8:
+      4 
+      5     uv run evaluacion/evaluar.py                     # los dos mo
+        dos, con sonnet
+      6     uv run evaluacion/evaluar.py --modos A --paralelo 2
+      7 
+     … +216 lines (ctrl+o to expand)
+
+● Antes de ejecutar, pruebo la regla de causalidad con frases de ejemplo.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● La regla se comporta como se espera. Lanzo el experimento completo: 20
+  llamadas, con el modo A en paralelo y el modo B de una en una.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Mientras corre el experimento, preparo el script de la figura. Usa estilo.py
+  del proyecto y toma el título de los datos.
+
+● Write(evaluacion\grafico_evaluacion.py)
+  ⎿  Wrote 72 lines to evaluacion\grafico_evaluacion.py
+      1 """Figura de la evaluación: aciertos por modo (A sin MCP ni skill
+        s, B con MCP y skills), por tipo de pregunta.
+      2 
+      3 Desde tarea_8:  uv run evaluacion/grafico_evaluacion.py
+      4 Lee evaluacion/resultados.csv y guarda figuras/evaluacion_modos.p
+        ng con el estilo del proyecto.
+      5 """
+      6 import sys
+      7 from pathlib import Path
+      8 
+     … +64 lines (ctrl+o to expand)
+
+● Ya está el script de la figura. Espero a que termine el experimento para
+  generarla con los resultados reales.
+
+✻ Worked for 2m 54s · done 4:19 PM
+
+● Background command "Run the full two-mode evaluation experiment" completed
+(exit code 0)
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Antes del análisis reviso los registros del modo B: el modo B nunca llamó a
+  Skill, y aparecen llamadas a Bash con comandos distintos de uri run y a Grep,
+  que no estaba habilitada.
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+● Los registros muestran que el modo B nunca invocó Skill: las respuestas
+  salieron de leer archivos ya generados, y Bash(uv run:*) no restringió Bash
+  como se pretendía. Además, la columna de herramientas cuenta también los
+  intentos fallidos, así que voy a corregir ese conteo en el script.
+● Update(evaluacion\evaluar.py)
+  ⎿  Added 20 lines, removed 5 lines
+      128  
+      129      REGISTROS.mkdir(exist_ok=True)
+      130      (REGISTROS / f"{fila.id}_{modo}.jsonl").write_text(salida,
+            encoding="utf-8")
+      131 +    return {**leer_registro(salida, error), "segundos": segund
+          +os}                                                           
+      132  
+      132 -    habilitadas, usadas, resultado = [], [], {}               
+      133 +                                                              
+      134 +def leer_registro(salida, error=""):                          
+      135 +    """Extrae de la salida stream-json las herramientas habili
+          +tadas, las usadas y la respuesta estructurada.                
+      136 +                                                              
+      137 +    Una herramienta cuenta como usada solo si su resultado no 
+          +es un error; las llamadas denegadas por permisos o            
+      138 +    rechazadas (por ejemplo, una herramienta no habilitada) va
+          +n a herramientas_fallidas.                                    
+      139 +    """                                                       
+      140 +    habilitadas, llamadas, fallidas_ids, resultado = [], {}, s
+          +et(), {}                                                      
+      141      for linea in salida.splitlines():
+      142          try:
+      143              ev = json.loads(linea)
+      144          except json.JSONDecodeError:
+      145              continue
+      146 +        contenido = (ev.get("message") or {}).get("content") i
+          +f isinstance(ev.get("message"), dict) else None               
+      147          if ev.get("type") == "system" and ev.get("subtype") ==
+            "init":
+      148              mcp = [f"{s['name']} ({s.get('status')})" for s in
+            ev.get("mcp_servers", [])]
+      149              habilitadas = [h for h in ev.get("tools", []) if h
+            != "StructuredOutput"] + [f"servidor {m}" for m in mcp]
+      141 -        elif ev.get("type") == "assistant":                   
+      142 -            for b in ev.get("message", {}).get("content", []):
+      150 +        elif isinstance(contenido, list):                     
+      151 +            for b in contenido:                               
+      152 +                if not isinstance(b, dict):                   
+      153 +                    continue                                  
+      154                  if b.get("type") == "tool_use" and b.get("name
+           ") != "StructuredOutput":
+      144 -                    usadas.append(_herramienta(b))            
+      145 -        elif ev.get("type") == "result":                      
+      155 +                    llamadas[b["id"]] = _herramienta(b)       
+      156 +                elif b.get("type") == "tool_result" and b.get(
+          +"is_error"):                                                  
+      157 +                    fallidas_ids.add(b.get("tool_use_id"))    
+      158 +        if ev.get("type") == "result":                        
+      159              resultado = ev
+      160 +    usadas = [h for i, h in llamadas.items() if i not in falli
+          +das_ids]                                                      
+      161 +    fallidas = [h for i, h in llamadas.items() if i in fallida
+          +s_ids]                                                        
+      162      r = resultado.get("structured_output") or {}
+      163      if not resultado:
+      164          error = error or "sin evento result"
+
+● Update(evaluacion\evaluar.py)
+  ⎿  Added 3 lines, removed 2 lines
+      170      return {"valor": r.get("valor"), "valor_2": r.get("valor_2
+           "), "unidad_respuesta": r.get("unidad", ""),
+      171              "fuente": r.get("fuente", ""), "interpretacion": r
+           .get("interpretacion", ""),
+      172              "herramientas_usadas": "; ".join(usadas) if usadas
+            else "ninguna",
+      173 -            "n_herramientas": len(usadas), "herramientas_habil
+          -itadas": ", ".join(habilitadas) or "ninguna",                 
+      174 -            "segundos": segundos, "turnos": resultado.get("num
+          -_turns"), "error": error}                                     
+      173 +            "n_herramientas": len(usadas), "herramientas_falli
+          +das": "; ".join(fallidas),                                    
+      174 +            "herramientas_habilitadas": ", ".join(habilitadas)
+          + or "ninguna",                                                
+      175 +            "turnos": resultado.get("num_turns"), "error": err
+          +or}                                                           
+      176  
+      177  
+      178  def _num(x):
+
+● Ahora agrego la opción --recalificar, que reconstruye resultados.csv desde
+  registros/ y conserva los tiempos medidos en la ejecución.
+
+● Update(evaluacion\evaluar.py)
+  ⎿  Added 21 lines, removed 4 lines
+      203      p = argparse.ArgumentParser()
+      204      p.add_argument("--modos", nargs="+", default=["A", "B"], c
+           hoices=list(MODOS))
+      205      p.add_argument("--paralelo", type=int, default=4, help="ll
+           amadas simultáneas del modo A")
+      206 +    p.add_argument("--recalificar", action="store_true",      
+      207 +                   help="no llama a claude: rehace resultados.
+          +csv desde evaluacion/registros/ con los tiempos ya medidos")  
+      208      a = p.parse_args()
+      209      if not (PROYECTO / ".mcp.json").exists():
+      210          raise SystemExit("Falta .mcp.json en tarea_8. Conecten
+            el servidor: claude mcp add --scope project bcrp -- uv run mc
+           p/server.py")
+      211  
+      212      preguntas = pd.read_csv(AQUI / "preguntas.csv", dtype={"id
+           ": str})
+      211 -    print(f"{len(preguntas) * len(a.modos)} llamadas a claude 
+          --p con {MODELO}...", flush=True)                              
+      212 -    # El modo B corre de a una llamada: las skills escriben en
+          - salidas/, figuras/ y mapas/, y dos llamadas                  
+      213 -    # simultáneas podrían leer un archivo a medio escribir. El
+          - modo A corre en paralelo, en carpetas aisladas.              
+      214 -    with ThreadPoolExecutor(a.paralelo) as ex_a, ThreadPoolExe
+          -cutor(1) as ex_b:                                             
+      213 +    if a.recalificar:                                         
+      214 +        previos = pd.read_csv(AQUI / "resultados.csv").set_ind
+          +ex(["id", "modo"]).segundos                                   
+      215 +                                                              
+      216 +        class _Hecho:                                         
+      217 +            def __init__(self, q, m):                         
+      218 +                salida = (REGISTROS / f"{q.id}_{m}.jsonl").rea
+          +d_text(encoding="utf-8")                                      
+      219 +                self.r = {**leer_registro(salida), "segundos":
+          + float(previos[(q.id, m)])}                                   
+      220 +                                                              
+      221 +            def result(self):                                 
+      222 +                return self.r                                 
+      223 +        futuros = [((q, m), _Hecho(q, m)) for q in preguntas.i
+          +tertuples() for m in a.modos]                                 
+      224 +        print(f"Recalifico {len(futuros)} respuestas desde {RE
+          +GISTROS.relative_to(PROYECTO).as_posix()}/", flush=True)      
+      225 +        ex_a = ex_b = None                                    
+      226 +    else:                                                     
+      227 +        print(f"{len(preguntas) * len(a.modos)} llamadas a cla
+          +ude -p con {MODELO}...", flush=True)                          
+      228 +        # El modo B corre de a una llamada: las skills escribe
+          +n en salidas/, figuras/ y mapas/, y dos llamadas              
+      229 +        # simultáneas podrían leer un archivo a medio escribir
+          +. El modo A corre en paralelo, en carpetas aisladas.          
+      230 +        ex_a, ex_b = ThreadPoolExecutor(a.paralelo), ThreadPoo
+          +lExecutor(1)                                                  
+      231          futuros = [((q, m), (ex_a if m == "A" else ex_b).submi
+           t(preguntar, q, m))
+      232                     for q in preguntas.itertuples() for m in a.
+           modos]
+      233 +    if True:                                                  
+      234          filas = []
+      235          for (q, m), f in futuros:
+      236              r = f.result()
+
+● Update(evaluacion\evaluar.py)
+  ⎿  Added 4 lines
+      242                            "valor": r["valor"], "valor_2": r["v
+           alor_2"], "unidad": r["unidad_respuesta"],
+      243                            "fuente": r["fuente"], "interpretaci
+           on": r["interpretacion"],
+      244                            "herramientas_usadas": r["herramient
+           as_usadas"], "n_herramientas": r["n_herramientas"],
+      245 +                          "herramientas_fallidas": r["herramie
+          +ntas_fallidas"],                                              
+      246                            "resultado": resultado, "segundos": 
+           r["segundos"], "turnos": r["turnos"],
+      247                            "error": r["error"], "herramientas_h
+           abilitadas": r["herramientas_habilitadas"]})
+      248              print(f"  {q.id:<12} modo {m}  {resultado:<12} {r[
+           'segundos']:>6} s  {r['herramientas_usadas'][:80]}",
+      249                    flush=True)
+      250 +    for ex in (ex_a, ex_b):                                   
+      251 +        if ex:                                                
+      252 +            ex.shutdown()                                     
+      253  
+      254      res = pd.DataFrame(filas)
+      255      res.to_csv(AQUI / "resultados.csv", index=False, encoding=
+           "utf-8")
+
+● Quito el if True: provisional y dejo el bloque bien indentado.
+
+  Read 1 file (ctrl+o to expand)
+
+● Bash(cd "C:/Users/anaza/Documents/GitHub/data-science-python-2026/tarea_8" &&
+      PYTHONIOENCODING=utf-8 python - <<'EOF'
+      from pathlib import Path…)
+  ⎿          raise SystemExit("Falta .mcp.json en tarea_8. Conecten el serv
+     idor: claude mcp add --scope project bcrp -- uv run mcp/server.py")
+     … +46 lines (ctrl+o to expand)
+  ⎿  1 file changed (binary, mode only or too large to show)
+
+● Bash(cd "C:/Users/anaza/Documents/GitHub/data-science-python-2026/tarea_8" &&
+      cp evaluacion/resultados.csv
+      "C:/Users/anaza/AppData/Local/Temp/claude/229d61cb04deb289…)
+  ⎿  Recalifico 20 respuestas desde evaluacion/registros/
+       bcrp_1       modo A  no sabe         6.4 s  ninguna
+       bcrp_1       modo B  acierta        18.5 s  mcp__bcrp__buscar_series
+     … +74 lines (ctrl+o to expand)
+  ⎿  Updated evaluacion\resultados.csv (+21 -21)
+       1 -id,tipo,modo,pregunta,valor_esperado,valor_esperado_2,valor,val
+         -or_2,unidad,fuente,interpretacion,herramientas_usadas,n_herrami
+         -entas,resultado,segundos,turnos,error,herramientas_habilitadas 
+       2 -bcrp_1,bcrp,A,"¿Cuál fue la inflación interanual (variación del
+         - IPC en 12 meses) de Lima Metropolitana en octubre de 2026 segú
+         -n el BCRP, en %?",5.251,,,,% (variación porcentual 12 meses),"N
+         -o se consultó ninguna fuente. El dato de octubre de 2026 lo pub
+         -lica el INEI/BCRP a inicios de noviembre, y no tengo acceso ver
+         -ificado a esa serie.","No puedo confirmar la cifra con certeza,
+         - así que no la estimo. Hay que consultar la serie del IPC de Li
+         -ma Metropolitana (variación 12 meses) en las estadísticas del B
+         -CRP o en la nota del INEI.",ninguna,0,no sabe,6.4,2,sin respues
+         -ta (null),ninguna                                              
+       3 -bcrp_1,bcrp,B,"¿Cuál fue la inflación interanual (variación del
+         - IPC en 12 meses) de Lima Metropolitana en octubre de 2026 segú
+         -n el BCRP, en %?",5.251,,5.25,,% (variación porcentual del IPC 
+         -en 12 meses),"BCRP, serie PN01273PM (Índice de precios Lima Met
+         -ropolitana, var% 12 meses - IPC), periodo octubre 2026.","La in
+         -flación interanual de Lima Metropolitana en octubre de 2026 fue
+         - 5,25 %, por encima del 4,55 % de setiembre y del 4,44 % de ago
+         -sto, es decir, una aceleración.",mcp__bcrp__buscar_series; mcp_
+         -_bcrp__buscar_series; mcp__bcrp__serie,3,acierta,18.5,5,,"Bash,
+         - Read, Skill, mcp__bcrp__buscar_series, mcp__bcrp__comparar_ser
+         -ies, mcp__bcrp__resumen, mcp__bcrp__serie, servidor bcrp (conne
+         -cted)"                                                         
+       4 -bcrp_2,bcrp,A,"¿Cuál era la tasa de referencia de la política m
+         -onetaria del BCRP en setiembre de 2026, en %?",4.25,,,,% anual,
+         -No verificada. La cifra oficial está en las notas del Programa 
+         -Monetario del BCRP (bcrp.gob.pe) y en la serie de estadísticas 
+         -del BCRP «Tasa de referencia de la política monetaria».,"No pue
+         -do confirmar la tasa de referencia vigente en setiembre de 2026
+         -, por lo que no la estimo. Hay que consultar el comunicado del 
+         -Programa Monetario de ese mes en el BCRP.",ninguna,0,no sabe,7.
+         -9,2,sin respuesta (null),ninguna                               
+       5 -bcrp_2,bcrp,B,"¿Cuál era la tasa de referencia de la política m
+         -onetaria del BCRP en setiembre de 2026, en %?",4.25,,4.25,,% (t
+         -asa de interés anual),"BCRP, serie mensual PD04722MM (Tasa de R
+         -eferencia de la Política Monetaria), periodo 2026-09.","En seti
+         -embre de 2026 la tasa de referencia del BCRP fue 4,25 %. Se man
+         -tuvo igual en agosto y octubre de 2026, así que no hubo cambios
+         - en ese tramo.",mcp__bcrp__buscar_series; mcp__bcrp__serie,2,ac
+         -ierta,11.5,4,,"Bash, Read, Skill, mcp__bcrp__buscar_series, mcp
+         -__bcrp__comparar_series, mcp__bcrp__resumen, mcp__bcrp__serie, 
+         -servidor bcrp (connected)"                                     
+       6 -bcrp_3,bcrp,A,"¿Cuál fue el tipo de cambio interbancario venta 
+         -del 15 de octubre de 2026 según el BCRP, en soles por dólar?",3
+         -.4282,,,,soles por dólar (S/ por US$),"No consultado: no tengo 
+         -acceso verificado a la serie del BCRP (PD04638PD, tipo de cambi
+         -o interbancario venta) para esa fecha.","No puedo confirmar con
+         - certeza la cifra del 15 de octubre de 2026, por lo que no la e
+         -stimo. Se puede consultar en la base de datos estadísticos del 
+         -BCRP (BCRPData).",ninguna,0,no sabe,6.1,2,sin respuesta (null),
+         -ninguna                                                        
+       7 -bcrp_3,bcrp,B,"¿Cuál fue el tipo de cambio interbancario venta 
+         -del 15 de octubre de 2026 según el BCRP, en soles por dólar?",3
+         -.4282,,3.4282,,soles por dólar (S/ por US$),"BCRP, serie PD0463
+         -8PD (Tipo de cambio - TC Interbancario (S/ por US$) - Venta), d
+         -ato diario del 2026-10-15.","El 15 de octubre de 2026 el tipo d
+         -e cambio interbancario venta fue de unos S/ 3,428 por dólar (va
+         -lor exacto 3,42821). Es decir, un dólar costaba cerca de 3,43 s
+         -oles en el mercado interbancario ese día.",mcp__bcrp__buscar_se
+         -ries; mcp__bcrp__serie,2,acierta,12.5,4,,"Bash, Read, Skill, mc
+         -p__bcrp__buscar_series, mcp__bcrp__comparar_series, mcp__bcrp__
+         -resumen, mcp__bcrp__serie, servidor bcrp (connected)"          
+       8 -bcrp_4,bcrp,A,"¿Cuánto creció el PBI real del Perú en 2025 segú
+         -n el BCRP, en %?",3.4306,,,,% de variación anual del PBI real,"
+         -No verificada. La cifra oficial debe tomarse del BCRP (Nota Sem
+         -anal, serie PBI real var. % anual 2025, o el Reporte de Inflaci
+         -ón más reciente).","No se pudo confirmar con certeza el crecimi
+         -ento del PBI real peruano en 2025 según el BCRP, por lo que no 
+         -se entrega una estimación. Se recomienda consultar la serie anu
+         -al del BCRP o BCRPData.",ninguna,0,no sabe,7.8,2,sin respuesta 
+         -(null),ninguna                                                 
+       9 -bcrp_4,bcrp,B,"¿Cuánto creció el PBI real del Perú en 2025 segú
+         -n el BCRP, en %?",3.4306,,3.43,,% (variación porcentual real an
+         -ual),"BCRP, serie PM04923AA ""Producto bruto interno por tipo d
+         -e gasto (variaciones porcentuales reales) - PBI"", anual, año 2
+         -025 (actualizada 2026-08-20)","El PBI real del Perú creció 3,43
+         -% en 2025 según el BCRP, algo menos que el 3,52% de 2024. Esto 
+         -confirma una expansión moderada y estable tras la caída de 0,35
+         -% en 2023.",mcp__bcrp__buscar_series; mcp__bcrp__buscar_series;
+         - mcp__bcrp__serie,3,acierta,12.5,5,,"Bash, Read, Skill, mcp__bc
+         -rp__buscar_series, mcp__bcrp__comparar_series, mcp__bcrp__resum
+         -en, mcp__bcrp__serie, servidor bcrp (connected)"               
+      10 -enaho_1,enaho,A,"¿Cuál fue la incidencia de la pobreza monetari
+         -a nacional del Perú en 2024 según la ENAHO del INEI, en % de pe
+         -rsonas?",27.6,,27.6,,% de personas en situación de pobreza mone
+         -taria (población total nacional),"INEI, ENAHO 2024, informe téc
+         -nico «Evolución de la pobreza monetaria 2014-2024» (mayo 2025).
+         - Cifra recordada de memoria, no verificada en esta sesión.","En
+         - 2024, el 27,6 % de los peruanos vivía con un gasto per cápita 
+         -inferior a la línea de pobreza monetaria. Esto supone una baja 
+         -de unos 1,4 puntos porcentuales frente al 29,0 % de 2023.",ning
+         -una,0,acierta,7.2,2,,ninguna                                   
+      11 -enaho_1,enaho,B,"¿Cuál fue la incidencia de la pobreza monetari
+         -a nacional del Perú en 2024 según la ENAHO del INEI, en % de pe
+         -rsonas?",27.6,,27.6,,"% de personas (población en situación de 
+         -pobreza monetaria, total nacional)","INEI, ENAHO 2024, informe 
+         -técnico «Evolución de la pobreza monetaria 2014-2024» (mayo de 
+         -2025). Cifra recordada de esa publicación; no la verifiqué en e
+         -sta sesión con datos ni con series del BCRP.","En 2024, el 27,6
+         - % de los peruanos vivía con un gasto per cápita por debajo del
+         - costo de la canasta básica de consumo. Esa cifra es menor que 
+         -la de 2023, que fue de 29,0 %.",ninguna,0,acierta,8.8,2,,"Bash,
+         - Read, Skill, mcp__bcrp__buscar_series, mcp__bcrp__comparar_ser
+         -ies, mcp__bcrp__resumen, mcp__bcrp__serie, servidor bcrp (conne
+         -cted)"                                                         
+      12 -enaho_2,enaho,A,"¿Cuál fue la incidencia de la pobreza monetari
+         -a en el área rural del Perú en 2024 según la ENAHO del INEI, en
+         - % de personas?",39.3,,,,% de personas en situación de pobreza 
+         -monetaria,"INEI, ENAHO 2024, informe «Evolución de la Pobreza M
+         -onetaria 2015-2024». No pude verificar la cifra en la fuente.",
+         -"No puedo confirmar con certeza la incidencia de la pobreza mon
+         -etaria rural en 2024, por lo que no la estimo. Debe consultarse
+         - el cuadro por área de residencia del informe del INEI.",ningun
+         -a,0,no sabe,8.1,2,sin respuesta (null),ninguna                 
+      13 -enaho_2,enaho,B,"¿Cuál fue la incidencia de la pobreza monetari
+         -a en el área rural del Perú en 2024 según la ENAHO del INEI, en
+         - % de personas?",39.3,,39.3,,"% de personas (incidencia de pobr
+         -eza monetaria, área rural, 2024)","ENAHO 2024 del INEI, módulo 
+         -34 (sumaria), método oficial (factor07 × mieperho), calculado e
+         -n salidas/indicadores.csv del proyecto tarea_8. Validado en sal
+         -idas/validacion.txt: 39.30 % con la sumaria y 39.44 % con perso
+         -nas y facpob07, frente a la referencia de 39.3 % ± 0.1 pp.","En
+         - 2024, el 39.3 % de las personas del área rural del Perú vivía 
+         -en pobreza monetaria. Esa cifra es 14.5 puntos porcentuales may
+         -or que la del área urbana (24.8 %) y supera al promedio naciona
+         -l (27.6 %).","Bash(cd /c/Users/anaza/Documents/GitHub/data-scie
+         -nce-python-2026 && grep -rIil ""rural"" --includ); Bash(grep -r
+         -Iil ""rural"" --include=*.md --include=*.csv --include=*.txt /c
+         -/Users/anaza/Documents); Bash(cd /c/Users/anaza/Documents/GitHu
+         -b/data-science-python-2026/tarea_8; cat salidas/indicador)",3,a
+         -cierta,15.6,5,permisos denegados: Bash,"Bash, Read, Skill, mcp_
+         -_bcrp__buscar_series, mcp__bcrp__comparar_series, mcp__bcrp__re
+         -sumen, mcp__bcrp__serie, servidor bcrp (connected)"            
+      14 -enaho_3,enaho,A,"¿Cuál fue la incidencia de la pobreza monetari
+         -a en el departamento de Cajamarca en 2024 según la ENAHO del IN
+         -EI, en % de personas?",45.0,,,,% de personas en situación de po
+         -breza monetaria,"INEI, ENAHO 2024, «Evolución de la pobreza mon
+         -etaria 2014-2024». No pude consultarla, así que no hay cifra ve
+         -rificada.","No puedo dar con certeza la incidencia de pobreza m
+         -onetaria de Cajamarca en 2024. Para obtenerla hay que revisar e
+         -l cuadro departamental del informe técnico del INEI, que incluy
+         -e intervalos de confianza.",ninguna,0,no sabe,6.7,2,sin respues
+         -ta (null),ninguna                                              
+      15 -enaho_3,enaho,B,"¿Cuál fue la incidencia de la pobreza monetari
+         -a en el departamento de Cajamarca en 2024 según la ENAHO del IN
+         -EI, en % de personas?",45.0,,45.0,,% de personas en situación d
+         -e pobreza monetaria,"ENAHO 2024 (INEI), sumaria módulo 34 con f
+         -actor07 × mieperho, calculado en salidas/indicadores.csv y sali
+         -das/comparacion_mapa.csv (45,01%). Coincide con la referencia d
+         -el curso pobreza_departamento_2024.csv (45,0%).","En 2024, cerc
+         -a de 45 de cada 100 personas en Cajamarca vivían en pobreza mon
+         -etaria, muy por encima del promedio nacional. El cálculo propio
+         - con factores de expansión coincide con la cifra de referencia 
+         -(diferencia 0,0 pp).","Bash(cd /c/Users/anaza/Documents/GitHub/
+         -data-science-python-2026 && grep -ril ""cajamarca"" --inc); Gre
+         -p; Bash(grep -ril ""cajamarca"" /c/Users/anaza/Documents/GitHub
+         -/data-science-python-2026/tarea_8 --i); Bash(cd /c/Users/anaza/
+         -Documents/GitHub/data-science-python-2026/tarea_8; head -1 sali
+         -das/compa)",4,acierta,17.0,6,permisos denegados: Bash,"Bash, Re
+         -ad, Skill, mcp__bcrp__buscar_series, mcp__bcrp__comparar_series
+         -, mcp__bcrp__resumen, mcp__bcrp__serie, servidor bcrp (connecte
+         -d)"                                                            
+      16 -enaho_4,enaho,A,"¿Cuál fue la incidencia de la pobreza monetari
+         -a en el departamento de Ica en 2024 según la ENAHO del INEI, en
+         - % de personas?",6.0,,,,% de personas en situación de pobreza m
+         -onetaria,"INEI, ENAHO 2024, informe técnico ""Evolución de la p
+         -obreza monetaria 2014-2024"". No pude consultarlo en esta sesió
+         -n, así que no hay cifra verificada.","No puedo dar con certeza 
+         -la incidencia de pobreza monetaria de Ica en 2024, así que no o
+         -frezco una estimación. Conviene revisar el cuadro por departame
+         -ntos del informe del INEI, que además publica intervalos de con
+         -fianza.",ninguna,0,no sabe,6.6,2,sin respuesta (null),ninguna  
+      17 -enaho_4,enaho,B,"¿Cuál fue la incidencia de la pobreza monetari
+         -a en el departamento de Ica en 2024 según la ENAHO del INEI, en
+         - % de personas?",6.0,,6.0,,"% de personas en situación de pobre
+         -za monetaria (departamento de Ica, 2024)","Archivo del proyecto
+         - salidas/comparacion_mapa.csv (pobreza oficial ENAHO 2024 con l
+         -a variable de pobreza de la sumaria: 6,01%, redondeado 6,0%) y 
+         -la referencia del curso .claude/skills/mapeando-enaho/referenci
+         -as/pobreza_departamento_2024.csv (6,0%). INEI, ENAHO 2024.","En
+         - 2024 alrededor del 6,0% de las personas en Ica estaban en pobr
+         -eza monetaria, una de las incidencias más bajas del país y muy 
+         -por debajo del promedio nacional. El cálculo propio con factore
+         -s de expansión coincide con la referencia (diferencia 0,0 pp)."
+         -,"Bash(cd /c/Users/anaza/Documents/GitHub/data-science-python-2
+         -026 && grep -ril ""ica"" --include=*); Bash(ls /c/Users/anaza/D
+         -ocuments/GitHub/data-science-python-2026); Bash(ls; grep -rli "
+         -"pobreza"" --include=*.csv --include=*.md --include=*.json . | 
+         -head -20); Bash(grep -i ""ica"" .claude/skills/mapeando-enaho/r
+         -eferencias/pobreza_departamento_2024.csv sali)",4,acierta,18.1,
+         -6,"permisos denegados: Bash, Bash","Bash, Read, Skill, mcp__bcr
+         -p__buscar_series, mcp__bcrp__comparar_series, mcp__bcrp__resume
+         -n, mcp__bcrp__serie, servidor bcrp (connected)"                
+      18 -combinada_1,combinada,A,"¿Cuál fue la incidencia de la pobreza 
+         -monetaria nacional del Perú en 2024 según la ENAHO del INEI, en
+         - % de personas (valor), y cuánto creció el PBI real del Perú en
+         - 2024 según el BCRP, en % (valor_2)?",27.6,3.52,27.6,3.3,valor:
+         - % de la población (personas) en pobreza monetaria; valor_2: va
+         -riación porcentual anual del PBI real,"valor: INEI, ENAHO 2024,
+         - informe técnico «Evolución de la pobreza monetaria 2014-2024» 
+         -(mayo 2025); valor_2: BCRP, Memoria 2024 / Notas de estudios, c
+         -recimiento del PBI real 2024. Cifras de memoria, no verificadas
+         - en línea durante esta sesión.","Aproximadamente 27,6 % de los 
+         -peruanos vivía en pobreza monetaria en 2024, por debajo del 29,
+         -0 % de 2023. La economía creció 3,3 % real en 2024, una recuper
+         -ación tras el bajo crecimiento de 2023.",ninguna,0,se equivoca,
+         -5.7,2,valor fuera de tolerancia,ninguna                        
+      19 -combinada_1,combinada,B,"¿Cuál fue la incidencia de la pobreza 
+         -monetaria nacional del Perú en 2024 según la ENAHO del INEI, en
+         - % de personas (valor), y cuánto creció el PBI real del Perú en
+         - 2024 según el BCRP, en % (valor_2)?",27.6,3.52,27.6,3.5,valor:
+         - % de personas en pobreza monetaria; valor_2: % de variación an
+         -ual del PBI real,"valor: INEI, ENAHO 2024, informe técnico «Evo
+         -lución de la pobreza monetaria 2014-2024» (cifra tomada de mi c
+         -onocimiento de esa publicación, no recalculada con los microdat
+         -os en esta sesión). valor_2: BCRP, serie PM04983AA (PBI, variac
+         -ión porcentual interanual, anual), 2024 = 3,5153 %.","En 2024 e
+         -l 27,6 % de las personas en el Perú vivía en pobreza monetaria,
+         - por debajo del 29,0 % de 2023. El PBI real creció 3,5 % ese añ
+         -o según la serie anual del BCRP, es decir, la economía se recup
+         -eró mientras la pobreza bajó.",mcp__bcrp__buscar_series; mcp__b
+         -crp__serie,2,acierta,16.1,4,,"Bash, Read, Skill, mcp__bcrp__bus
+         -car_series, mcp__bcrp__comparar_series, mcp__bcrp__resumen, mcp
+         -__bcrp__serie, servidor bcrp (connected)"                      
+      20 -combinada_2,combinada,A,"¿Cuál fue la brecha, en puntos porcent
+         -uales, entre la pobreza monetaria rural y la urbana del Perú en
+         - 2024 según la ENAHO del INEI (valor), y cuál fue la inflación 
+         -interanual (variación del IPC en 12 meses) de Lima Metropolitan
+         -a en diciembre de 2024 según el BCRP, en % (valor_2)?",14.5,1.9
+         -7,,1.97,valor: puntos porcentuales (no determinado); valor_2: %
+         - variación del IPC en 12 meses,"valor_2: BCRP / INEI, IPC de Li
+         -ma Metropolitana, variación interanual a diciembre de 2024 (1,9
+         -7 %). valor: no se pudo verificar la cifra de pobreza rural y u
+         -rbana de la ENAHO 2024 del INEI en esta sesión.","La inflación 
+         -de Lima Metropolitana cerró 2024 en 1,97 %, dentro del rango me
+         -ta del BCRP (1 %–3 %). No doy la brecha rural-urbana de pobreza
+         - porque no pude confirmar con certeza las dos tasas de 2024 y n
+         -o quise estimarla.",ninguna,0,no sabe,6.9,2,sin respuesta (null
+         -),ninguna                                                      
+      21 -combinada_2,combinada,B,"¿Cuál fue la brecha, en puntos porcent
+         -uales, entre la pobreza monetaria rural y la urbana del Perú en
+         - 2024 según la ENAHO del INEI (valor), y cuál fue la inflación 
+         -interanual (variación del IPC en 12 meses) de Lima Metropolitan
+         -a en diciembre de 2024 según el BCRP, en % (valor_2)?",14.5,1.9
+         -7,14.49,1.97,"valor: puntos porcentuales (pobreza rural − urban
+         -a, 2024); valor_2: % (variación del IPC en 12 meses, dic-2024)"
+         -,"valor: ENAHO 2024 del INEI (sumaria, módulo 34, factor07 × mi
+         -eperho), calculado en salidas/indicadores.csv del proyecto: rur
+         -al 39.30 % − urbana 24.81 % = 14.49 pp. valor_2: BCRP, serie PN
+         -01273PM (IPC Lima Metropolitana, var% 12 meses), diciembre 2024
+         - = 1.9663 %.","La pobreza monetaria rural (39.3 %) superó a la 
+         -urbana (24.8 %) en unos 14.5 puntos porcentuales en 2024. La in
+         -flación interanual de Lima Metropolitana cerró diciembre de 202
+         -4 en cerca de 2.0 %, dentro del rango meta del BCRP (1 % a 3 %)
+         -.","mcp__bcrp__buscar_series; Bash(cd /c/Users/anaza/Documents/
+         -GitHub/data-science-python-2026 && grep -rIl -i ""rural"" --inc
+         -l); mcp__bcrp__buscar_series; Bash(grep -rIl -i ""rural"" /c/Us
+         -ers/anaza/Documents/GitHub/data-science-python-2026/tarea_8); m
+         -cp__bcrp__serie; Bash(cd /c/Users/anaza/Documents/GitHub/data-s
+         -cience-python-2026/tarea_8/salidas && cat indicad)",6,acierta,3
+         -2.3,8,permisos denegados: Bash,"Bash, Read, Skill, mcp__bcrp__b
+         -uscar_series, mcp__bcrp__comparar_series, mcp__bcrp__resumen, m
+         -cp__bcrp__serie, servidor bcrp (connected)"                    
+       1 +id,tipo,modo,pregunta,valor_esperado,valor_esperado_2,valor,val
+         +or_2,unidad,fuente,interpretacion,herramientas_usadas,n_herrami
+         +entas,herramientas_fallidas,resultado,segundos,turnos,error,her
+         +ramientas_habilitadas                                          
+       2 +bcrp_1,bcrp,A,"¿Cuál fue la inflación interanual (variación del
+         + IPC en 12 meses) de Lima Metropolitana en octubre de 2026 segú
+         +n el BCRP, en %?",5.251,,,,% (variación porcentual 12 meses),"N
+         +o se consultó ninguna fuente. El dato de octubre de 2026 lo pub
+         +lica el INEI/BCRP a inicios de noviembre, y no tengo acceso ver
+         +ificado a esa serie.","No puedo confirmar la cifra con certeza,
+         + así que no la estimo. Hay que consultar la serie del IPC de Li
+         +ma Metropolitana (variación 12 meses) en las estadísticas del B
+         +CRP o en la nota del INEI.",ninguna,0,,no sabe,6.4,2,sin respue
+         +sta (null),ninguna                                             
+       3 +bcrp_1,bcrp,B,"¿Cuál fue la inflación interanual (variación del
+         + IPC en 12 meses) de Lima Metropolitana en octubre de 2026 segú
+         +n el BCRP, en %?",5.251,,5.25,,% (variación porcentual del IPC 
+         +en 12 meses),"BCRP, serie PN01273PM (Índice de precios Lima Met
+         +ropolitana, var% 12 meses - IPC), periodo octubre 2026.","La in
+         +flación interanual de Lima Metropolitana en octubre de 2026 fue
+         + 5,25 %, por encima del 4,55 % de setiembre y del 4,44 % de ago
+         +sto, es decir, una aceleración.",mcp__bcrp__buscar_series; mcp_
+         +_bcrp__buscar_series; mcp__bcrp__serie,3,,acierta,18.5,5,,"Bash
+         +, Read, Skill, mcp__bcrp__buscar_series, mcp__bcrp__comparar_se
+         +ries, mcp__bcrp__resumen, mcp__bcrp__serie, servidor bcrp (conn
+         +ected)"                                                        
+       4 +bcrp_2,bcrp,A,"¿Cuál era la tasa de referencia de la política m
+         +onetaria del BCRP en setiembre de 2026, en %?",4.25,,,,% anual,
+         +No verificada. La cifra oficial está en las notas del Programa 
+         +Monetario del BCRP (bcrp.gob.pe) y en la serie de estadísticas 
+         +del BCRP «Tasa de referencia de la política monetaria».,"No pue
+         +do confirmar la tasa de referencia vigente en setiembre de 2026
+         +, por lo que no la estimo. Hay que consultar el comunicado del 
+         +Programa Monetario de ese mes en el BCRP.",ninguna,0,,no sabe,7
+         +.9,2,sin respuesta (null),ninguna                              
+       5 +bcrp_2,bcrp,B,"¿Cuál era la tasa de referencia de la política m
+         +onetaria del BCRP en setiembre de 2026, en %?",4.25,,4.25,,% (t
+         +asa de interés anual),"BCRP, serie mensual PD04722MM (Tasa de R
+         +eferencia de la Política Monetaria), periodo 2026-09.","En seti
+         +embre de 2026 la tasa de referencia del BCRP fue 4,25 %. Se man
+         +tuvo igual en agosto y octubre de 2026, así que no hubo cambios
+         + en ese tramo.",mcp__bcrp__buscar_series; mcp__bcrp__serie,2,,a
+         +cierta,11.5,4,,"Bash, Read, Skill, mcp__bcrp__buscar_series, mc
+         +p__bcrp__comparar_series, mcp__bcrp__resumen, mcp__bcrp__serie,
+         + servidor bcrp (connected)"                                    
+       6 +bcrp_3,bcrp,A,"¿Cuál fue el tipo de cambio interbancario venta 
+         +del 15 de octubre de 2026 según el BCRP, en soles por dólar?",3
+         +.4282,,,,soles por dólar (S/ por US$),"No consultado: no tengo 
+         +acceso verificado a la serie del BCRP (PD04638PD, tipo de cambi
+         +o interbancario venta) para esa fecha.","No puedo confirmar con
+         + certeza la cifra del 15 de octubre de 2026, por lo que no la e
+         +stimo. Se puede consultar en la base de datos estadísticos del 
+         +BCRP (BCRPData).",ninguna,0,,no sabe,6.1,2,sin respuesta (null)
+         +,ninguna                                                       
+       7 +bcrp_3,bcrp,B,"¿Cuál fue el tipo de cambio interbancario venta 
+         +del 15 de octubre de 2026 según el BCRP, en soles por dólar?",3
+         +.4282,,3.4282,,soles por dólar (S/ por US$),"BCRP, serie PD0463
+         +8PD (Tipo de cambio - TC Interbancario (S/ por US$) - Venta), d
+         +ato diario del 2026-10-15.","El 15 de octubre de 2026 el tipo d
+         +e cambio interbancario venta fue de unos S/ 3,428 por dólar (va
+         +lor exacto 3,42821). Es decir, un dólar costaba cerca de 3,43 s
+         +oles en el mercado interbancario ese día.",mcp__bcrp__buscar_se
+         +ries; mcp__bcrp__serie,2,,acierta,12.5,4,,"Bash, Read, Skill, m
+         +cp__bcrp__buscar_series, mcp__bcrp__comparar_series, mcp__bcrp_
+         +_resumen, mcp__bcrp__serie, servidor bcrp (connected)"         
+       8 +bcrp_4,bcrp,A,"¿Cuánto creció el PBI real del Perú en 2025 segú
+         +n el BCRP, en %?",3.4306,,,,% de variación anual del PBI real,"
+         +No verificada. La cifra oficial debe tomarse del BCRP (Nota Sem
+         +anal, serie PBI real var. % anual 2025, o el Reporte de Inflaci
+         +ón más reciente).","No se pudo confirmar con certeza el crecimi
+         +ento del PBI real peruano en 2025 según el BCRP, por lo que no 
+         +se entrega una estimación. Se recomienda consultar la serie anu
+         +al del BCRP o BCRPData.",ninguna,0,,no sabe,7.8,2,sin respuesta
+         + (null),ninguna                                                
+       9 +bcrp_4,bcrp,B,"¿Cuánto creció el PBI real del Perú en 2025 segú
+         +n el BCRP, en %?",3.4306,,3.43,,% (variación porcentual real an
+         +ual),"BCRP, serie PM04923AA ""Producto bruto interno por tipo d
+         +e gasto (variaciones porcentuales reales) - PBI"", anual, año 2
+         +025 (actualizada 2026-08-20)","El PBI real del Perú creció 3,43
+         +% en 2025 según el BCRP, algo menos que el 3,52% de 2024. Esto 
+         +confirma una expansión moderada y estable tras la caída de 0,35
+         +% en 2023.",mcp__bcrp__buscar_series; mcp__bcrp__buscar_series;
+         + mcp__bcrp__serie,3,,acierta,12.5,5,,"Bash, Read, Skill, mcp__b
+         +crp__buscar_series, mcp__bcrp__comparar_series, mcp__bcrp__resu
+         +men, mcp__bcrp__serie, servidor bcrp (connected)"              
+      10 +enaho_1,enaho,A,"¿Cuál fue la incidencia de la pobreza monetari
+         +a nacional del Perú en 2024 según la ENAHO del INEI, en % de pe
+         +rsonas?",27.6,,27.6,,% de personas en situación de pobreza mone
+         +taria (población total nacional),"INEI, ENAHO 2024, informe téc
+         +nico «Evolución de la pobreza monetaria 2014-2024» (mayo 2025).
+         + Cifra recordada de memoria, no verificada en esta sesión.","En
+         + 2024, el 27,6 % de los peruanos vivía con un gasto per cápita 
+         +inferior a la línea de pobreza monetaria. Esto supone una baja 
+         +de unos 1,4 puntos porcentuales frente al 29,0 % de 2023.",ning
+         +una,0,,acierta,7.2,2,,ninguna                                  
+      11 +enaho_1,enaho,B,"¿Cuál fue la incidencia de la pobreza monetari
+         +a nacional del Perú en 2024 según la ENAHO del INEI, en % de pe
+         +rsonas?",27.6,,27.6,,"% de personas (población en situación de 
+         +pobreza monetaria, total nacional)","INEI, ENAHO 2024, informe 
+         +técnico «Evolución de la pobreza monetaria 2014-2024» (mayo de 
+         +2025). Cifra recordada de esa publicación; no la verifiqué en e
+         +sta sesión con datos ni con series del BCRP.","En 2024, el 27,6
+         + % de los peruanos vivía con un gasto per cápita por debajo del
+         + costo de la canasta básica de consumo. Esa cifra es menor que 
+         +la de 2023, que fue de 29,0 %.",ninguna,0,,acierta,8.8,2,,"Bash
+         +, Read, Skill, mcp__bcrp__buscar_series, mcp__bcrp__comparar_se
+         +ries, mcp__bcrp__resumen, mcp__bcrp__serie, servidor bcrp (conn
+         +ected)"                                                        
+      12 +enaho_2,enaho,A,"¿Cuál fue la incidencia de la pobreza monetari
+         +a en el área rural del Perú en 2024 según la ENAHO del INEI, en
+         + % de personas?",39.3,,,,% de personas en situación de pobreza 
+         +monetaria,"INEI, ENAHO 2024, informe «Evolución de la Pobreza M
+         +onetaria 2015-2024». No pude verificar la cifra en la fuente.",
+         +"No puedo confirmar con certeza la incidencia de la pobreza mon
+         +etaria rural en 2024, por lo que no la estimo. Debe consultarse
+         + el cuadro por área de residencia del informe del INEI.",ningun
+         +a,0,,no sabe,8.1,2,sin respuesta (null),ninguna                
+      13 +enaho_2,enaho,B,"¿Cuál fue la incidencia de la pobreza monetari
+         +a en el área rural del Perú en 2024 según la ENAHO del INEI, en
+         + % de personas?",39.3,,39.3,,"% de personas (incidencia de pobr
+         +eza monetaria, área rural, 2024)","ENAHO 2024 del INEI, módulo 
+         +34 (sumaria), método oficial (factor07 × mieperho), calculado e
+         +n salidas/indicadores.csv del proyecto tarea_8. Validado en sal
+         +idas/validacion.txt: 39.30 % con la sumaria y 39.44 % con perso
+         +nas y facpob07, frente a la referencia de 39.3 % ± 0.1 pp.","En
+         + 2024, el 39.3 % de las personas del área rural del Perú vivía 
+         +en pobreza monetaria. Esa cifra es 14.5 puntos porcentuales may
+         +or que la del área urbana (24.8 %) y supera al promedio naciona
+         +l (27.6 %).","Bash(grep -rIil ""rural"" --include=*.md --includ
+         +e=*.csv --include=*.txt /c/Users/anaza/Documents); Bash(cd /c/U
+         +sers/anaza/Documents/GitHub/data-science-python-2026/tarea_8; c
+         +at salidas/indicador)",2,"Bash(cd /c/Users/anaza/Documents/GitH
+         +ub/data-science-python-2026 && grep -rIil ""rural"" --includ)",
+         +acierta,15.6,5,permisos denegados: Bash,"Bash, Read, Skill, mcp
+         +__bcrp__buscar_series, mcp__bcrp__comparar_series, mcp__bcrp__r
+         +esumen, mcp__bcrp__serie, servidor bcrp (connected)"           
+      14 +enaho_3,enaho,A,"¿Cuál fue la incidencia de la pobreza monetari
+         +a en el departamento de Cajamarca en 2024 según la ENAHO del IN
+         +EI, en % de personas?",45.0,,,,% de personas en situación de po
+         +breza monetaria,"INEI, ENAHO 2024, «Evolución de la pobreza mon
+         +etaria 2014-2024». No pude consultarla, así que no hay cifra ve
+         +rificada.","No puedo dar con certeza la incidencia de pobreza m
+         +onetaria de Cajamarca en 2024. Para obtenerla hay que revisar e
+         +l cuadro departamental del informe técnico del INEI, que incluy
+         +e intervalos de confianza.",ninguna,0,,no sabe,6.7,2,sin respue
+         +sta (null),ninguna                                             
+      15 +enaho_3,enaho,B,"¿Cuál fue la incidencia de la pobreza monetari
+         +a en el departamento de Cajamarca en 2024 según la ENAHO del IN
+         +EI, en % de personas?",45.0,,45.0,,% de personas en situación d
+         +e pobreza monetaria,"ENAHO 2024 (INEI), sumaria módulo 34 con f
+         +actor07 × mieperho, calculado en salidas/indicadores.csv y sali
+         +das/comparacion_mapa.csv (45,01%). Coincide con la referencia d
+         +el curso pobreza_departamento_2024.csv (45,0%).","En 2024, cerc
+         +a de 45 de cada 100 personas en Cajamarca vivían en pobreza mon
+         +etaria, muy por encima del promedio nacional. El cálculo propio
+         + con factores de expansión coincide con la cifra de referencia 
+         +(diferencia 0,0 pp).","Bash(grep -ril ""cajamarca"" /c/Users/an
+         +aza/Documents/GitHub/data-science-python-2026/tarea_8 --i); Bas
+         +h(cd /c/Users/anaza/Documents/GitHub/data-science-python-2026/t
+         +area_8; head -1 salidas/compa)",2,"Bash(cd /c/Users/anaza/Docum
+         +ents/GitHub/data-science-python-2026 && grep -ril ""cajamarca""
+         + --inc); Grep",acierta,17.0,6,permisos denegados: Bash,"Bash, R
+         +ead, Skill, mcp__bcrp__buscar_series, mcp__bcrp__comparar_serie
+         +s, mcp__bcrp__resumen, mcp__bcrp__serie, servidor bcrp (connect
+         +ed)"                                                           
+      16 +enaho_4,enaho,A,"¿Cuál fue la incidencia de la pobreza monetari
+         +a en el departamento de Ica en 2024 según la ENAHO del INEI, en
+         + % de personas?",6.0,,,,% de personas en situación de pobreza m
+         +onetaria,"INEI, ENAHO 2024, informe técnico ""Evolución de la p
+         +obreza monetaria 2014-2024"". No pude consultarlo en esta sesió
+         +n, así que no hay cifra verificada.","No puedo dar con certeza 
+         +la incidencia de pobreza monetaria de Ica en 2024, así que no o
+         +frezco una estimación. Conviene revisar el cuadro por departame
+         +ntos del informe del INEI, que además publica intervalos de con
+         +fianza.",ninguna,0,,no sabe,6.6,2,sin respuesta (null),ninguna 
+      17 +enaho_4,enaho,B,"¿Cuál fue la incidencia de la pobreza monetari
+         +a en el departamento de Ica en 2024 según la ENAHO del INEI, en
+         + % de personas?",6.0,,6.0,,"% de personas en situación de pobre
+         +za monetaria (departamento de Ica, 2024)","Archivo del proyecto
+         + salidas/comparacion_mapa.csv (pobreza oficial ENAHO 2024 con l
+         +a variable de pobreza de la sumaria: 6,01%, redondeado 6,0%) y 
+         +la referencia del curso .claude/skills/mapeando-enaho/referenci
+         +as/pobreza_departamento_2024.csv (6,0%). INEI, ENAHO 2024.","En
+         + 2024 alrededor del 6,0% de las personas en Ica estaban en pobr
+         +eza monetaria, una de las incidencias más bajas del país y muy 
+         +por debajo del promedio nacional. El cálculo propio con factore
+         +s de expansión coincide con la referencia (diferencia 0,0 pp)."
+         +,"Bash(ls; grep -rli ""pobreza"" --include=*.csv --include=*.md
+         + --include=*.json . | head -20); Bash(grep -i ""ica"" .claude/s
+         +kills/mapeando-enaho/referencias/pobreza_departamento_2024.csv 
+         +sali)",2,"Bash(cd /c/Users/anaza/Documents/GitHub/data-science-
+         +python-2026 && grep -ril ""ica"" --include=*); Bash(ls /c/Users
+         +/anaza/Documents/GitHub/data-science-python-2026)",acierta,18.1
+         +,6,"permisos denegados: Bash, Bash","Bash, Read, Skill, mcp__bc
+         +rp__buscar_series, mcp__bcrp__comparar_series, mcp__bcrp__resum
+         +en, mcp__bcrp__serie, servidor bcrp (connected)"               
+      18 +combinada_1,combinada,A,"¿Cuál fue la incidencia de la pobreza 
+         +monetaria nacional del Perú en 2024 según la ENAHO del INEI, en
+         + % de personas (valor), y cuánto creció el PBI real del Perú en
+         + 2024 según el BCRP, en % (valor_2)?",27.6,3.52,27.6,3.3,valor:
+         + % de la población (personas) en pobreza monetaria; valor_2: va
+         +riación porcentual anual del PBI real,"valor: INEI, ENAHO 2024,
+         + informe técnico «Evolución de la pobreza monetaria 2014-2024» 
+         +(mayo 2025); valor_2: BCRP, Memoria 2024 / Notas de estudios, c
+         +recimiento del PBI real 2024. Cifras de memoria, no verificadas
+         + en línea durante esta sesión.","Aproximadamente 27,6 % de los 
+         +peruanos vivía en pobreza monetaria en 2024, por debajo del 29,
+         +0 % de 2023. La economía creció 3,3 % real en 2024, una recuper
+         +ación tras el bajo crecimiento de 2023.",ninguna,0,,se equivoca
+         +,5.7,2,valor fuera de tolerancia,ninguna                       
+      19 +combinada_1,combinada,B,"¿Cuál fue la incidencia de la pobreza 
+         +monetaria nacional del Perú en 2024 según la ENAHO del INEI, en
+         + % de personas (valor), y cuánto creció el PBI real del Perú en
+         + 2024 según el BCRP, en % (valor_2)?",27.6,3.52,27.6,3.5,valor:
+         + % de personas en pobreza monetaria; valor_2: % de variación an
+         +ual del PBI real,"valor: INEI, ENAHO 2024, informe técnico «Evo
+         +lución de la pobreza monetaria 2014-2024» (cifra tomada de mi c
+         +onocimiento de esa publicación, no recalculada con los microdat
+         +os en esta sesión). valor_2: BCRP, serie PM04983AA (PBI, variac
+         +ión porcentual interanual, anual), 2024 = 3,5153 %.","En 2024 e
+         +l 27,6 % de las personas en el Perú vivía en pobreza monetaria,
+         + por debajo del 29,0 % de 2023. El PBI real creció 3,5 % ese añ
+         +o según la serie anual del BCRP, es decir, la economía se recup
+         +eró mientras la pobreza bajó.",mcp__bcrp__buscar_series; mcp__b
+         +crp__serie,2,,acierta,16.1,4,,"Bash, Read, Skill, mcp__bcrp__bu
+         +scar_series, mcp__bcrp__comparar_series, mcp__bcrp__resumen, mc
+         +p__bcrp__serie, servidor bcrp (connected)"                     
+     … 2 more lines (ctrl+o to expand)
+
+● Las respuestas, los tiempos y las calificaciones quedaron idénticos tras
+  recalificar. Pero los registros contienen correos, así que reviso dónde
+  aparecen.
+
+  Ran 3 shell commands (ctrl+o to expand)
+
+● Era un falso positivo: example-skills@anthropic-agent-skills es el
+  identificador de un plugin. Los registros no contienen correos. Genero la
+  figura.
+
+● Bash(cd "C:/Users/anaza/Documents/GitHub/data-science-python-2026/tarea_8" &&
+      uv run evaluacion/grafico_evaluacion.py 2>&1 | grep -v VIRTUAL_ENV)
+  ⎿  Guardé C:/Users/anaza/Documents/GitHub/data-science-python-2026/tarea_
+     8/figuras/evaluacion_modos.png
+  ⎿  1 file changed (binary, mode only or too large to show)
+
+  Read 1 file (ctrl+o to expand)
+
+● La figura funciona, pero el subtítulo se parte mal y queda demasiado espacio
+  entre el encabezado y la leyenda. Lo ajusto.
+
+● Bash(cd "C:/Users/anaza/Documents/GitHub/data-science-python-2026/tarea_8" &&
+      python - <<'EOF'
+      from pathlib import Path…)
+  ⎿  Guardé C:/Users/anaza/Documents/GitHub/data-science-python-2026/tarea_
+     8/figuras/evaluacion_modos.png
+  ⎿  Updated evaluacion\grafico_evaluacion.py (+72 -72)
+       1 -"""Figura de la evaluación: aciertos por modo (A sin MCP ni ski
+         -lls, B con MCP y skills), por tipo de pregunta.                
+       2 -                                                               
+       3 -Desde tarea_8:  uv run evaluacion/grafico_evaluacion.py        
+       4 -Lee evaluacion/resultados.csv y guarda figuras/evaluacion_modos
+         -.png con el estilo del proyecto.                               
+       5 -"""                                                            
+       6 -import sys                                                     
+       7 -from pathlib import Path                                       
+       8 -                                                               
+       9 -import pandas as pd                                            
+      10 -                                                               
+      11 -PROYECTO = Path(__file__).resolve().parents[1]                 
+      12 -sys.path.insert(0, str(PROYECTO / ".claude/skills/graficando-en
+         -aho/scripts"))                                                 
+      13 -import estilo as e  # noqa: E402                               
+      14 -import matplotlib.pyplot as plt  # noqa: E402                  
+      15 -                                                               
+      16 -TIPOS = {"bcrp": "BCRP", "enaho": "ENAHO", "combinada": "Combin
+         -adas"}                                                         
+      17 -MODOS = {"A": ("Modo A, sin MCP ni skills", e.AZUL_PROMEDIO, e.
+         -AZUL_MARINO),                                                  
+      18 -         "B": ("Modo B, con MCP y skills", e.AZUL, e.BLANCO)}  
+      19 -                                                               
+      20 -                                                               
+      21 -def main():                                                    
+      22 -    e.configurar()                                             
+      23 -    res = pd.read_csv(PROYECTO / "evaluacion/resultados.csv")  
+      24 -    res["acierto"] = res.resultado.eq("acierta")               
+      25 -    por_tipo = res.pivot_table(index="tipo", columns="modo", va
+         -lues="acierto", aggfunc="sum").reindex(list(TIPOS))            
+      26 -    n_tipo = res[res.modo == "A"].groupby("tipo").size().reinde
+         -x(list(TIPOS))                                                 
+      27 -    total = res.groupby("modo").acierto.sum()                  
+      28 -    n = int(res.groupby("modo").size().iloc[0])                
+      29 -    grupos = list(TIPOS.values()) + ["Total"]                  
+      30 -    valores = {m: list(por_tipo[m].fillna(0).astype(int)) + [in
+         -t(total.get(m, 0))] for m in MODOS}                            
+      31 -    maximos = list(n_tipo.astype(int)) + [n]                   
+      32 -                                                               
+      33 -    fig = plt.figure(figsize=(10, 6.6))                        
+      34 -    a, b = int(total.get("A", 0)), int(total.get("B", 0))      
+      35 -    titulo = (f"Con el MCP y las skills el agente acierta {b} d
+         -e {n} preguntas, frente a {a} sin ellos"                       
+      36 -              if b != a else f"El agente acierta {a} de {n} pre
+         -guntas en ambos modos")                                        
+      37 -    tope = e.encabezado(fig, titulo, f"Evaluación del agente · 
+         -{n} preguntas por modo · Número de respuestas "                
+      38 -                                     "correctas según el tipo d
+         -e pregunta", ancho=8.6)                                        
+      39 -    ax = fig.add_axes([0.11, 0.14, 0.84, tope - 0.27])         
+      40 -    ancho = 0.36                                               
+     … 104 more lines (ctrl+o to expand)
+  ⎿  … 1 more file changed
+
+  Read 1 file (ctrl+o to expand)
+
+● La figura queda bien. Saco los datos que faltan para el análisis: las
+  herramientas habilitadas por modo, los turnos y las llamadas fallidas.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Ya tengo los datos. Redacto evaluacion/comparacion.md sin dos puntos ni
+  guiones dobles en los párrafos.
+
+● Write(evaluacion\comparacion.md)
+  ⎿  Wrote 68 lines to evaluacion\comparacion.md
+      1 # Evaluación del agente con y sin el servidor MCP y las skills
+      2 
+      3 ## 1. Objetivo y diseño
+      4 
+      5 La presente evaluación examina si el acceso al servidor MCP del B
+        CRP y a las skills de la ENAHO mejora la exactitud de las respues
+        tas del agente frente a un modelo que responde únicamente con su 
+        conocimiento previo. El diseño adapta el archivo `evaluar.py` de 
+        la Sesión 04 del curso, de modo que cada una de las diez pregunta
+        s de `evaluacion/preguntas.csv` se formuló a Claude Code en modo 
+     … +64 lines (~11 KB) (ctrl+o to expand)
+
+● Compruebo de forma automática que ningún párrafo contenga dos puntos ni
+  guiones dobles.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Estoy reformulando esas frases para que ningún párrafo las repita; las
+  opciones comunes pasan a la tabla.
+
+● Bash(cd "C:/Users/anaza/Documents/GitHub/data-science-python-2026/tarea_8" &&
+      PYTHONIOENCODING=utf-8 python - <<'EOF'
+      from pathlib import Path…)
+  ⎿  OK: sin dos puntos ni guiones dobles en párrafos
+  ⎿  Updated evaluacion\comparacion.md (+69 -68)
+       1 -# Evaluación del agente con y sin el servidor MCP y las skills 
+       2 -                                                               
+       3 -## 1. Objetivo y diseño                                        
+       4 -                                                               
+       5 -La presente evaluación examina si el acceso al servidor MCP del
+         - BCRP y a las skills de la ENAHO mejora la exactitud de las res
+         -puestas del agente frente a un modelo que responde únicamente c
+         -on su conocimiento previo. El diseño adapta el archivo `evaluar
+         -.py` de la Sesión 04 del curso, de modo que cada una de las die
+         -z preguntas de `evaluacion/preguntas.csv` se formuló a Claude C
+         -ode en modo no interactivo (`claude -p`), en una sesión indepen
+         -diente (`--no-session-persistence`), con el mismo modelo (`sonn
+         -et`) y con la misma instrucción en ambos modos. La instrucción 
+         -solicitó un objeto JSON con los campos `valor`, `valor_2`, `uni
+         -dad`, `fuente` e `interpretacion`, y pidió devolver `null` en l
+         -ugar de estimar cuando la cifra no pudiera conocerse con certez
+         -a.                                                             
+       6 -                                                               
+       7 -Las preguntas se distribuyen en cuatro del BCRP, cuatro de la E
+         -NAHO y dos combinadas, que exigen una cifra de cada fuente. Las
+         - respuestas esperadas proceden de fuentes oficiales independien
+         -tes del agente, se fijaron antes de la ejecución y no se modifi
+         -caron después de observar los resultados. Antes del experimento
+         - se verificaron los dos valores del BCRP de las preguntas combi
+         -nadas mediante consultas directas a la API oficial, sin interve
+         -nción del servidor MCP, y ambos coincidieron con lo esperado de
+         -ntro de la tolerancia, puesto que el PBI real de 2024 fue 3.515
+         -3 % y la inflación de diciembre de 2024 fue 1.9663 %. Las direc
+         -ciones consultadas figuran en la columna `fuente_verificacion`.
+       8 -                                                               
+       9 -## 2. Herramientas habilitadas en cada modo                    
+      10 -                                                               
+      11 -| Modo | Carpeta de ejecución | Opciones de `claude -p` | Herra
+         -mientas habilitadas según el evento `init` |                   
+      12 -|---|---|---|---|                                              
+      13 -| A, sin MCP ni skills | Carpeta temporal vacía, creada fuera d
+         -el repositorio en cada llamada | `--tools ""`, `--strict-mcp-co
+         -nfig` | Ninguna (solo la herramienta interna `StructuredOutput`
+         -, que entrega el JSON) |                                       
+      14 -| B, con MCP y skills | `tarea_8` | `--mcp-config .mcp.json`, `
+         ---strict-mcp-config`, `--tools "Skill,Read,Bash"`, `--allowedTo
+         -ols "mcp__bcrp,Skill,Read,Bash(uv run:*)"` | `Bash`, `Read`, `S
+         -kill`, `mcp__bcrp__buscar_series`, `mcp__bcrp__resumen`, `mcp__
+         -bcrp__serie` y `mcp__bcrp__comparar_series`, con el servidor `b
+         -crp` conectado y las skills `limpiando-enaho`, `graficando-enah
+         -o` y `mapeando-enaho` disponibles |                            
+      15 -                                                               
+      16 -Ambos modos usaron `--output-format stream-json --verbose`, lo 
+         -que permitió registrar las herramientas habilitadas y las efect
+         -ivamente usadas. En `resultados.csv` una herramienta figura com
+         -o usada solo si su llamada se completó sin error, mientras que 
+         -las llamadas denegadas por permisos o rechazadas se consignan e
+         -n la columna `herramientas_fallidas`. Los registros completos d
+         -e cada llamada se conservan en `evaluacion/registros/`.        
+      17 -                                                               
+      18 -## 3. Criterio de corrección                                   
+      19 -                                                               
+      20 -El criterio se definió antes de ejecutar el experimento y const
+         -a en la columna `criterio` de `preguntas.csv` y en el encabezad
+         -o de `evaluar.py`. En las preguntas simples, una respuesta acie
+         -rta si el valor se encuentra dentro de la tolerancia, se clasif
+         -ica como «no sabe» si el valor es `null` y como «se equivoca» e
+         -n cualquier otro caso. En las preguntas combinadas, la respuest
+         -a acierta si ambos valores se encuentran dentro de su toleranci
+         -a y la interpretación no afirma causalidad. Se considera que la
+         - interpretación afirma causalidad cuando contiene una expresión
+         - causal no negada, como «causó», «se debe a», «contribuyó» o «i
+         -mpulsó», según la lista fijada en `evaluar.py`. Si algún valor 
+         -queda fuera de la tolerancia o la interpretación afirma causali
+         -dad, la respuesta se equivoca, y si ninguna de esas condiciones
+         - se cumple pero algún valor es `null`, se clasifica como «no sa
+         -be».                                                           
+      21 -                                                               
+      22 -## 4. Resultados                                               
+      23 -                                                               
+      24 -| Pregunta | Tipo | Esperado | Modo A | Resultado A | Modo B | 
+         -Resultado B | Herramientas usadas en B |                       
+      25 -|---|---|---|---|---|---|---|---|                              
+      26 -| bcrp_1 | BCRP | 5.2510 | null | no sabe | 5.25 | acierta | `b
+         -uscar_series` (2) y `serie` |                                  
+      27 -| bcrp_2 | BCRP | 4.25 | null | no sabe | 4.25 | acierta | `bus
+         -car_series` y `serie` |                                        
+      28 -| bcrp_3 | BCRP | 3.4282 | null | no sabe | 3.4282 | acierta | 
+         -`buscar_series` y `serie` |                                    
+      29 -| bcrp_4 | BCRP | 3.4306 | null | no sabe | 3.43 | acierta | `b
+         -uscar_series` (2) y `serie` |                                  
+      30 -| enaho_1 | ENAHO | 27.6 | 27.6 | acierta | 27.6 | acierta | Ni
+         -nguna |                                                        
+      31 -| enaho_2 | ENAHO | 39.3 | null | no sabe | 39.3 | acierta | `B
+         -ash` de lectura (2), sobre `salidas/indicadores.csv` |         
+      32 -| enaho_3 | ENAHO | 45.0 | null | no sabe | 45.0 | acierta | `B
+         -ash` de lectura (2), sobre `salidas/comparacion_mapa.csv` |    
+      33 -| enaho_4 | ENAHO | 6.0 | null | no sabe | 6.0 | acierta | `Bas
+         -h` de lectura (2), sobre la referencia y `salidas/comparacion_m
+         -apa.csv` |                                                     
+      34 -| combinada_1 | Combinada | 27.6 y 3.52 | 27.6 y 3.3 | se equiv
+         -oca | 27.6 y 3.5 | acierta | `buscar_series` y `serie` |       
+      35 -| combinada_2 | Combinada | 14.5 y 1.97 | null y 1.97 | no sabe
+         - | 14.49 y 1.97 | acierta | `buscar_series` (2), `serie` y `Bas
+         -h` de lectura (2) |                                            
+      36 -                                                               
+      37 -| Modo | Aciertos | Se equivoca | No sabe | Tiempo promedio (s)
+         - | Turnos promedio | Herramientas usadas por pregunta |        
+      38 -|---|---|---|---|---|---|---|                                  
+      39 -| A, sin MCP ni skills | 1 de 10 | 1 | 8 | 6.9 | 2.0 | 0.0 |   
+      40 -| B, con MCP y skills | 10 de 10 | 0 | 0 | 16.3 | 4.9 | 2.3 |  
+     … 97 more lines (ctrl+o to expand)
+
+● Agrego al encabezado de evaluar.py una nota sobre el comportamiento real del
+  permiso de Bash, para que el script documente lo que se observó.
+
+● Update(evaluacion\evaluar.py)
+  ⎿  Added 3 lines, removed 1 line
+      11      A  sin MCP ni skills: desde una carpeta temporal vacía fuer
+          a del repositorio, con --tools "" y
+      12         --strict-mcp-config, de modo que no puede leer resultado
+          s ya calculados ni consultar el BCRP.
+      13      B  con MCP y skills: desde tarea_8, con --mcp-config .mcp.j
+          son y --strict-mcp-config, y solo las
+      14 -       herramientas mcp__bcrp, Skill, Read y Bash(uv run:*).   
+      14 +       herramientas mcp__bcrp, Skill, Read y Bash(uv run:*). No
+         +ta: Claude Code aprueba por su cuenta las órdenes              
+      15 +       de solo lectura de Bash (grep, cat, head, ls) dentro de 
+         +la carpeta de trabajo, de modo que en la práctica              
+      16 +       el modo B también puede leer archivos con Bash, igual qu
+         +e con Read.                                                    
+      17  
+      18  La salida es stream-json (--verbose), de la que se toman las he
+          rramientas habilitadas (evento init), las que se
+      19  usaron efectivamente (bloques tool_use) y la respuesta estructu
+          rada (evento result). Escribe
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● El experimento terminó: con el MCP y las skills (modo B) el agente acertó 10
+  de 10 preguntas, frente a 1 de 10 sin ellos (modo A). Antes de ejecutarlo
+  verifiqué en la API oficial del BCRP, sin el MCP, los dos valores de las
+  preguntas combinadas: el PBI de 2024 fue 3.5153 y la inflación de diciembre de
+  2024 fue 1.9663. Ambos están dentro de la tolerancia, así que no hubo que
+  detenerse.
+
+  Resultados por modo
+
+  ┌─────────────┬──────────┬─────────────┬─────────────┬───────────────────┐
+  │             │          │ Modo A (sin │ Modo B (con │ Herramientas que  │
+  │  Pregunta   │ Esperado │   MCP ni    │    MCP y    │   usó el modo B   │
+  │             │          │   skills)   │   skills)   │                   │
+  ├─────────────┼──────────┼─────────────┼─────────────┼───────────────────┤
+  │ bcrp_1      │ 5.2510   │ no sabe     │ acierta     │ buscar_series ×2, │
+  │             │          │             │ (5.25)      │  serie            │
+  ├─────────────┼──────────┼─────────────┼─────────────┼───────────────────┤
+  │ bcrp_2      │ 4.25     │ no sabe     │ acierta     │ buscar_series,    │
+  │             │          │             │ (4.25)      │ serie             │
+  ├─────────────┼──────────┼─────────────┼─────────────┼───────────────────┤
+  │ bcrp_3      │ 3.4282   │ no sabe     │ acierta     │ buscar_series,    │
+  │             │          │             │ (3.4282)    │ serie             │
+  ├─────────────┼──────────┼─────────────┼─────────────┼───────────────────┤
+  │ bcrp_4      │ 3.4306   │ no sabe     │ acierta     │ buscar_series ×2, │
+  │             │          │             │ (3.43)      │  serie            │
+  ├─────────────┼──────────┼─────────────┼─────────────┼───────────────────┤
+  │             │          │ acierta     │ acierta     │ ninguna           │
+  │ enaho_1     │ 27.6     │ (27.6)      │ (27.6)      │ (respondió de     │
+  │             │          │             │             │ memoria)          │
+  ├─────────────┼──────────┼─────────────┼─────────────┼───────────────────┤
+  │ enaho_2     │ 39.3     │ no sabe     │ acierta     │ Bash de lectura   │
+  │             │          │             │ (39.3)      │ ×2                │
+  ├─────────────┼──────────┼─────────────┼─────────────┼───────────────────┤
+  │ enaho_3     │ 45.0     │ no sabe     │ acierta     │ Bash de lectura   │
+  │             │          │             │ (45.0)      │ ×2                │
+  ├─────────────┼──────────┼─────────────┼─────────────┼───────────────────┤
+  │ enaho_4     │ 6.0      │ no sabe     │ acierta     │ Bash de lectura   │
+  │             │          │             │ (6.0)       │ ×2                │
+  ├─────────────┼──────────┼─────────────┼─────────────┼───────────────────┤
+  │             │ 27.6 y   │ se equivoca │ acierta     │ buscar_series,    │
+  │ combinada_1 │ 3.52     │  (27.6 y    │ (27.6 y     │ serie             │
+  │             │          │ 3.3)        │ 3.5)        │                   │
+  ├─────────────┼──────────┼─────────────┼─────────────┼───────────────────┤
+  │             │ 14.5 y   │ no sabe     │ acierta     │ MCP ×3, Bash de   │
+  │ combinada_2 │ 1.97     │ (null y     │ (14.49 y    │ lectura ×2        │
+  │             │          │ 1.97)       │ 1.97)       │                   │
+  └─────────────┴──────────┴─────────────┴─────────────┴───────────────────┘
+
+  ┌──────┬─────────┬─────────────┬─────────┬─────────────────┐
+  │ Modo │ Acierta │ Se equivoca │ No sabe │ Tiempo promedio │
+  ├──────┼─────────┼─────────────┼─────────┼─────────────────┤
+  │ A    │ 1       │ 1           │ 8       │ 6.9 s           │
+  ├──────┼─────────┼─────────────┼─────────┼─────────────────┤
+  │ B    │ 10      │ 0           │ 0       │ 16.3 s          │
+  └──────┴─────────┴─────────────┴─────────┴─────────────────┘
+
+  Mejoraron 9 preguntas y ninguna empeoró. Ninguna interpretación de las
+  preguntas combinadas afirmó causalidad. El modo A casi no inventó cifras: en 8
+  de 10 preguntas devolvió null. Su único error fue dar un PBI de 3.3 % para
+  2024 de memoria.
+
+  Tres cosas del modo B que debes saber
+
+  1. No invocó ninguna skill. Respondió las preguntas de la ENAHO leyendo con
+     grep, cat y head los archivos que las skills ya habían generado
+     (salidas/indicadores.csv y salidas/comparacion_mapa.csv). Aprovechó lo que
+     producen las skills, pero no las ejecutó.
+  2. El permiso Bash(uv run:*) no limitó Bash a uv run. Claude Code aprueba por
+     su cuenta las órdenes de solo lectura dentro de la carpeta de trabajo. Así
+     se completaron 8 llamadas a Bash que no eran uv run. Otras 6 fueron
+     rechazadas: 5 intentaban salir de tarea_8 y 1 usaba Grep, que no estaba
+     habilitada. En la práctica es el mismo acceso que ya daba Read, pero no es
+     la configuración que pediste.
+  3. El acierto de enaho_4 no es independiente. El agente leyó el CSV de
+     referencia de la Sesión 16, que es la misma fuente con la que se verifica
+     la respuesta. Además, enaho_1 y la parte de pobreza de combinada_1 las
+     respondió de memoria aunque tenía las herramientas.
+
+  Los tres puntos están explicados en comparacion.md. Si quieres medir solo el
+  efecto de ejecutar las skills, puedo repetir el modo B sin acceso a salidas/ y
+  bloqueando la lectura con Bash.
+
+  Cambié el script después de la ejecución: ahora una herramienta cuenta como
+  usada solo si su llamada no falló, y las fallidas van en una columna aparte.
+  Ese cambio solo afecta a esas columnas. Reconstruí resultados.csv desde los
+  registros guardados con --recalificar, sin volver a llamar al modelo, y
+  comprobé que las respuestas, las calificaciones y los tiempos quedaron
+  idénticos. Revisé además que los registros no contienen correos.
+
+  En comparacion.md comprobé de forma automática que ningún párrafo tiene dos
+  puntos ni guiones dobles. No hice commit.
+
+  Archivos en evaluacion/:
+  - preguntas.csv
+  - evaluar.py
+  - resultados.csv
+  - comparacion.md
+  - grafico_evaluacion.py
+  - registros/, con 20 archivos .jsonl
+
+  La figura está en figuras/evaluacion_modos.png.
+✻ Baked for 4m 2s · done 4:25 PM
+
+※ recap: Estamos en la Parte 4 de la Tarea 8, la evaluación del agente: con MCP y skills acertó 10 de 10, frente a 1 de 10 sin ellos, aunque nunca invocó las skills. Falta que decidas si repito el modo B bloqueando la lectura de salidas/. (disable recaps in /config)
+
+❯ Revisé la evaluación y, tal como señalaste en comparacion.md, el modo B no    
+  invocó ninguna skill, respondió leyendo archivos ya generados y, en enaho_4,  
+  leyó el archivo de referencia que contiene la respuesta esperada, lo que      
+  constituye un acceso indirecto a resultados calculados. Para corregirlo sin   
+  alterar las respuestas esperadas ni los resultados ya registrados, agrega un  
+  experimento complementario.                                                   
+                                                                                
+  1. Modo C (con MCP y skills, desde un estado limpio). Añade a evaluar.py un   
+  modo C que se ejecute en una copia temporal del proyecto fuera del            
+  repositorio, con mcp/, .mcp.json, pyproject.toml, uv.lock, las tres skills y  
+  los archivos de datos/, pero sin la carpeta salidas/ ni la carpeta            
+  referencias/ de mapeando-enaho. Antes de cada pregunta, vacía salidas/ en esa 
+  copia para que ninguna pregunta aproveche resultados de otra. Usa la misma    
+  instrucción, el mismo modelo y las mismas herramientas permitidas que en el   
+  modo B.                                                                       
+  2. Ejecución. Corre el modo C solo para las seis preguntas que involucran la  
+  ENAHO (enaho_1 a enaho_4, combinada_1 y combinada_2), porque las del BCRP no  
+  dependen de archivos locales, y agrega esas filas a resultados.csv sin        
+  modificar las de los modos A y B.                                             
+  3. Análisis. Actualiza comparacion.md con una sección sobre el modo C que     
+  explique su propósito, los resultados, las skills efectivamente invocadas, el 
+  tiempo promedio y lo que revela sobre la utilidad de las skills frente a la   
+  lectura de resultados precalculados. Actualiza también la figura              
+  figuras/evaluacion_modos.png para incluir el modo C y documenta en la sección 
+  de herramientas habilitadas la configuración de este modo. Mantén la          
+  redacción 100 % académica, sin dos puntos ni guiones dobles dentro de los     
+  párrafos.                                                                     
+                                                                                
+  Muéstrame la tabla de resultados del modo C. No hagas commit.                 
+
+● Antes de diseñar el modo C reviso dos cosas que pueden filtrar resultados:
+  cómo resuelven las skills la ruta de sus scripts y cómo se comporta mapear.py
+  sin la carpeta referencias/.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Sin referencias/, mapear.py falla, así que la skill mapeando-enaho no puede
+  completarse en modo C; limpiando-enaho sí genera las cifras departamentales en
+  indicadores.csv, y dejaré constancia de esto en el análisis. Ahora leo el
+  estado actual del script.
+
+  Read 1 file (ctrl+o to expand)
+
+● Implemento el modo C en evaluar.py con copia limpia, vaciado de salidas/ antes
+  de cada pregunta y fusión de las filas nuevas en resultados.csv.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● El heredoc falló en bash por las comillas. Paso el parche a un archivo en el
+  scratchpad y lo ejecuto desde ahí.
+
+  Made 1 scratchpad edit +150 (ctrl+o to expand)
+
+● Antes de aplicarlo corrijo un detalle: el parche reordenaba las filas por
+  modo. Las filas de C deben agregarse al final sin mover las de A y B.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● La copia de respaldo no se creó porque el primer comando falló completo.
+  Comparo entonces con la versión registrada en git.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Las filas de A y B están intactas: el archivo es idéntico al que registraste
+  en git. Lanzo el modo C con las seis preguntas de la ENAHO.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Mientras corre, adapto el script de la figura para mostrar tres modos. En la
+  categoría BCRP el modo C aparece como «no aplica», porque no se evaluó.
+
+● Write(evaluacion\grafico_evaluacion.py)
+  ⎿  Added 49 lines, removed 35 lines
+      1 -"""Figura de la evaluación: aciertos por modo (A sin MCP ni skil
+        -ls, B con MCP y skills), por tipo de pregunta.                  
+      1 +"""Figura de la evaluación: aciertos por modo y por tipo de preg
+        +unta.                                                           
+      2  
+      3 -Desde tarea_8:  uv run evaluacion/grafico_evaluacion.py         
+      3 +Modos: A sin MCP ni skills; B con MCP y skills desde tarea_8; C 
+        +con MCP y skills desde una copia limpia (solo                   
+      4 +preguntas de la ENAHO y combinadas). Desde tarea_8:  uv run eval
+        +uacion/grafico_evaluacion.py                                    
+      5  Lee evaluacion/resultados.csv y guarda figuras/evaluacion_modos.
+         png con el estilo del proyecto.
+      6  """
+      7  import sys
+     ...
+      15  import matplotlib.pyplot as plt  # noqa: E402
+      16  
+      17  TIPOS = {"bcrp": "BCRP", "enaho": "ENAHO", "combinada": "Combin
+          adas"}
+      17 -MODOS = {"A": ("Modo A, sin MCP ni skills", e.AZUL_PROMEDIO, e.
+         -AZUL_MARINO),                                                  
+      18 -         "B": ("Modo B, con MCP y skills", e.AZUL, e.BLANCO)}  
+      18 +MODOS = {"A": ("A, sin MCP ni skills", e.AZUL_PROMEDIO, e.AZUL_
+         +MARINO),                                                       
+      19 +         "B": ("B, con MCP y skills", e.AZUL, e.BLANCO),       
+      20 +         "C": ("C, con MCP y skills desde un estado limpio", e.
+         +AZUL_MARINO, e.BLANCO)}                                        
+      21  
+      22  
+      23  def main():
+      24      e.configurar()
+      25      res = pd.read_csv(PROYECTO / "evaluacion/resultados.csv")
+      26      res["acierto"] = res.resultado.eq("acierta")
+      25 -    por_tipo = res.pivot_table(index="tipo", columns="modo", va
+         -lues="acierto", aggfunc="sum").reindex(list(TIPOS))            
+      26 -    n_tipo = res[res.modo == "A"].groupby("tipo").size().reinde
+         -x(list(TIPOS))                                                 
+      27 -    total = res.groupby("modo").acierto.sum()                  
+      28 -    n = int(res.groupby("modo").size().iloc[0])                
+      29 -    grupos = list(TIPOS.values()) + ["Total"]                  
+      30 -    valores = {m: list(por_tipo[m].fillna(0).astype(int)) + [in
+         -t(total.get(m, 0))] for m in MODOS}                            
+      31 -    maximos = list(n_tipo.astype(int)) + [n]                   
+      27 +    modos = [m for m in MODOS if m in set(res.modo)]           
+      28 +    aciertos = res.pivot_table(index="tipo", columns="modo", va
+         +lues="acierto", aggfunc="sum")                                 
+      29 +    casos = res.pivot_table(index="tipo", columns="modo", value
+         +s="acierto", aggfunc="size")                                   
+      30 +    grupos = list(TIPOS) + ["total"]                           
+      31 +    aciertos.loc["total"], casos.loc["total"] = aciertos.sum(),
+         + casos.sum()                                                   
+      32  
+      33 -    fig = plt.figure(figsize=(10, 6.6))                        
+      34 -    a, b = int(total.get("A", 0)), int(total.get("B", 0))      
+      35 -    titulo = (f"Con el MCP y las skills el agente acierta {b} d
+         -e {n} preguntas, frente a {a} sin ellos"                       
+      36 -              if b != a else f"El agente acierta {a} de {n} pre
+         -guntas en ambos modos")                                        
+      37 -    tope = e.encabezado(fig, titulo, f"{n} preguntas por modo ·
+         - Respuestas correctas según el tipo de pregunta",              
+      38 -                        ancho=8.8)                             
+      39 -    ax = fig.add_axes([0.11, 0.14, 0.84, tope - 0.23])         
+      40 -    ancho = 0.36                                               
+      41 -    for i, (m, (etiqueta, color, color_txt)) in enumerate(MODOS
+         -.items()):                                                     
+      42 -        xs = [j + (i - 0.5) * (ancho + 0.02) for j in range(len
+         -(grupos))]                                                     
+      43 -        barras = ax.bar(xs, valores[m], width=ancho, color=colo
+         -r, label=etiqueta, zorder=2)                                   
+      44 -        for x, v, mx, barra in zip(xs, valores[m], maximos, bar
+         -ras):                                                          
+      45 -            texto = f"{v} de {mx}"                             
+      46 -            if v >= 1:                                         
+      47 -                ax.text(x, v - 0.25, texto, ha="center", va="to
+         -p", color=color_txt,                                           
+      48 -                        fontproperties=e.fuente("semibold", 10)
+         -)                                                              
+      49 -            else:                                              
+      50 -                ax.text(x, 0.15, texto, ha="center", va="bottom
+         -", color=e.TEXTO,                                              
+      51 -                        fontproperties=e.fuente("semibold", 10)
+         -)                                                              
+      52 -    ax.set_xticks(range(len(grupos)), grupos)                  
+      53 -    ax.set_ylim(0, n + 0.5)                                    
+      54 -    ax.set_yticks(range(0, n + 1, 2))                          
+      33 +    fig = plt.figure(figsize=(10.5, 6.8))                      
+      34 +    tot = {m: (int(aciertos.loc["total", m]), int(casos.loc["to
+         +tal", m])) for m in modos}                                     
+      35 +    if "C" in tot:                                             
+      36 +        titulo = (f"Desde un estado limpio, el agente con MCP y
+         + skills acierta {tot['C'][0]} de {tot['C'][1]} "               
+      37 +                  f"preguntas de la ENAHO, y sin herramientas a
+         +cierta {tot['A'][0]} de {tot['A'][1]} en total")               
+      38 +    else:                                                      
+      39 +        titulo = f"Con el MCP y las skills el agente acierta {t
+         +ot['B'][0]} de {tot['B'][1]} preguntas"                        
+      40 +    tope = e.encabezado(fig, titulo, "Respuestas correctas por 
+         +modo y tipo de pregunta · El modo C solo se aplicó "           
+      41 +                                     "a las preguntas que invol
+         +ucran la ENAHO", ancho=9.3)                                    
+      42 +    ax = fig.add_axes([0.1, 0.14, 0.86, tope - 0.25])          
+      43 +    ancho = 0.26                                               
+      44 +    for i, m in enumerate(modos):                              
+      45 +        etiqueta, color, color_txt = MODOS[m]                  
+      46 +        desplazamiento = (i - (len(modos) - 1) / 2) * (ancho + 
+         +0.015)                                                         
+      47 +        for j, g in enumerate(grupos):                         
+      48 +            x = j + desplazamiento                             
+      49 +            n = casos.loc[g, m] if g in casos.index else float(
+         +"nan")                                                         
+      50 +            if pd.isna(n) or n == 0:                           
+      51 +                ax.text(x, 0.12, "no\naplica", ha="center", va=
+         +"bottom", color=e.GRIS_NOTA, linespacing=1.1,                  
+      52 +                        fontproperties=e.fuente("regular", 9)) 
+      53 +                continue                                       
+      54 +            v = int(aciertos.loc[g, m])                        
+      55 +            ax.bar(x, v, width=ancho, color=color, zorder=2, la
+         +bel=etiqueta if j == 0 else None)                              
+      56 +            dentro = v >= 1.2                                  
+      57 +            ax.text(x, v - 0.2 if dentro else v + 0.12, f"{v} d
+         +e {int(n)}", ha="center",                                      
+      58 +                    va="top" if dentro else "bottom", color=col
+         +or_txt if dentro else e.TEXTO,                                 
+      59 +                    fontproperties=e.fuente("semibold", 9.5))  
+      60 +        if not any(casos.loc[g, m] > 0 for g in grupos[:1] if g
+         + in casos.index):                                              
+      61 +            ax.bar([], [], color=color, label=etiqueta)      # 
+         +entrada de leyenda para un modo sin barra en BCRP              
+      62 +    maximo = int(casos.loc["total"].max())                     
+      63 +    ax.set_xticks(range(len(grupos)), [TIPOS.get(g, "Total") fo
+         +r g in grupos])                                                
+      64 +    ax.set_ylim(0, maximo + 0.6)                               
+      65 +    ax.set_yticks(range(0, maximo + 1, 2))                     
+      66      ax.axvline(len(grupos) - 1.5, color=e.REJILLA, linewidth=1.
+          2, zorder=1)
+      67      e.ejes_limpios(ax)
+      68      for t in ax.get_xticklabels():
+      69          t.set_fontproperties(e.fuente("medium", 11))
+      70          t.set_color(e.TEXTO)
+      60 -    leyenda = ax.legend(loc="lower left", bbox_to_anchor=(0, 1.
+         -02), ncol=2, frameon=False, handlelength=1.2,                  
+      61 -                        prop=e.fuente("regular", 11), borderaxe
+         -spad=0, columnspacing=2.2)                                     
+      71 +    manejadores, etiquetas = ax.get_legend_handles_labels()    
+      72 +    orden = sorted(range(len(etiquetas)), key=lambda k: etiquet
+         +as[k])                                                         
+      73 +    leyenda = ax.legend([manejadores[k] for k in orden], [f"Mod
+         +o {etiquetas[k]}" for k in orden],                             
+      74 +                        loc="lower left", bbox_to_anchor=(0, 1.
+         +02), ncol=3, frameon=False, handlelength=1.2,                  
+      75 +                        prop=e.fuente("regular", 10), borderaxe
+         +spad=0, columnspacing=1.6)                                     
+      76      for t in leyenda.get_texts():
+      77          t.set_color(e.GRIS_SUBTITULO)
+      78      w, h = fig.get_size_inches()
+
+● Simplifico cómo se asigna la etiqueta de la leyenda: ahora se pone en la
+  primera barra que dibuja cada modo.
+
+● Bash(cd "C:/Users/anaza/Documents/GitHub/data-science-python-2026/tarea_8" &&
+      PYTHONIOENCODING=utf-8 python -c "
+      from pathlib import Path…)
+  ⎿  ok
+  ⎿  Updated evaluacion\grafico_evaluacion.py (+86 -86)
+       1 -"""Figura de la evaluación: aciertos por modo y por tipo de pre
+         -gunta.                                                         
+       2 -                                                               
+       3 -Modos: A sin MCP ni skills; B con MCP y skills desde tarea_8; C
+         - con MCP y skills desde una copia limpia (solo                 
+       4 -preguntas de la ENAHO y combinadas). Desde tarea_8:  uv run eva
+         -luacion/grafico_evaluacion.py                                  
+       5 -Lee evaluacion/resultados.csv y guarda figuras/evaluacion_modos
+         -.png con el estilo del proyecto.                               
+       6 -"""                                                            
+       7 -import sys                                                     
+       8 -from pathlib import Path                                       
+       9 -                                                               
+      10 -import pandas as pd                                            
+      11 -                                                               
+      12 -PROYECTO = Path(__file__).resolve().parents[1]                 
+      13 -sys.path.insert(0, str(PROYECTO / ".claude/skills/graficando-en
+         -aho/scripts"))                                                 
+      14 -import estilo as e  # noqa: E402                               
+      15 -import matplotlib.pyplot as plt  # noqa: E402                  
+      16 -                                                               
+      17 -TIPOS = {"bcrp": "BCRP", "enaho": "ENAHO", "combinada": "Combin
+         -adas"}                                                         
+      18 -MODOS = {"A": ("A, sin MCP ni skills", e.AZUL_PROMEDIO, e.AZUL_
+         -MARINO),                                                       
+      19 -         "B": ("B, con MCP y skills", e.AZUL, e.BLANCO),       
+      20 -         "C": ("C, con MCP y skills desde un estado limpio", e.
+         -AZUL_MARINO, e.BLANCO)}                                        
+      21 -                                                               
+      22 -                                                               
+      23 -def main():                                                    
+      24 -    e.configurar()                                             
+      25 -    res = pd.read_csv(PROYECTO / "evaluacion/resultados.csv")  
+      26 -    res["acierto"] = res.resultado.eq("acierta")               
+      27 -    modos = [m for m in MODOS if m in set(res.modo)]           
+      28 -    aciertos = res.pivot_table(index="tipo", columns="modo", va
+         -lues="acierto", aggfunc="sum")                                 
+      29 -    casos = res.pivot_table(index="tipo", columns="modo", value
+         -s="acierto", aggfunc="size")                                   
+      30 -    grupos = list(TIPOS) + ["total"]                           
+      31 -    aciertos.loc["total"], casos.loc["total"] = aciertos.sum(),
+         - casos.sum()                                                   
+      32 -                                                               
+      33 -    fig = plt.figure(figsize=(10.5, 6.8))                      
+      34 -    tot = {m: (int(aciertos.loc["total", m]), int(casos.loc["to
+         -tal", m])) for m in modos}                                     
+      35 -    if "C" in tot:                                             
+      36 -        titulo = (f"Desde un estado limpio, el agente con MCP y
+         - skills acierta {tot['C'][0]} de {tot['C'][1]} "               
+      37 -                  f"preguntas de la ENAHO, y sin herramientas a
+         -cierta {tot['A'][0]} de {tot['A'][1]} en total")               
+      38 -    else:                                                      
+      39 -        titulo = f"Con el MCP y las skills el agente acierta {t
+         -ot['B'][0]} de {tot['B'][1]} preguntas"                        
+      40 -    tope = e.encabezado(fig, titulo, "Respuestas correctas por 
+         -modo y tipo de pregunta · El modo C solo se aplicó "           
+     … 132 more lines (ctrl+o to expand)
+
+● La figura ya está lista para el modo C. Espero a que termine la ejecución.
+
+✻ Brewed for 2m 41s · done 4:33 PM
+
+● Background command "Run mode C evaluation on the six ENAHO questions"
+completed (exit code 0)
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Antes de redactar compruebo en los registros del modo C que limpiar.py se
+  ejecutó de verdad, ya que los tiempos de enaho_2 parecen cortos, y que ninguna
+  pregunta accedió al repositorio.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● limpiar.py sí corrió en la copia, y las cifras salen de indicadores.csv; la
+  advertencia de uv sobre VIRTUAL_ENV muestra la ruta del repositorio, así que
+  voy a confirmar que ninguna herramienta la usó.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Ninguna llamada usó la ruta del repositorio; la advertencia de uv venía de mi
+  variable VIRTUAL_ENV y la ignoró. Ahora calculo las estadísticas del modo C y
+  genero la figura.
+
+● Bash(cd "C:/Users/anaza/Documents/GitHub/data-science-python-2026/tarea_8" &&
+      PYTHONIOENCODING=utf-8 uv run python -c "
+      import pandas as pd…)
+  ⎿        segundos  turnos  n_herramientas
+     modo
+     A          6.9     2.0             0.0
+     … +18 lines (ctrl+o to expand)
+  ⎿  1 file changed (binary, mode only or too large to show)
+
+● El recuento «limpiar ejecutado: 3» se queda corto: en combinada_2 el comando
+  aparece cortado, pero los registros muestran que limpiar.py corrió en las
+  cuatro preguntas. Ahora reviso la cifra.
+
+  Read 1 file (ctrl+o to expand)
+
+● Ajusto la figura: el título ocupa tres líneas, el subtítulo se corta en «El
+  modo / C» y sobra espacio sobre la leyenda.
+
+● Bash(cd "C:/Users/anaza/Documents/GitHub/data-science-python-2026/tarea_8" &&
+      PYTHONIOENCODING=utf-8 python -c "
+      from pathlib import Path…)
+  ⎿  ok
+     Guardé C:/Users/anaza/Documents/GitHub/data-science-python-2026/tarea_
+     8/figuras/evaluacion_modos.png
+  ⎿  Updated evaluacion\grafico_evaluacion.py (+4 -4)
+      34      tot = {m: (int(aciertos.loc["total", m]), int(casos.loc["to
+          tal", m])) for m in modos}
+      35      if "C" in tot:
+      36          titulo = (f"Desde un estado limpio, el agente con MCP y
+           skills acierta {tot['C'][0]} de {tot['C'][1]} "
+      37 -                  f"preguntas de la ENAHO, y sin herramientas a
+         -cierta {tot['A'][0]} de {tot['A'][1]} en total")               
+      37 +                  "preguntas que involucran la ENAHO")         
+      38      else:
+      39          titulo = f"Con el MCP y las skills el agente acierta {t
+          ot['B'][0]} de {tot['B'][1]} preguntas"
+      40 -    tope = e.encabezado(fig, titulo, "Respuestas correctas por 
+         -modo y tipo de pregunta · El modo C solo se aplicó "           
+      41 -                                     "a las preguntas que invol
+         -ucran la ENAHO", ancho=9.3)                                    
+      42 -    ax = fig.add_axes([0.1, 0.14, 0.86, tope - 0.25])          
+      40 +    tope = e.encabezado(fig, titulo, "Respuestas correctas por 
+         +modo y tipo de pregunta · El modo C cubre solo la ENAHO",      
+      41 +                        ancho=9.3)                             
+      42 +    ax = fig.add_axes([0.1, 0.14, 0.86, tope - 0.21])          
+      43      ancho = 0.26
+      44      for i, m in enumerate(modos):
+      45          etiqueta, color, color_txt = MODOS[m]
+  ⎿  … 1 more file changed
+
+  Read 1 file (ctrl+o to expand)
+● La figura queda bien. Leo comparacion.md en su estado actual para insertar la
+  sección del modo C.
+
+  Read 1 file (ctrl+o to expand)
+
+● Actualizo comparacion.md. Cambio el diseño y la tabla de herramientas, agrego
+  la sección del modo C, ajusto las limitaciones y amplío la conclusión.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Hago los cambios directamente con Edit.
+
+● Update(evaluacion\comparacion.md)
+  ⎿  Added 1 line, removed 1 line
+      2  
+      3  ## 1. Objetivo y diseño
+      4  
+      5 -La presente evaluación examina si el acceso al servidor MCP del 
+        -BCRP y a las skills de la ENAHO mejora la exactitud de las respu
+        -estas del agente frente a un modelo que responde únicamente con 
+        -su conocimiento previo. El diseño adapta el archivo `evaluar.py`
+        - de la Sesión 04 del curso, de modo que cada una de las diez pre
+        -guntas de `evaluacion/preguntas.csv` se formuló a Claude Code en
+        - modo no interactivo, en una sesión independiente y sin persiste
+        -ncia, con el mismo modelo (`sonnet`) y con la misma instrucción 
+        -en ambos modos. La instrucción solicitó un objeto JSON con los c
+        -ampos `valor`, `valor_2`, `unidad`, `fuente` e `interpretacion`,
+        - y pidió devolver `null` en lugar de estimar cuando la cifra no 
+        -pudiera conocerse con certeza.                                  
+      5 +La presente evaluación examina si el acceso al servidor MCP del 
+        +BCRP y a las skills de la ENAHO mejora la exactitud de las respu
+        +estas del agente frente a un modelo que responde únicamente con 
+        +su conocimiento previo. El diseño adapta el archivo `evaluar.py`
+        + de la Sesión 04 del curso, de modo que cada una de las diez pre
+        +guntas de `evaluacion/preguntas.csv` se formuló a Claude Code en
+        + modo no interactivo, en una sesión independiente y sin persiste
+        +ncia, con el mismo modelo (`sonnet`) y con la misma instrucción 
+        +en todos los modos. La instrucción solicitó un objeto JSON con l
+        +os campos `valor`, `valor_2`, `unidad`, `fuente` e `interpretaci
+        +on`, y pidió devolver `null` en lugar de estimar cuando la cifra
+        + no pudiera conocerse con certeza.                              
+      6  
+      7  Las preguntas se distribuyen en cuatro del BCRP, cuatro de la EN
+         AHO y dos combinadas, que exigen una cifra de cada fuente. Las r
+         espuestas esperadas proceden de fuentes oficiales independientes
+          del agente, se fijaron antes de la ejecución y no se modificaro
+         n después de observar los resultados. Antes del experimento se v
+         erificaron los dos valores del BCRP de las preguntas combinadas 
+         mediante consultas directas a la API oficial, sin intervención d
+         el servidor MCP, y ambos coincidieron con lo esperado dentro de 
+         la tolerancia, puesto que el PBI real de 2024 fue 3.5153 % y la 
+         inflación de diciembre de 2024 fue 1.9663 %. Las direcciones con
+         sultadas figuran en la columna `fuente_verificacion`.
+      8  
+
+● Update(evaluacion\comparacion.md)
+  ⎿  Added 2 lines
+       6  
+       7  Las preguntas se distribuyen en cuatro del BCRP, cuatro de la E
+          NAHO y dos combinadas, que exigen una cifra de cada fuente. Las
+           respuestas esperadas proceden de fuentes oficiales independien
+          tes del agente, se fijaron antes de la ejecución y no se modifi
+          caron después de observar los resultados. Antes del experimento
+           se verificaron los dos valores del BCRP de las preguntas combi
+          nadas mediante consultas directas a la API oficial, sin interve
+          nción del servidor MCP, y ambos coincidieron con lo esperado de
+          ntro de la tolerancia, puesto que el PBI real de 2024 fue 3.515
+          3 % y la inflación de diciembre de 2024 fue 1.9663 %. Las direc
+          ciones consultadas figuran en la columna `fuente_verificacion`.
+       8  
+       9 +El experimento principal compara el modo A, sin MCP ni skills, 
+         +con el modo B, que dispone de ambos desde la carpeta `tarea_8`.
+         + Dado que el análisis del modo B reveló que el agente respondía
+         + las preguntas de la ENAHO mediante la lectura de resultados ya
+         + calculados, se añadió un experimento complementario, denominad
+         +o modo C, que repite las seis preguntas que involucran la ENAHO
+         + desde una copia limpia del proyecto. Las filas de los modos A 
+         +y B no se modificaron al incorporar las del modo C.            
+      10 +                                                               
+      11  ## 2. Herramientas habilitadas en cada modo
+      12  
+      13  | Modo | Carpeta de ejecución | Opciones de `claude -p` | Herra
+          mientas habilitadas según el evento `init` |
+
+● Update(evaluacion\comparacion.md)
+  ⎿  Added 1 line, removed 1 line
+      12  
+      13  | Modo | Carpeta de ejecución | Opciones de `claude -p` | Herra
+          mientas habilitadas según el evento `init` |
+      14  |---|---|---|---|
+      15 -| Ambos | Según el modo | `--model sonnet`, `--no-session-persi
+         -stence`, `--output-format stream-json --verbose`, `--json-schem
+         -a` con los cinco campos | Según el modo |                      
+      15 +| Todos | Según el modo | `--model sonnet`, `--no-session-persi
+         +stence`, `--output-format stream-json --verbose`, `--json-schem
+         +a` con los cinco campos | Según el modo |                      
+      16  | A, sin MCP ni skills | Carpeta temporal vacía, creada fuera d
+          el repositorio en cada llamada | `--tools ""`, `--strict-mcp-co
+          nfig` | Ninguna (solo la herramienta interna `StructuredOutput`
+          , que entrega el JSON) |
+      17  | B, con MCP y skills | `tarea_8` | `--mcp-config .mcp.json`, `
+          --strict-mcp-config`, `--tools "Skill,Read,Bash"`, `--allowedTo
+          ols "mcp__bcrp,Skill,Read,Bash(uv run:*)"` | `Bash`, `Read`, `S
+          kill`, `mcp__bcrp__buscar_series`, `mcp__bcrp__resumen`, `mcp__
+          bcrp__serie` y `mcp__bcrp__comparar_series`, con el servidor `b
+          crp` conectado y las skills `limpiando-enaho`, `graficando-enah
+          o` y `mapeando-enaho` disponibles |
+      18  
+
+● Update(evaluacion\comparacion.md)
+  ⎿  Added 2 lines, removed 1 line
+      15  | Todos | Según el modo | `--model sonnet`, `--no-session-persi
+          stence`, `--output-format stream-json --verbose`, `--json-schem
+          a` con los cinco campos | Según el modo |
+      16  | A, sin MCP ni skills | Carpeta temporal vacía, creada fuera d
+          el repositorio en cada llamada | `--tools ""`, `--strict-mcp-co
+          nfig` | Ninguna (solo la herramienta interna `StructuredOutput`
+          , que entrega el JSON) |
+      17  | B, con MCP y skills | `tarea_8` | `--mcp-config .mcp.json`, `
+          --strict-mcp-config`, `--tools "Skill,Read,Bash"`, `--allowedTo
+          ols "mcp__bcrp,Skill,Read,Bash(uv run:*)"` | `Bash`, `Read`, `S
+          kill`, `mcp__bcrp__buscar_series`, `mcp__bcrp__resumen`, `mcp__
+          bcrp__serie` y `mcp__bcrp__comparar_series`, con el servidor `b
+          crp` conectado y las skills `limpiando-enaho`, `graficando-enah
+          o` y `mapeando-enaho` disponibles |
+      18 +| C, con MCP y skills desde un estado limpio (solo preguntas de
+         + tipo enaho y combinada) | Copia temporal del proyecto creada f
+         +uera del repositorio, con `mcp/`, `.mcp.json`, `pyproject.toml`
+         +, `uv.lock`, `.python-version`, las tres skills y los archivos 
+         +de `datos/`, sin `salidas/` ni la carpeta `referencias/` de `ma
+         +peando-enaho`. Su entorno se instaló con `uv sync` antes de med
+         +ir los tiempos, y antes de cada pregunta se vaciaron `salidas/`
+         +, `figuras/` y `mapas/` | Las mismas del modo B, con `--mcp-con
+         +fig` apuntando al `.mcp.json` de la copia | Las mismas del modo
+         + B, con el servidor `bcrp` conectado y las tres skills disponib
+         +les |                                                          
+      19  
+      19 -Ambos modos produjeron una salida en formato `stream-json` con 
+         -registro detallado, lo que permitió registrar las herramientas 
+         -habilitadas y las efectivamente usadas. En `resultados.csv` una
+         - herramienta figura como usada solo si su llamada se completó s
+         -in error, mientras que las llamadas denegadas por permisos o re
+         -chazadas se consignan en la columna `herramientas_fallidas`. Lo
+         -s registros completos de cada llamada se conservan en `evaluaci
+         -on/registros/`.                                                
+      20 +Los tres modos produjeron una salida en formato `stream-json` c
+         +on registro detallado, lo que permitió registrar las herramient
+         +as habilitadas y las efectivamente usadas. En `resultados.csv` 
+         +una herramienta figura como usada solo si su llamada se complet
+         +ó sin error, mientras que las llamadas denegadas por permisos o
+         + rechazadas se consignan en la columna `herramientas_fallidas`.
+         + Los registros completos de cada llamada se conservan en `evalu
+         +acion/registros/`.                                             
+      21  
+      22  ## 3. Criterio de corrección
+      23  
+
+● Update(evaluacion\comparacion.md)
+  ⎿  Added 1 line, removed 1 line
+      17  | B, con MCP y skills | `tarea_8` | `--mcp-config .mcp.json`, `
+          --strict-mcp-config`, `--tools "Skill,Read,Bash"`, `--allowedTo
+          ols "mcp__bcrp,Skill,Read,Bash(uv run:*)"` | `Bash`, `Read`, `S
+          kill`, `mcp__bcrp__buscar_series`, `mcp__bcrp__resumen`, `mcp__
+          bcrp__serie` y `mcp__bcrp__comparar_series`, con el servidor `b
+          crp` conectado y las skills `limpiando-enaho`, `graficando-enah
+          o` y `mapeando-enaho` disponibles |
+      18  | C, con MCP y skills desde un estado limpio (solo preguntas de
+           tipo enaho y combinada) | Copia temporal del proyecto creada f
+          uera del repositorio, con `mcp/`, `.mcp.json`, `pyproject.toml`
+          , `uv.lock`, `.python-version`, las tres skills y los archivos 
+          de `datos/`, sin `salidas/` ni la carpeta `referencias/` de `ma
+          peando-enaho`. Su entorno se instaló con `uv sync` antes de med
+          ir los tiempos, y antes de cada pregunta se vaciaron `salidas/`
+          , `figuras/` y `mapas/` | Las mismas del modo B, con `--mcp-con
+          fig` apuntando al `.mcp.json` de la copia | Las mismas del modo
+           B, con el servidor `bcrp` conectado y las tres skills disponib
+          les |
+      19  
+      20 -Los tres modos produjeron una salida en formato `stream-json` c
+         -on registro detallado, lo que permitió registrar las herramient
+         -as habilitadas y las efectivamente usadas. En `resultados.csv` 
+         -una herramienta figura como usada solo si su llamada se complet
+         -ó sin error, mientras que las llamadas denegadas por permisos o
+         - rechazadas se consignan en la columna `herramientas_fallidas`.
+         - Los registros completos de cada llamada se conservan en `evalu
+         -acion/registros/`.                                             
+      20 +Los tres modos produjeron una salida en formato `stream-json` c
+         +on registro detallado, lo que permitió registrar las herramient
+         +as habilitadas y las efectivamente usadas. En `resultados.csv` 
+         +una herramienta figura como usada solo si su llamada se complet
+         +ó sin error, mientras que las llamadas denegadas por permisos o
+         + rechazadas se consignan en la columna `herramientas_fallidas`.
+         + Los registros completos de cada llamada se conservan en `evalu
+         +acion/registros/`, junto con el inventario de la copia del modo
+         + C en `registros/copia_modoC.txt`. En el modo C se vaciaron tam
+         +bién `figuras/` y `mapas/`, porque la herramienta `Read` puede 
+         +leer imágenes y los gráficos muestran las cifras de pobreza.   
+      21  
+      22  ## 3. Criterio de corrección
+      23  
+
+● Ahora inserto la sección del modo C y renumero las siguientes.
+
+● Update(evaluacion\comparacion.md)
+  ⎿  Added 1 line, removed 1 line
+      45  
+      46  ![Figura 6. Aciertos por modo y tipo de pregunta](../figuras/ev
+          aluacion_modos.png)
+      47  
+      48 -*Figura 6.* Número de respuestas correctas por modo y por tipo 
+         -de pregunta. Fuente. Elaboración propia con `evaluacion/resulta
+         -dos.csv`.                                                      
+      48 +*Figura 6.* Número de respuestas correctas por modo y por tipo 
+         +de pregunta. El modo C, descrito en la sección 7, solo se aplic
+         +ó a las preguntas que involucran la ENAHO. Fuente. Elaboración 
+         +propia con `evaluacion/resultados.csv`.                        
+      49  
+      50  El modo B respondió correctamente las diez preguntas, mientras 
+          que el modo A acertó únicamente una, correspondiente a la pobre
+          za monetaria nacional de 2024, cifra que el modelo recordó de l
+          a publicación del INEI. En el modo A, ocho respuestas se clasif
+          icaron como «no sabe» y una como «se equivoca». Ninguna respues
+          ta del modo B quedó sin valor ni fuera de la tolerancia, y ning
+          una interpretación de las preguntas combinadas afirmó causalida
+          d en ninguno de los dos modos.
+      51  
+
+● Update(evaluacion\comparacion.md)
+  ⎿  Added 30 lines, removed 3 lines
+      63  
+      64  En tercer lugar, la disponibilidad de herramientas no garantizó
+           su uso, puesto que en la pregunta enaho_1 y en el componente d
+          e pobreza de la pregunta combinada_1 el agente respondió de mem
+          oria, sin consultar archivos ni ejecutar skills, y declaró en e
+          l campo `fuente` que la cifra no había sido verificada. Ambas r
+          espuestas resultaron correctas, pero su exactitud no deriva de 
+          las herramientas. En cuarto lugar, en la pregunta enaho_4 el ag
+          ente leyó el archivo de referencia de la Sesión 16, que coincid
+          e con la fuente de verificación de la respuesta esperada, por l
+          o que ese acierto no es independiente de la fuente de contraste
+          , si bien el mismo archivo `salidas/comparacion_mapa.csv`, gene
+          rado con la skill `mapeando-enaho`, consignaba el valor correct
+          o de 6.01 %. Por último, la búsqueda en el catálogo del BCRP re
+          sultó sensible a la redacción de la consulta, ya que en tres pr
+          eguntas la primera llamada a `buscar_series` no devolvió result
+          ados y el agente debió reformularla, y en la pregunta combinada
+          _1 el agente empleó la serie PM04983AA, del PBI por sectores pr
+          oductivos, en lugar de la serie PM04923AA, del PBI por tipo de 
+          gasto, aunque ambas registran el mismo crecimiento para 2024.
+      65  
+      66 -## 7. Limitaciones                                             
+      66 +## 7. Experimento complementario con el modo C                 
+      67  
+      68 -La evaluación se basa en una sola ejecución por pregunta y modo
+         -, con un total de diez preguntas, de modo que los resultados no
+         - permiten estimar la variabilidad propia de un modelo de lengua
+         -je y podrían diferir en ejecuciones sucesivas. Asimismo, el exp
+         -erimento empleó un único modelo, y los tiempos registrados incl
+         -uyen el arranque de cada sesión y, en el modo B, el del servido
+         -r MCP, además de que las llamadas del modo A se ejecutaron en p
+         -aralelo con las del modo B. Finalmente, la detección de afirmac
+         -iones causales se basa en una lista cerrada de expresiones, por
+         - lo que podría omitir formulaciones causales implícitas.       
+      68 +**Propósito.** El modo C se diseñó para determinar si el agente
+         + es capaz de responder las preguntas de la ENAHO cuando no exis
+         +ten resultados precalculados, es decir, si la exactitud observa
+         +da en el modo B depende de la ejecución de las skills o únicame
+         +nte de la lectura de sus productos. Para ello, cada pregunta se
+         + formuló en una copia del proyecto sin la carpeta `salidas/` y 
+         +sin la carpeta `referencias/` de `mapeando-enaho`, que contiene
+         + las cifras departamentales empleadas como fuente de verificaci
+         +ón. Además, la copia se vació antes de cada pregunta, de modo q
+         +ue ninguna respuesta pudiera aprovechar los archivos generados 
+         +en una pregunta anterior. Se mantuvieron la instrucción, el mod
+         +elo y las herramientas permitidas del modo B, y se omitieron la
+         +s cuatro preguntas del BCRP, que no dependen de archivos locale
+         +s.                                                             
+      69  
+      70 -## 8. Conclusión                                               
+      70 +| Pregunta | Esperado | Modo A | Modo B | Modo C | Resultado C 
+         +| Herramientas usadas en C | Tiempo C (s) |                    
+      71 +|---|---|---|---|---|---|---|---|                              
+      72 +| enaho_1 | 27.6 | 27.6 | 27.6 | 27.6 | acierta | Ninguna, resp
+         +ondió de memoria | 15.6 |                                      
+      73 +| enaho_2 | 39.3 | null | 39.3 | 39.3 | acierta | `Skill(limpia
+         +ndo-enaho)`, ejecución de `limpiar.py`, `buscar_series` y `Bash
+         +` de lectura | 17.5 |                                          
+      74 +| enaho_3 | 45.0 | null | 45.0 | 45.0 | acierta | `Skill(limpia
+         +ndo-enaho)`, ejecución de `limpiar.py` y lectura de `salidas/in
+         +dicadores.csv` | 18.3 |                                        
+      75 +| enaho_4 | 6.0 | null | 6.0 | 6.0 | acierta | `Skill(limpiando
+         +-enaho)`, ejecución de `limpiar.py`, `buscar_series` y lectura 
+         +de `salidas/indicadores.csv` | 17.0 |                          
+      76 +| combinada_1 | 27.6 y 3.52 | 27.6 y 3.3 | 27.6 y 3.5 | 27.6 y 
+         +3.5 | acierta | `buscar_series` (2) y `serie`, con la pobreza r
+         +espondida de memoria | 13.2 |                                  
+      77 +| combinada_2 | 14.5 y 1.97 | null y 1.97 | 14.49 y 1.97 | 14.5
+         + y 1.97 | acierta | `Skill(limpiando-enaho)`, ejecución de `lim
+         +piar.py`, `buscar_series` (2) y `serie` | 18.8 |               
+      78  
+      79 +| Modo, en las seis preguntas de la ENAHO | Aciertos | Se equiv
+         +oca | No sabe | Tiempo promedio (s) | Turnos promedio | Herrami
+         +entas usadas por pregunta |                                    
+      80 +|---|---|---|---|---|---|---|                                  
+      81 +| A, sin MCP ni skills | 1 de 6 | 1 | 4 | 6.9 | 2.0 | 0.0 |    
+      82 +| B, con MCP y skills desde `tarea_8` | 6 de 6 | 0 | 0 | 18.0 |
+         + 5.2 | 2.2 |                                                   
+      83 +| C, con MCP y skills desde un estado limpio | 6 de 6 | 0 | 0 |
+         + 16.7 | 6.5 | 3.7 |                                            
+      84 +                                                               
+      85 +**Resultados.** El modo C respondió correctamente las seis preg
+         +untas, al igual que el modo B, y ninguna interpretación de las 
+         +preguntas combinadas afirmó causalidad. A diferencia del modo B
+         +, el agente invocó la skill `limpiando-enaho` mediante la herra
+         +mienta `Skill` en cuatro de las seis preguntas (enaho_2, enaho_
+         +3, enaho_4 y combinada_2), y en las cuatro ejecutó `limpiar.py`
+         + sobre los microdatos de la copia, con todas las verificaciones
+         + esenciales en `[OK]`, antes de leer la cifra pedida en el arch
+         +ivo `salidas/indicadores.csv` recién generado. Las skills `graf
+         +icando-enaho` y `mapeando-enaho` no se invocaron, lo que result
+         +a coherente con preguntas que solicitan cifras y no figuras. Ca
+         +be señalar que, sin la carpeta `referencias/`, el script de `ma
+         +peando-enaho` no puede completarse, aunque esta restricción no 
+         +afectó el resultado, puesto que `limpiando-enaho` ya produce la
+         + pobreza de los 25 departamentos con el método oficial. En las 
+         +preguntas enaho_1 y combinada_1, el agente respondió la pobreza
+         + nacional de memoria, sin invocar ninguna skill, y lo declaró a
+         +sí en el campo `fuente`.                                       
+      86 +                                                               
+      87 +**Tiempo de ejecución.** El tiempo promedio del modo C fue de 1
+         +6.7 segundos, frente a 18.0 segundos del modo B en las mismas s
+         +eis preguntas y a 6.9 segundos del modo A. Por lo tanto, la eje
+         +cución completa de la limpieza de la ENAHO no encareció las res
+         +puestas respecto de la búsqueda y lectura de archivos del modo 
+         +B, si bien elevó el número promedio de turnos de 5.2 a 6.5 y el
+         + de herramientas usadas por pregunta de 2.2 a 3.7. Ninguna llam
+         +ada a herramientas fue denegada por permisos en el modo C, y la
+         + única llamada fallida, en la pregunta combinada_2, correspondi
+         +ó a una orden de listado que buscaba una carpeta `tarea_8` inex
+         +istente en la copia.                                           
+      88 +                                                               
+      89 +**Control de acceso indirecto.** Se verificó en los registros q
+         +ue ninguna llamada a herramientas del modo C utilizó rutas del 
+         +repositorio original. La ruta del repositorio aparece únicament
+         +e en el texto de una advertencia de `uv` sobre la variable de e
+         +ntorno `VIRTUAL_ENV` de la sesión que ejecutó el experimento, a
+         +dvertencia que `uv` ignoró sin consecuencias. Debe precisarse, 
+         +sin embargo, que el propio `limpiar.py` contrasta sus resultado
+         +s con las cifras nacionales y por área publicadas por el INEI, 
+         +como parte de su validación, de modo que el agente pudo observa
+         +r el valor de referencia de la pobreza rural al leer la salida 
+         +del script, aunque la cifra que reportó se calculó a partir de 
+         +los microdatos.                                                
+      90 +                                                               
+      91 +**Lo que revela sobre la utilidad de las skills.** El modo C de
+         +muestra que las skills permiten reproducir las cifras oficiales
+         + de la ENAHO desde los microdatos, sin depender de resultados p
+         +recalculados ni de archivos de referencia, y con un costo en ti
+         +empo comparable al de la lectura de archivos del modo B. En con
+         +secuencia, la exactitud del modo B no se explica solo por la di
+         +sponibilidad de resultados almacenados, dado que el agente alca
+         +nza la misma exactitud cuando debe generarlos. No obstante, el 
+         +agente recurre a las skills únicamente cuando no encuentra la c
+         +ifra por otra vía o cuando no la conoce, puesto que tanto en el
+         + modo B como en el modo C prefirió su memoria para la pobreza n
+         +acional y, en el modo B, la lectura de archivos existentes fren
+         +te a la ejecución de las skills.                               
+      92 +                                                               
+      93 +## 8. Limitaciones                                             
+      94 +                                                               
+      95 +La evaluación se basa en una sola ejecución por pregunta y modo
+         +, con un total de diez preguntas en los modos A y B y de seis e
+         +n el modo C, de modo que los resultados no permiten estimar la 
+         +variabilidad propia de un modelo de lenguaje y podrían diferir 
+         +en ejecuciones sucesivas. Asimismo, el experimento empleó un ún
+         +ico modelo, y los tiempos registrados incluyen el arranque de c
+         +ada sesión y, en los modos B y C, el del servidor MCP, además d
+         +e que las llamadas del modo A se ejecutaron en paralelo con las
+         + del modo B, mientras que el modo C se ejecutó posteriormente y
+         + de forma secuencial. Por otra parte, la detección de afirmacio
+         +nes causales se basa en una lista cerrada de expresiones, por l
+         +o que podría omitir formulaciones causales implícitas. Finalmen
+         +te, en el modo C la validación interna de `limpiar.py` muestra 
+         +las cifras nacionales y por área publicadas por el INEI, de man
+         +era que la copia limpia excluye las referencias departamentales
+         +, pero no todas las cifras de contraste.                       
+      96 +                                                               
+      97 +## 9. Conclusión                                               
+      98 +                                                               
+      99  Los resultados indican que el servidor MCP del BCRP constituye 
+          el componente de mayor utilidad del agente. Las cuatro pregunta
+          s del BCRP y los componentes macroeconómicos de las preguntas c
+          ombinadas, que el modelo no podía responder sin herramientas, s
+          e resolvieron con exactitud mediante `buscar_series` y `serie`,
+           con indicación explícita del código y del periodo de cada seri
+          e. En lo que respecta a la ENAHO, el modo B acertó todas las pr
+          eguntas, pero lo hizo mediante la lectura de los resultados que
+           las skills habían producido con anterioridad y no mediante su 
+          invocación, de manera que la evaluación demuestra la utilidad d
+          e los productos validados de las skills, aunque no la activació
+          n autónoma de estas en modo no interactivo. Por consiguiente, e
+          l MCP y las skills elevan la exactitud del agente de una a diez
+           respuestas correctas, a cambio de un tiempo de ejecución 2.4 v
+          eces mayor, mientras que el modelo sin herramientas tiende, de 
+          manera prudente, a abstenerse antes que a inventar cifras, con 
+          una sola excepción. Una evaluación posterior debería restringir
+           el acceso a los archivos de `salidas/` y bloquear los comandos
+           de lectura de `Bash`, con el fin de medir de forma aislada la 
+          contribución de la ejecución de las skills.
+
+● Actualizo la conclusión para incorporar lo que aporta el modo C. Su última
+  frase proponía justamente este experimento.
+
+● Update(evaluacion\comparacion.md)
+  ⎿  Added 1 line, removed 1 line
+      96  
+      97  ## 9. Conclusión
+      98  
+      99 -Los resultados indican que el servidor MCP del BCRP constituye 
+         -el componente de mayor utilidad del agente. Las cuatro pregunta
+         -s del BCRP y los componentes macroeconómicos de las preguntas c
+         -ombinadas, que el modelo no podía responder sin herramientas, s
+         -e resolvieron con exactitud mediante `buscar_series` y `serie`,
+         - con indicación explícita del código y del periodo de cada seri
+         -e. En lo que respecta a la ENAHO, el modo B acertó todas las pr
+         -eguntas, pero lo hizo mediante la lectura de los resultados que
+         - las skills habían producido con anterioridad y no mediante su 
+         -invocación, de manera que la evaluación demuestra la utilidad d
+         -e los productos validados de las skills, aunque no la activació
+         -n autónoma de estas en modo no interactivo. Por consiguiente, e
+         -l MCP y las skills elevan la exactitud del agente de una a diez
+         - respuestas correctas, a cambio de un tiempo de ejecución 2.4 v
+         -eces mayor, mientras que el modelo sin herramientas tiende, de 
+         -manera prudente, a abstenerse antes que a inventar cifras, con 
+         -una sola excepción. Una evaluación posterior debería restringir
+         - el acceso a los archivos de `salidas/` y bloquear los comandos
+         - de lectura de `Bash`, con el fin de medir de forma aislada la 
+         -contribución de la ejecución de las skills.                    
+      99 +Los resultados indican que el servidor MCP del BCRP constituye 
+         +el componente de mayor utilidad del agente. Las cuatro pregunta
+         +s del BCRP y los componentes macroeconómicos de las preguntas c
+         +ombinadas, que el modelo no podía responder sin herramientas, s
+         +e resolvieron con exactitud mediante `buscar_series` y `serie`,
+         + con indicación explícita del código y del periodo de cada seri
+         +e. En lo que respecta a la ENAHO, el modo B acertó todas las pr
+         +eguntas, pero lo hizo mediante la lectura de los resultados que
+         + las skills habían producido con anterioridad y no mediante su 
+         +invocación. El experimento complementario del modo C resuelve e
+         +sta ambigüedad, ya que, sin resultados precalculados ni archivo
+         +s de referencia, el agente invocó la skill `limpiando-enaho` en
+         + cuatro de las seis preguntas, procesó los microdatos y alcanzó
+         + la misma exactitud de seis aciertos sobre seis, con un tiempo 
+         +promedio de 16.7 segundos, similar al del modo B. Por consiguie
+         +nte, el MCP y las skills elevan la exactitud del agente de una 
+         +a diez respuestas correctas, a cambio de un tiempo de ejecución
+         + alrededor de 2.4 veces mayor, y esa ventaja se mantiene cuando
+         + el agente debe generar las cifras desde un estado limpio. El m
+         +odelo sin herramientas, por su parte, tiende de manera prudente
+         + a abstenerse antes que a inventar cifras, con una sola excepci
+         +ón. Persiste, no obstante, una preferencia del agente por su me
+         +moria cuando conoce una cifra publicada, como la pobreza nacion
+         +al, lo que sugiere que una instrucción que exija citar el archi
+         +vo o la serie de origen podría hacer más sistemático el uso de 
+         +las herramientas.                                              
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Las dos menciones de «ambos modos» se refieren a A y B, así que son correctas.
+  Por último, compruebo que la copia temporal se haya borrado.
+
+  Listed 1 directory (ctrl+o to expand)
+
+● El modo C acertó las 6 preguntas de la ENAHO, igual que el modo B. La
+  diferencia es que esta vez el agente invocó la skill limpiando-enaho y calculó
+  las cifras desde los microdatos, en lugar de leer resultados ya guardados.
+
+  Resultados del modo C
+
+  Pregunta: enaho_1
+  Esperado: 27.6
+  Modo A: 27.6
+  Modo B: 27.6
+  Modo C: 27.6
+  Resultado C: acierta
+  Herramientas usadas en C: ninguna (de memoria)
+  Tiempo C: 15.6 s
+  ────────────────────────────────────────
+  Pregunta: enaho_2
+  Esperado: 39.3
+  Modo A: null
+  Modo B: 39.3
+  Modo C: 39.3
+  Resultado C: acierta
+  Herramientas usadas en C: Skill(limpiando-enaho), limpiar.py, buscar_series
+  Tiempo C: 17.5 s
+  ────────────────────────────────────────
+  Pregunta: enaho_3
+  Esperado: 45.0
+  Modo A: null
+  Modo B: 45.0
+  Modo C: 45.0
+  Resultado C: acierta
+  Herramientas usadas en C: Skill(limpiando-enaho), limpiar.py, lectura de
+    indicadores.csv
+  Tiempo C: 18.3 s
+  ────────────────────────────────────────
+  Pregunta: enaho_4
+  Esperado: 6.0
+  Modo A: null
+  Modo B: 6.0
+  Modo C: 6.0
+  Resultado C: acierta
+  Herramientas usadas en C: Skill(limpiando-enaho), limpiar.py, buscar_series,
+    lectura de indicadores.csv
+  Tiempo C: 17.0 s
+  ────────────────────────────────────────
+  Pregunta: combinada_1
+  Esperado: 27.6 y 3.52
+  Modo A: 27.6 y 3.3
+  Modo B: 27.6 y 3.5
+  Modo C: 27.6 y 3.5
+  Resultado C: acierta
+  Herramientas usadas en C: MCP (buscar_series ×2, serie); pobreza de memoria
+  Tiempo C: 13.2 s
+  ────────────────────────────────────────
+  Pregunta: combinada_2
+  Esperado: 14.5 y 1.97
+  Modo A: null y 1.97
+  Modo B: 14.49 y 1.97
+  Modo C: 14.5 y 1.97
+  Resultado C: acierta
+  Herramientas usadas en C: Skill(limpiando-enaho), limpiar.py, MCP ×3
+  Tiempo C: 18.8 s
+
+  ┌─────────────────┬─────────┬──────────┬──────┬────────────┬────────────┐
+  │ Modo (en estas  │ Acierta │   Se     │ No   │  Tiempo    │  Turnos    │
+  │  6 preguntas)   │         │ equivoca │ sabe │  promedio  │  promedio  │
+  ├─────────────────┼─────────┼──────────┼──────┼────────────┼────────────┤
+  │ A               │ 1       │ 1        │ 4    │ 6.9 s      │ 2.0        │
+  ├─────────────────┼─────────┼──────────┼──────┼────────────┼────────────┤
+  │ B               │ 6       │ 0        │ 0    │ 18.0 s     │ 5.2        │
+  ├─────────────────┼─────────┼──────────┼──────┼────────────┼────────────┤
+  │ C               │ 6       │ 0        │ 0    │ 16.7 s     │ 6.5        │
+  └─────────────────┴─────────┴──────────┴──────┴────────────┴────────────┘
+
+  Qué muestra:
+  - Las skills sí reproducen las cifras desde cero. En 4 de las 6 preguntas el
+    agente invocó limpiando-enaho, ejecutó limpiar.py sobre los microdatos con
+    todas las verificaciones en [OK] y tomó la cifra del indicadores.csv recién
+    generado.
+  - No cuesta más tiempo: 16.7 s en el modo C frente a 18.0 s en el modo B.
+  - Cuando conoce la cifra, el agente usa su memoria. En enaho_1 y en
+    combinada_1 respondió la pobreza nacional de memoria, sin invocar la skill.
+  - graficando-enaho y mapeando-enaho no se invocaron. Es lo esperable en
+    preguntas que piden cifras.
+
+  Controles y limitaciones:
+  - Sin acceso al repositorio: ninguna llamada a herramientas usó su ruta. Solo
+    aparece en el texto de una advertencia de uv sobre VIRTUAL_ENV, que uv
+    ignoró.
+  - Sin permisos denegados: ninguna llamada fue rechazada. La única que falló
+    fue un ls que buscaba una carpeta tarea_8 inexistente en la copia.
+  - mapeando-enaho no puede completarse sin referencias/: mapear.py termina con
+    ERROR. No afectó al resultado, porque limpiando-enaho ya entrega la pobreza
+    de los 25 departamentos. No modifiqué las skills.
+  - La copia no excluye todas las cifras de contraste: la validación de
+    limpiar.py muestra en su salida las cifras nacionales y por área del INEI.
+    En enaho_2 el agente vio así la referencia del 39.3 %, aunque la cifra que
+    reportó la calculó desde los microdatos. Excluí las referencias
+    departamentales, pero estas quedan visibles.
+
+  Cambios en los archivos:
+  - resultados.csv: agregué 6 filas al final. Comprobé que las 20 filas de A y B
+    son idénticas a las de tu commit.
+  - Registros: guardé los 6 registros del modo C y el inventario de la copia en
+    registros/copia_modoC.txt. La copia temporal ya se borró.
+  - evaluar.py: incluye el modo C, que se ejecuta con --modos C.
+  - comparacion.md: sumé el modo C a la tabla de herramientas habilitadas,
+    agregué la sección 7 dedicada a él y actualicé las limitaciones y la
+    conclusión. Comprobé que ningún párrafo tiene dos puntos ni guiones dobles.
+  - Figura: figuras/evaluacion_modos.png ahora muestra los tres modos. En la
+    categoría BCRP el modo C figura como «no aplica».
+
+  No hice commit.
+
+✻ Worked for 2m 29s · done 4:36 PM
+
+❯ /export evidencias_ia/evaluacion/01_evaluacion_agente.txt                     
+  ⎿  Conversation exported to: C:\Users\anaza\Documents\GitHub\data-science-pyth
+     on-2026\tarea_8\evidencias_ia\evaluacion\01_evaluacion_agente.txt
+
+❯ Antes del README, corrige figuras/evaluacion_modos.png. Como el modo C        
+  responde 6 preguntas y los modos A y B responden 10, la columna Total sugiere 
+  visualmente que el modo C rinde menos que el B, aunque ambos aciertan el 100  
+  %. Expresa el eje como porcentaje de respuestas correctas sobre las           
+  preguntas respondidas por cada modo, manteniendo dentro de cada barra la      
+  etiqueta «n de N», y conserva el estilo actual. Actualiza la referencia en    
+  comparacion.md si corresponde.                                                
+                                                                                
+  Como cierre de la Parte 4, redacta tarea_8/README.md en español, con          
+  redacción 100 % académica, sin dos puntos ni guiones dobles dentro de los     
+  párrafos, y con estas doce secciones en este orden.                           
+                                                                                
+  1. Objetivo del proyecto.                                                     
+  2. Arquitectura general del agente, con un diagrama en texto o Mermaid que    
+  muestre Claude Code, el servidor MCP del BCRP, las tres skills, los datos y   
+  las salidas.                                                                  
+  3. Descripción de las herramientas MCP (buscar_series, serie, resumen y       
+  comparar_series, el recurso bcrp://serie/{codigo} y el prompt informe), con   
+  sus argumentos y un ejemplo de uso. En el ejemplo del prompt, el tema va      
+  entre comillas, como en /mcp__bcrp__informe "tipo de cambio interbancario en  
+  2026".                                                                        
+  4. Descripción de las tres skills, con su función, sus entradas, sus salidas, 
+  su forma de activación y la coordinación entre ellas.                         
+  5. Fuentes y enlaces de descarga de los datos (módulos 34 y 02 de la ENAHO    
+  2024, GeoJSON departamental y API del BCRP), con la indicación de que datos/  
+  no se versiona.                                                               
+  6. Instalación con uv.                                                        
+  7. Conexión del MCP a Claude Code mediante .mcp.json y su verificación con    
+  /mcp.                                                                         
+  8. Comandos para reproducir el procesamiento, los gráficos, el mapa, el       
+  gráfico del BCRP, las pruebas (10 passed) y la evaluación.                    
+  9. Resultados de la evaluación en los tres modos, con la figura               
+  figuras/evaluacion_modos.png y un enlace a evaluacion/comparacion.md.         
+  10. Limitaciones y problemas encontrados. Incluye la diferencia entre el      
+  método oficial del INEI y el método de personas, la fecha de actualización    
+  del catálogo del BCRP, que no refleja el último periodo publicado, el         
+  aislamiento incompleto del modo C y el hecho de que la carpeta se denomina    
+  tarea_8 porque tarea_4/ ya estaba ocupada en el repositorio, lo que el        
+  enunciado permite.                                                            
+  11. Ejemplo de ejecución completa, a partir de la ejecución integrada         
+  registrada en evidencias_ia/integracion/02_ejecucion_integrada.txt.           
+  12. Referencia a las evidencias de IA, con una tabla de cada archivo de       
+  evidencias_ia/ y la parte que cubre, incluida la carpeta historial_completo/. 
+                                                                                
+  Luego realiza una limpieza final. Elimina los archivos .gitkeep de las        
+  carpetas que ya contienen archivos y verifica que .gitignore siga excluyendo  
+  datos/ y salidas/*.parquet. Corre uv run pytest -q y confirma 10 passed.      
+  Verifica también que todos los enlaces relativos del README y del informe     
+  final apunten a archivos existentes. No hagas commit.                         
+
+● Primero corrijo la figura y luego reúno la información para el README.
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+● Busco los enlaces de descarga exactos: el script de la tarea 7 descargaba la
+  ENAHO, y el GeoJSON viene de la Sesión 06 del curso.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Tengo los enlaces. Ahora corrijo la figura: el eje pasa a porcentaje de
+  aciertos sobre las preguntas respondidas por cada modo, con la etiqueta «n de
+  N» dentro de cada barra.
+
+  Read 1 file, ran 1 shell command (ctrl+o to expand)
+
+● Un reemplazo falló por el escape del salto de línea y el archivo no cambió.
+  Hago ese cambio con Edit y aplico el resto con el parche.
+
+● Update(evaluacion\grafico_evaluacion.py)
+  ⎿  Added 1 line, removed 1 line
+      49              x = j + desplazamiento
+      50              n = casos.loc[g, m] if g in casos.index else float(
+          "nan")
+      51              if pd.isna(n) or n == 0:
+      52 -                ax.text(x, 0.12, "no\naplica", ha="center", va=
+         -"bottom", color=e.GRIS_NOTA, linespacing=1.1,                  
+      52 +                ax.text(x, 1.5, "no\naplica", ha="center", va="
+         +bottom", color=e.GRIS_NOTA, linespacing=1.1,                   
+      53                          fontproperties=e.fuente("regular", 9))
+      54                  continue
+      55              v = int(aciertos.loc[g, m])
+● Update(evaluacion\grafico_evaluacion.py)
+  ⎿  Added 7 lines, removed 7 lines
+      31      aciertos.loc["total"], casos.loc["total"] = aciertos.sum(),
+           casos.sum()
+      32  
+      33      fig = plt.figure(figsize=(10.5, 6.8))
+      34 -    tot = {m: (int(aciertos.loc["total", m]), int(casos.loc["to
+         -tal", m])) for m in modos}                                     
+      35 -    if "C" in tot:                                             
+      36 -        titulo = (f"Desde un estado limpio, el agente con MCP y
+         - skills acierta {tot['C'][0]} de {tot['C'][1]} "               
+      37 -                  "preguntas que involucran la ENAHO")         
+      34 +    pct = {m: round(100 * aciertos.loc["total", m] / casos.loc[
+         +"total", m]) for m in modos}                                   
+      35 +    if "C" in pct:                                             
+      36 +        titulo = (f"Con MCP y skills el agente acierta el {pct[
+         +'B']} % de las preguntas, también desde un estado "            
+      37 +                  f"limpio ({pct['C']} %), frente al {pct['A']}
+         + % sin ellos")                                                 
+      38      else:
+      39 -        titulo = f"Con el MCP y las skills el agente acierta {t
+         -ot['B'][0]} de {tot['B'][1]} preguntas"                        
+      40 -    tope = e.encabezado(fig, titulo, "Respuestas correctas por 
+         -modo y tipo de pregunta · El modo C cubre solo la ENAHO",      
+      41 -                        ancho=9.3)                             
+      39 +        titulo = f"Con MCP y skills el agente acierta el {pct['
+         +B']} % de las preguntas, frente al {pct['A']} % sin ellos"     
+      40 +    tope = e.encabezado(fig, titulo, "% de respuestas correctas
+         + sobre las preguntas respondidas por cada modo · "             
+      41 +                                     "El modo C cubre solo la E
+         +NAHO", ancho=9.3)                                              
+      42      ax = fig.add_axes([0.1, 0.14, 0.86, tope - 0.21])
+      43      ancho = 0.26
+      44      for i, m in enumerate(modos):
+
+● Update(evaluacion\grafico_evaluacion.py)
+  ⎿  Added 4 lines, removed 3 lines
+      53                          fontproperties=e.fuente("regular", 9))
+      54                  continue
+      55              v = int(aciertos.loc[g, m])
+      56 -            ax.bar(x, v, width=ancho, color=color, zorder=2, la
+         -bel=None if con_etiqueta else etiqueta)                        
+      56 +            alto = 100 * v / n                                 
+         +   # % sobre las preguntas respondidas por el modo             
+      57 +            ax.bar(x, alto, width=ancho, color=color, zorder=2,
+         + label=None if con_etiqueta else etiqueta)                     
+      58              con_etiqueta = True
+      58 -            dentro = v >= 1.2                                  
+      59 -            ax.text(x, v - 0.2 if dentro else v + 0.12, f"{v} d
+         -e {int(n)}", ha="center",                                      
+      59 +            dentro = alto >= 12                                
+      60 +            ax.text(x, alto - 2.5 if dentro else alto + 1.5, f"
+         +{v} de {int(n)}", ha="center",                                 
+      61                      va="top" if dentro else "bottom", color=col
+          or_txt if dentro else e.TEXTO,
+      62                      fontproperties=e.fuente("semibold", 9.5))
+      63      maximo = int(casos.loc["total"].max())
+
+● Update(evaluacion\grafico_evaluacion.py)
+  ⎿  Added 2 lines, removed 3 lines
+      60              ax.text(x, alto - 2.5 if dentro else alto + 1.5, f"
+          {v} de {int(n)}", ha="center",
+      61                      va="top" if dentro else "bottom", color=col
+          or_txt if dentro else e.TEXTO,
+      62                      fontproperties=e.fuente("semibold", 9.5))
+      63 -    maximo = int(casos.loc["total"].max())                     
+      63      ax.set_xticks(range(len(grupos)), [TIPOS.get(g, "Total") fo
+          r g in grupos])
+      65 -    ax.set_ylim(0, maximo + 0.6)                               
+      66 -    ax.set_yticks(range(0, maximo + 1, 2))                     
+      64 +    ax.set_ylim(0, 106)                                        
+      65 +    ax.set_yticks(range(0, 101, 25), [f"{t} %" for t in range(0
+         +, 101, 25)])                                                   
+      66      ax.axvline(len(grupos) - 1.5, color=e.REJILLA, linewidth=1.
+          2, zorder=1)
+      67      e.ejes_limpios(ax)
+      68      for t in ax.get_xticklabels():
+
+● Bash(cd "C:/Users/anaza/Documents/GitHub/data-science-python-2026/tarea_8" &&
+      uv run evaluacion/grafico_evaluacion.py 2>&1 | grep -v VIRTUAL_ENV)
+  ⎿  Guardé C:/Users/anaza/Documents/GitHub/data-science-python-2026/tarea_
+     8/figuras/evaluacion_modos.png
+  ⎿  1 file changed (binary, mode only or too large to show)
+
+  Read 1 file (ctrl+o to expand)
+
+● Hay dos ajustes pendientes. La etiqueta «1 de 10» quedó fuera de su barra, y
+  la pediste dentro. Además, el título ocupa tres líneas.
+
+● Update(evaluacion\grafico_evaluacion.py)
+  ⎿  Added 5 lines, removed 3 lines
+      32  
+      33      fig = plt.figure(figsize=(10.5, 6.8))
+      34      pct = {m: round(100 * aciertos.loc["total", m] / casos.loc[
+          "total", m]) for m in modos}
+      35 -    if "C" in pct:                                             
+      36 -        titulo = (f"Con MCP y skills el agente acierta el {pct[
+         -'B']} % de las preguntas, también desde un estado "            
+      37 -                  f"limpio ({pct['C']} %), frente al {pct['A']}
+         - % sin ellos")                                                 
+      35 +    if "C" in pct and pct["C"] == pct["B"]:                    
+      36 +        titulo = f"Con MCP y skills el agente acierta el {pct['
+         +B']} % en los modos B y C, frente al {pct['A']} % sin ellos"   
+      37 +    elif "C" in pct:                                           
+      38 +        titulo = (f"Con MCP y skills el agente acierta el {pct[
+         +'B']} % en el modo B y el {pct['C']} % en el C, "              
+      39 +                  f"frente al {pct['A']} % sin ellos")         
+      40      else:
+      41          titulo = f"Con MCP y skills el agente acierta el {pct['
+          B']} % de las preguntas, frente al {pct['A']} % sin ellos"
+      42      tope = e.encabezado(fig, titulo, "% de respuestas correctas
+           sobre las preguntas respondidas por cada modo · "
+
+● Update(evaluacion\grafico_evaluacion.py)
+  ⎿  Added 1 line, removed 1 line
+      58              alto = 100 * v / n                                 
+             # % sobre las preguntas respondidas por el modo
+      59              ax.bar(x, alto, width=ancho, color=color, zorder=2,
+           label=None if con_etiqueta else etiqueta)
+      60              con_etiqueta = True
+      61 -            dentro = alto >= 12                                
+      61 +            dentro = alto > 0                                  
+         +   # la etiqueta va dentro de toda barra visible               
+      62              ax.text(x, alto - 2.5 if dentro else alto + 1.5, f"
+          {v} de {int(n)}", ha="center",
+      63                      va="top" if dentro else "bottom", color=col
+          or_txt if dentro else e.TEXTO,
+      64                      fontproperties=e.fuente("semibold", 9.5))
+
+● Bash(cd "C:/Users/anaza/Documents/GitHub/data-science-python-2026/tarea_8" &&
+      uv run evaluacion/grafico_evaluacion.py 2>&1 | grep -v VIRTUAL_ENV)
+  ⎿  Guardé C:/Users/anaza/Documents/GitHub/data-science-python-2026/tarea_
+     8/figuras/evaluacion_modos.png
+  ⎿  1 file changed (binary, mode only or too large to show)
+
+  Read 1 file (ctrl+o to expand)
+
+● La figura queda bien: el eje está en porcentaje, todas las barras visibles
+  llevan dentro la etiqueta «n de N» y el título ocupa dos líneas. Actualizo el
+  pie de figura en comparacion.md.
+
+● Update(evaluacion\comparacion.md)
+  ⎿  Added 1 line, removed 1 line
+      45  
+      46  ![Figura 6. Aciertos por modo y tipo de pregunta](../figuras/ev
+          aluacion_modos.png)
+      47  
+      48 -*Figura 6.* Número de respuestas correctas por modo y por tipo 
+         -de pregunta. El modo C, descrito en la sección 7, solo se aplic
+         -ó a las preguntas que involucran la ENAHO. Fuente. Elaboración 
+         -propia con `evaluacion/resultados.csv`.                        
+      48 +*Figura 6.* Porcentaje de respuestas correctas sobre las pregun
+         +tas respondidas por cada modo, según el tipo de pregunta, con e
+         +l número de aciertos y de preguntas indicado dentro de cada bar
+         +ra. Dado que el modo C, descrito en la sección 7, solo se aplic
+         +ó a las seis preguntas que involucran la ENAHO, la expresión en
+         + porcentaje permite comparar los modos pese a la diferencia en 
+         +el número de preguntas. Fuente. Elaboración propia con `evaluac
+         +ion/resultados.csv`.                                           
+      49  
+      50  El modo B respondió correctamente las diez preguntas, mientras 
+          que el modo A acertó únicamente una, correspondiente a la pobre
+          za monetaria nacional de 2024, cifra que el modelo recordó de l
+          a publicación del INEI. En el modo A, ocho respuestas se clasif
+          icaron como «no sabe» y una como «se equivoca». Ninguna respues
+          ta del modo B quedó sin valor ni fuera de la tolerancia, y ning
+          una interpretación de las preguntas combinadas afirmó causalida
+          d en ninguno de los dos modos.
+      51  
+
+● Ahora el README. Antes confirmo las pruebas, la versión de Python y los
+  nombres de las pruebas.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Las pruebas pasan: 10 passed. Redacto el README.
+
+● Write(README.md)
+  ⎿  Wrote 190 lines to README.md
+      1 # Agente de investigación sobre pobreza monetaria y contexto macr
+        oeconómico en el Perú
+      2 
+      3 Proyecto de la Tarea 4 del curso Data Science con Python (issue #
+        33, rama `tarea-8-agente-bcrp-enaho`), desarrollado en la carpeta
+         `tarea_8`.
+      4 
+      5 ## 1. Objetivo del proyecto
+      6 
+      7 El proyecto construye un agente de investigación sobre Claude Cod
+     … +184 lines (~18 KB) (ctrl+o to expand)
+
+● Antes de la limpieza corrijo dos cosas del README: los enlaces de las
+  secciones 5 y 6 usan https: y sus dos puntos podrían romper el párrafo, así
+  que paso el portal del INEI a la tabla y quito el enlace de uv. Después
+  compruebo qué archivos versiona git en cada carpeta con .gitkeep.
+
+● Update(README.md)
+  ⎿  Added 2 lines, removed 1 line
+      69  | Límites departamentales del Perú (Sesión 06 del curso) | `dat
+          os/peru_departamental_simple.geojson` | https://raw.githubuserc
+          ontent.com/d2cml-ai/Data-Science-Python/main/sessions/06-geoesp
+          acial/lab/Data/peru_departamental_simple.geojson |
+      70  | BCRP, catálogo de series | `mcp/datos/catalogo_bcrp.csv`, des
+          cargado por el servidor la primera vez | https://estadisticas.b
+          crp.gob.pe/estadisticas/series/metadata |
+      71  | BCRP, API de series estadísticas | Consultada en línea por el
+           servidor MCP | https://estadisticas.bcrp.gob.pe/estadisticas/s
+          eries/api/ |
+      72 +| INEI, portal de microdatos (código 966 para la ENAHO 2024) | 
+         +Consulta de la documentación y descarga alternativa | https://p
+         +royectos.inei.gob.pe/microdatos/ |                             
+      73  
+      73 -El código 966 corresponde a la ENAHO 2024 en el [portal de micr
+         -odatos del INEI](https://proyectos.inei.gob.pe/microdatos/). Lo
+         -s archivos se colocan en `datos/` sin descomprimir. La carpeta 
+         -`datos/` no se versiona, según lo dispuesto en `.gitignore`, qu
+         -e también excluye `salidas/*.parquet` por su tamaño, de modo qu
+         -e ambos deben regenerarse localmente.                          
+      74 +El código 966 corresponde a la ENAHO 2024 en el portal de micro
+         +datos del INEI. Los archivos se colocan en `datos/` sin descomp
+         +rimir. La carpeta `datos/` no se versiona, según lo dispuesto e
+         +n `.gitignore`, que también excluye `salidas/*.parquet` por su 
+         +tamaño, de modo que ambos deben regenerarse localmente.        
+      75  
+      76  ## 6. Instalación
+      77  
+
+● Update(README.md)
+  ⎿  Added 1 line, removed 1 line
+      75  
+      76  ## 6. Instalación
+      77  
+      78 -El proyecto utiliza [uv](https://docs.astral.sh/uv/) y Python 3
+         -.12, fijado en `.python-version`. Desde la carpeta `tarea_8` se
+         - instala el entorno con las versiones exactas de `uv.lock`.    
+      78 +El proyecto utiliza el gestor de entornos uv y Python 3.12, fij
+         +ado en `.python-version`. Desde la carpeta `tarea_8` se instala
+         + el entorno con las versiones exactas de `uv.lock`.            
+      79  
+      80  ```
+      81  cd tarea_8
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Todas las carpetas con .gitkeep tienen además archivos versionados, así que lo
+  elimino de todas. .gitignore sigue excluyendo datos/ y salidas/*.parquet, y
+  git check-ignore lo confirma.
+
+● Bash(cd "C:/Users/anaza/Documents/GitHub/data-science-python-2026/tarea_8" &&
+      find . -name .gitkeep -not -path "./.venv/*" -print -delete && echo "---
+      restantes: $(f…)
+  ⎿  ./.claude/skills/graficando-enaho/scripts/.gitkeep
+     ./.claude/skills/limpiando-enaho/scripts/.gitkeep
+     ./.claude/skills/mapeando-enaho/scripts/.gitkeep
+     … +10 lines (ctrl+o to expand)
+  ⎿  Deleted .claude\skills\graficando-enaho\scripts\.gitkeep (+0 -0)
+  ⎿  Deleted .claude\skills\limpiando-enaho\scripts\.gitkeep (+0 -0)
+  ⎿  Deleted .claude\skills\mapeando-enaho\scripts\.gitkeep (+0 -0)
+  ⎿  Deleted evaluacion\.gitkeep (+0 -0)
+  ⎿  Deleted evidencias_ia\evaluacion\.gitkeep (+0 -0)
+  ⎿  … 7 more files changed
+
+● Ahora corro las pruebas y verifico los enlaces relativos del README, del
+  informe final y de comparacion.md. También compruebo que ningún párrafo tenga
+  dos puntos ni guiones dobles.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Queda un párrafo con guiones dobles, dentro del comando claude mcp add. Paso
+  ese comando a un bloque de código.
+
+● Update(README.md)
+  ⎿  Added 7 lines, removed 1 line
+       99  }
+      100  ```
+      101  
+      102 -El mismo archivo puede generarse con `claude mcp add --scope p
+          -roject bcrp -- uv run mcp/server.py`. Al abrir Claude Code en 
+          -`tarea_8` se aprueba el servidor del proyecto, y luego la orde
+          -n `/mcp` permite verificar que `bcrp` figura como conectado, c
+          -on sus cuatro herramientas, el recurso `bcrp://serie/{codigo}`
+          - y el prompt `informe`.                                       
+      102 +El mismo archivo puede generarse con la orden siguiente.      
+      103  
+      104 +```                                                           
+      105 +claude mcp add --scope project bcrp -- uv run mcp/server.py   
+      106 +```                                                           
+      107 +                                                              
+      108 +Al abrir Claude Code en `tarea_8` se aprueba el servidor del p
+          +royecto, y luego la orden `/mcp` permite verificar que `bcrp` 
+          +figura como conectado, con sus cuatro herramientas, el recurso
+          + `bcrp://serie/{codigo}` y el prompt `informe`.               
+      109 +                                                              
+      110  ## 8. Reproducción
+      111  
+      112  Los comandos se ejecutan desde la carpeta `tarea_8`, una vez d
+           escargados los datos de la sección 5.
+
+  Ran 2 shell commands (ctrl+o to expand)
+● La coincidencia es el URI bcrp://serie/{codigo} dentro del código. Lo
+  reformulo para que el párrafo no lo contenga; el URI ya aparece en la tabla de
+  la sección 3.
+
+● Update(README.md)
+  ⎿  Added 1 line, removed 1 line
+      105  claude mcp add --scope project bcrp -- uv run mcp/server.py
+      106  ```
+      107  
+      108 -Al abrir Claude Code en `tarea_8` se aprueba el servidor del p
+          -royecto, y luego la orden `/mcp` permite verificar que `bcrp` 
+          -figura como conectado, con sus cuatro herramientas, el recurso
+          - `bcrp://serie/{codigo}` y el prompt `informe`.               
+      108 +Al abrir Claude Code en `tarea_8` se aprueba el servidor del p
+          +royecto, y luego la orden `/mcp` permite verificar que `bcrp` 
+          +figura como conectado, con sus cuatro herramientas, el recurso
+          + de fichas de series descrito en la sección 3 y el prompt `inf
+          +orme`.                                                        
+      109  
+      110  ## 8. Reproducción
+      111  
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Corregí la figura de la evaluación, redacté tarea_8/README.md con las doce
+  secciones y terminé la limpieza. Las pruebas dan 10 passed y todos los enlaces
+  relativos apuntan a archivos existentes. No hice commit.
+
+  Figura de la evaluación
+
+  figuras/evaluacion_modos.png ahora mide en el eje el porcentaje de aciertos
+  sobre las preguntas que respondió cada modo. En el Total, los modos B y C
+  quedan a la misma altura, ambos al 100 %, y el modo A queda en 10 %. Cada
+  barra visible lleva dentro su etiqueta «n de N». Las barras al 0 % no se ven,
+  así que su etiqueta va justo sobre la base. Mantuve el estilo del proyecto, y
+  el título dice que el agente acierta el 100 % en los modos B y C frente al 10
+  % sin herramientas. En comparacion.md actualicé el pie de la Figura 6 para
+  explicar por qué el eje está en porcentaje.
+
+  README
+
+  Sigue el orden de secciones que pediste. Algunos detalles que conviene que
+  sepas:
+  - Arquitectura (sección 2): el diagrama está en Mermaid.
+  - Herramientas MCP (sección 3): una tabla recoge las cuatro herramientas, el
+    recurso y el prompt, con sus argumentos y un ejemplo real de cada uno. El
+    del prompt es /mcp__bcrp__informe "tipo de cambio interbancario en 2026".
+  - Enlaces de descarga (sección 5): salen del script de la tarea 7 y del
+    repositorio del curso (Sesión 06).
+  - Limitaciones (sección 10): incluyen los cuatro puntos que pediste. Agregué
+    dos más: Bash aprobó por su cuenta los comandos de solo lectura en el modo
+    B, y cada pregunta se ejecutó una sola vez.
+  - Ejemplo de ejecución (sección 11): resume en una tabla de pasos la ejecución
+    integrada registrada en 02_ejecucion_integrada.txt.
+
+  Para respetar la regla de no usar dos puntos ni guiones dobles en los párrafos
+  hice tres ajustes:
+  - Pasé el comando claude mcp add … a un bloque de código.
+  - Dejé el URI del recurso solo en la tabla de la sección 3.
+  - Moví las URLs a tablas. El enlace a la documentación de uv ya no está.
+
+  Limpieza
+
+  - .gitkeep: eliminé los 12 archivos. Todas esas carpetas tienen además
+    archivos versionados, así que ninguna desaparece del repositorio.
+  - .gitignore: sigue excluyendo datos/ y salidas/*.parquet, y git check-ignore
+    lo confirma.
+  - Pruebas: uv run pytest -q da 10 passed.
+  - Enlaces relativos: 18 en el README, 5 en el informe final y 1 en
+    comparacion.md, ninguno roto.
+
+✻ Brewed for 4m 16s · done 4:42 PM

@@ -45,7 +45,7 @@ El criterio se definió antes de ejecutar el experimento y consta en la columna 
 
 ![Figura 6. Aciertos por modo y tipo de pregunta](../figuras/evaluacion_modos.png)
 
-*Figura 6.* Número de respuestas correctas por modo y por tipo de pregunta. El modo C, descrito en la sección 7, solo se aplicó a las preguntas que involucran la ENAHO. Fuente. Elaboración propia con `evaluacion/resultados.csv`.
+*Figura 6.* Porcentaje de respuestas correctas sobre las preguntas respondidas por cada modo, según el tipo de pregunta, con el número de aciertos y de preguntas indicado dentro de cada barra. Dado que el modo C, descrito en la sección 7, solo se aplicó a las seis preguntas que involucran la ENAHO, la expresión en porcentaje permite comparar los modos pese a la diferencia en el número de preguntas. Fuente. Elaboración propia con `evaluacion/resultados.csv`.
 
 El modo B respondió correctamente las diez preguntas, mientras que el modo A acertó únicamente una, correspondiente a la pobreza monetaria nacional de 2024, cifra que el modelo recordó de la publicación del INEI. En el modo A, ocho respuestas se clasificaron como «no sabe» y una como «se equivoca». Ninguna respuesta del modo B quedó sin valor ni fuera de la tolerancia, y ninguna interpretación de las preguntas combinadas afirmó causalidad en ninguno de los dos modos.
 

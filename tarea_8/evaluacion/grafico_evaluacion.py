@@ -31,14 +31,16 @@ def main():
     aciertos.loc["total"], casos.loc["total"] = aciertos.sum(), casos.sum()
 
     fig = plt.figure(figsize=(10.5, 6.8))
-    tot = {m: (int(aciertos.loc["total", m]), int(casos.loc["total", m])) for m in modos}
-    if "C" in tot:
-        titulo = (f"Desde un estado limpio, el agente con MCP y skills acierta {tot['C'][0]} de {tot['C'][1]} "
-                  "preguntas que involucran la ENAHO")
+    pct = {m: round(100 * aciertos.loc["total", m] / casos.loc["total", m]) for m in modos}
+    if "C" in pct and pct["C"] == pct["B"]:
+        titulo = f"Con MCP y skills el agente acierta el {pct['B']} % en los modos B y C, frente al {pct['A']} % sin ellos"
+    elif "C" in pct:
+        titulo = (f"Con MCP y skills el agente acierta el {pct['B']} % en el modo B y el {pct['C']} % en el C, "
+                  f"frente al {pct['A']} % sin ellos")
     else:
-        titulo = f"Con el MCP y las skills el agente acierta {tot['B'][0]} de {tot['B'][1]} preguntas"
-    tope = e.encabezado(fig, titulo, "Respuestas correctas por modo y tipo de pregunta · El modo C cubre solo la ENAHO",
-                        ancho=9.3)
+        titulo = f"Con MCP y skills el agente acierta el {pct['B']} % de las preguntas, frente al {pct['A']} % sin ellos"
+    tope = e.encabezado(fig, titulo, "% de respuestas correctas sobre las preguntas respondidas por cada modo · "
+                                     "El modo C cubre solo la ENAHO", ancho=9.3)
     ax = fig.add_axes([0.1, 0.14, 0.86, tope - 0.21])
     ancho = 0.26
     for i, m in enumerate(modos):
@@ -49,20 +51,20 @@ def main():
             x = j + desplazamiento
             n = casos.loc[g, m] if g in casos.index else float("nan")
             if pd.isna(n) or n == 0:
-                ax.text(x, 0.12, "no\naplica", ha="center", va="bottom", color=e.GRIS_NOTA, linespacing=1.1,
+                ax.text(x, 1.5, "no\naplica", ha="center", va="bottom", color=e.GRIS_NOTA, linespacing=1.1,
                         fontproperties=e.fuente("regular", 9))
                 continue
             v = int(aciertos.loc[g, m])
-            ax.bar(x, v, width=ancho, color=color, zorder=2, label=None if con_etiqueta else etiqueta)
+            alto = 100 * v / n                                    # % sobre las preguntas respondidas por el modo
+            ax.bar(x, alto, width=ancho, color=color, zorder=2, label=None if con_etiqueta else etiqueta)
             con_etiqueta = True
-            dentro = v >= 1.2
-            ax.text(x, v - 0.2 if dentro else v + 0.12, f"{v} de {int(n)}", ha="center",
+            dentro = alto > 0                                     # la etiqueta va dentro de toda barra visible
+            ax.text(x, alto - 2.5 if dentro else alto + 1.5, f"{v} de {int(n)}", ha="center",
                     va="top" if dentro else "bottom", color=color_txt if dentro else e.TEXTO,
                     fontproperties=e.fuente("semibold", 9.5))
-    maximo = int(casos.loc["total"].max())
     ax.set_xticks(range(len(grupos)), [TIPOS.get(g, "Total") for g in grupos])
-    ax.set_ylim(0, maximo + 0.6)
-    ax.set_yticks(range(0, maximo + 1, 2))
+    ax.set_ylim(0, 106)
+    ax.set_yticks(range(0, 101, 25), [f"{t} %" for t in range(0, 101, 25)])
     ax.axvline(len(grupos) - 1.5, color=e.REJILLA, linewidth=1.2, zorder=1)
     e.ejes_limpios(ax)
     for t in ax.get_xticklabels():
