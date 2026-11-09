@@ -1,6 +1,6 @@
 # Agente de investigación sobre pobreza monetaria y contexto macroeconómico en el Perú
 
-Proyecto de la Tarea 4 del curso Data Science con Python (issue #33, rama `tarea-8-agente-bcrp-enaho`), desarrollado en la carpeta `tarea_8`.
+Proyecto correspondiente a la 2026_Tarea_4 del curso Data Science con Python (issue #201 de d2cml-ai/Data-Science-Python), con seguimiento en el issue #33 de este repositorio, desarrollado en la carpeta `tarea_8` y en la rama `tarea-8-agente-bcrp-enaho`.
 
 ## 1. Objetivo del proyecto
 
@@ -194,4 +194,5 @@ La carpeta `evidencias_ia/` contiene las exportaciones en texto de las sesiones 
 | [`evidencias_ia/integracion/01_agente_investigacion.txt`](evidencias_ia/integracion/01_agente_investigacion.txt) | Parte 3, agente de investigación y redacción del informe final |
 | [`evidencias_ia/integracion/02_ejecucion_integrada.txt`](evidencias_ia/integracion/02_ejecucion_integrada.txt) | Parte 3, ejecución integrada de las skills y del servidor MCP en una sola sesión |
 | [`evidencias_ia/evaluacion/01_evaluacion_agente.txt`](evidencias_ia/evaluacion/01_evaluacion_agente.txt) | Parte 4, diseño y ejecución de la evaluación en los modos A, B y C |
+| [`evidencias_ia/evaluacion/02_readme_y_cierre.txt`](evidencias_ia/evaluacion/02_readme_y_cierre.txt) | Parte 4, redacción del README, corrección de la figura de evaluación y limpieza final |
 | [`evidencias_ia/historial_completo/`](evidencias_ia/historial_completo/LEEME.md) | Registros originales `.jsonl` de las cuatro sesiones, con datos sensibles ocultados, descritos en su archivo `LEEME.md` |
