@@ -4430,3 +4430,929 @@ completed (exit code 0)
     03_verificacion_y_errores.txt, que ahora existe.
 
 ✻ Cooked for 1m 7s · done 7:30 PM
+
+❯ /export evidencias_ia/integracion/03_verificacion_y_errores.txt               
+  ⎿  Conversation exported to: C:\Users\anaza\Documents\GitHub\data-science-pyth
+     on-2026\tarea_8\evidencias_ia\integracion\03_verificacion_y_errores.txt
+
+❯ Actualiza evidencias_ia/historial_completo/. Reemplaza sesion_04.jsonl por la 
+  versión completa actual de esa sesión y agrega, con la numeración siguiente,  
+  cualquier sesión posterior de este proyecto. Antes de copiar, oculta con      
+  [OCULTO] cualquier correo, clave, token o contraseña, verifica que cada línea 
+  siga siendo JSON válido y actualiza LEEME.md. No hagas commit.                
+
+  Made 1 scratchpad edit +47, ran 1 shell command (ctrl+o to expand)
+
+● Sigue sin haber sesiones posteriores: la única con cambios después de las
+  16:07 es esta. Copio la versión actual de sesion_04.jsonl ocultando correos y
+  secretos.
+
+● Bash(cd "C:/Users/anaza/Documents/GitHub/data-science-python-2026/tarea_8" &&
+      PYTHONIOENCODING=utf-8 python
+      "C:/Users/anaza/AppData/Local/Temp/claude/229d61cb04deb28…)
+  ⎿  1334 líneas JSON válidas; correos ocultados=47; secretos=0; asignacion
+     es de claves=0; de 2026-11-08T21:07:29.230Z a 2026-11-09T00:31:32.325Z
+     ; correos restantes=ninguno
+     17
+  ⎿  1 file changed (binary, mode only or too large to show)
+
+● Quedan 17 líneas que mencionan «zamalloa», «pucp» o «noreply@». Reviso si
+  alguna es un correo real.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Ninguna de esas líneas es un correo completo, solo fragmentos de mis comandos
+  de verificación; aun así oculto también esos fragmentos por prudencia, usando
+  reemplazos de texto simple que no afectan la validez del JSON.
+
+● Bash(cd "C:/Users/anaza/Documents/GitHub/data-science-python-2026/tarea_8" &&
+      PYTHONIOENCODING=utf-8 python -c "
+      import json…)
+  ⎿  fragmentos ocultados: {'zamalloa': 6, 'pucp': 27, 'noreply@anthropic':
+      5} | JSON válido en todas las líneas
+     evidencias_ia/historial_completo/sesion_01.jsonl: 0
+     … +3 lines (ctrl+o to expand)
+  ⎿  1 file changed (binary, mode only or too large to show)
+
+● Con la búsqueda sin distinguir mayúsculas aparecen coincidencias en las
+  sesiones 2 y 4. Reviso qué son.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Lo que queda son falsos positivos: en la sesión 2 son secuencias dentro de
+  imágenes base64 y en la sesión 4 es noreply@ sin dominio en mis propios
+  comandos, así que no hay ningún correo. Actualizo LEEME.md ahora.
+
+  Read 1 file (ctrl+o to expand)
+
+● Update(evidencias_ia\historial_completo\LEEME.md)
+  ⎿  Added 1 line, removed 1 line
+      11  | `sesion_01.jsonl` | 8 de noviembre de 2026, 14:17 a 14:44 | `
+          2686754a-cf8a-44f6-80e4-cb7a7b24d244` | Raíz del repositorio | 
+          Preparación del proyecto y Parte 1: resumen del enunciado, estr
+          uctura de `tarea_8/` y desarrollo del servidor MCP `bcrp` (`mcp
+          /server.py`) con sus pruebas | `evidencias_ia/mcp/01_servidor_m
+          cp.txt` |
+      12  | `sesion_02.jsonl` | 8 de noviembre de 2026, 14:48 a 15:44 | `
+          8f2d36c9-1f9a-43a4-9962-e8da755432d6` | `tarea_8` | Cierre de l
+          a Parte 1 y Parte 2: demostración del servidor MCP (inflación d
+          e setiembre y octubre de 2026, tipo de cambio, recurso `bcrp://
+          serie/PN01273PM` y prompt `informe`), ajustes al servidor y a l
+          as pruebas, y desarrollo de las skills `limpiando-enaho`, `graf
+          icando-enaho` y `mapeando-enaho` | `evidencias_ia/mcp/02_demost
+          racion_mcp.txt` (hasta la demostración del MCP) y `evidencias_i
+          a/skills/01_desarrollo_skills.txt` (sesión completa) |
+      13  | `sesion_03.jsonl` | 8 de noviembre de 2026, 15:46 a 16:04 | `
+          17d456e5-42b3-4c29-b924-ce28f816ccff` | `tarea_8` | Final de la
+           Parte 2 y Parte 3: activación automática y manual de las skill
+          s (mapa departamental y gráfico por área), tabla de activacione
+          s, y agente de investigación con la redacción y los ajustes de 
+          `informes/informe_final.md` | `evidencias_ia/skills/02_activaci
+          on_skills.txt` y `evidencias_ia/integracion/01_agente_investiga
+          cion.txt` |
+      14 -| `sesion_04.jsonl` | 8 de noviembre de 2026, 16:07 a 19:12 | `
+         -a3903f2e-9214-4985-92ab-ed3bfd1875d9` | `tarea_8` | Parte 3, ej
+         -ecución integrada: respuesta a la pregunta de investigación con
+         - las skills invocadas mediante la herramienta Skill (limpieza; 
+         -gráficos por área, sexo y sexo según área; mapa), con las herra
+         -mientas MCP `buscar_series`, `resumen`, `serie` y `comparar_ser
+         -ies`, y con `informes/grafico_bcrp.py`, y contraste de las cifr
+         -as con el informe, que no requirió cambios. Creación de esta ca
+         -rpeta. Parte 4: diseño y ejecución de la evaluación en los modo
+         -s A y B, experimento complementario del modo C, redacción del R
+         -EADME, corrección de la figura de evaluación, limpieza final y 
+         -este último ajuste | `evidencias_ia/integracion/02_ejecucion_in
+         -tegrada.txt` (ejecución integrada), `evidencias_ia/evaluacion/0
+         -1_evaluacion_agente.txt` (hasta el modo C) y `evidencias_ia/eva
+         -luacion/02_readme_y_cierre.txt` (hasta la limpieza final) |    
+      14 +| `sesion_04.jsonl` | 8 de noviembre de 2026, 16:07 a 19:31 | `
+         +a3903f2e-9214-4985-92ab-ed3bfd1875d9` | `tarea_8` | Parte 3, ej
+         +ecución integrada: respuesta a la pregunta de investigación con
+         + las skills invocadas mediante la herramienta Skill (limpieza; 
+         +gráficos por área, sexo y sexo según área; mapa), con las herra
+         +mientas MCP `buscar_series`, `resumen`, `serie` y `comparar_ser
+         +ies`, y con `informes/grafico_bcrp.py`, y contraste de las cifr
+         +as con el informe, que no requirió cambios. Creación de esta ca
+         +rpeta. Parte 4: diseño y ejecución de la evaluación en los modo
+         +s A y B, experimento complementario del modo C, redacción del R
+         +EADME, corrección de la figura de evaluación, limpieza final y 
+         +este último ajuste | `evidencias_ia/integracion/02_ejecucion_in
+         +tegrada.txt` (ejecución integrada), `evidencias_ia/evaluacion/0
+         +1_evaluacion_agente.txt` (hasta el modo C) y `evidencias_ia/eva
+         +luacion/02_readme_y_cierre.txt` (hasta la limpieza final) |    
+      15  
+      16  ## Notas
+      17  
+
+● Update(evidencias_ia\historial_completo\LEEME.md)
+  ⎿  Added 1 line, removed 1 line
+      11  | `sesion_01.jsonl` | 8 de noviembre de 2026, 14:17 a 14:44 | `
+          2686754a-cf8a-44f6-80e4-cb7a7b24d244` | Raíz del repositorio | 
+          Preparación del proyecto y Parte 1: resumen del enunciado, estr
+          uctura de `tarea_8/` y desarrollo del servidor MCP `bcrp` (`mcp
+          /server.py`) con sus pruebas | `evidencias_ia/mcp/01_servidor_m
+          cp.txt` |
+      12  | `sesion_02.jsonl` | 8 de noviembre de 2026, 14:48 a 15:44 | `
+          8f2d36c9-1f9a-43a4-9962-e8da755432d6` | `tarea_8` | Cierre de l
+          a Parte 1 y Parte 2: demostración del servidor MCP (inflación d
+          e setiembre y octubre de 2026, tipo de cambio, recurso `bcrp://
+          serie/PN01273PM` y prompt `informe`), ajustes al servidor y a l
+          as pruebas, y desarrollo de las skills `limpiando-enaho`, `graf
+          icando-enaho` y `mapeando-enaho` | `evidencias_ia/mcp/02_demost
+          racion_mcp.txt` (hasta la demostración del MCP) y `evidencias_i
+          a/skills/01_desarrollo_skills.txt` (sesión completa) |
+      13  | `sesion_03.jsonl` | 8 de noviembre de 2026, 15:46 a 16:04 | `
+          17d456e5-42b3-4c29-b924-ce28f816ccff` | `tarea_8` | Final de la
+           Parte 2 y Parte 3: activación automática y manual de las skill
+          s (mapa departamental y gráfico por área), tabla de activacione
+          s, y agente de investigación con la redacción y los ajustes de 
+          `informes/informe_final.md` | `evidencias_ia/skills/02_activaci
+          on_skills.txt` y `evidencias_ia/integracion/01_agente_investiga
+          cion.txt` |
+      14 -| `sesion_04.jsonl` | 8 de noviembre de 2026, 16:07 a 19:31 | `
+         -a3903f2e-9214-4985-92ab-ed3bfd1875d9` | `tarea_8` | Parte 3, ej
+         -ecución integrada: respuesta a la pregunta de investigación con
+         - las skills invocadas mediante la herramienta Skill (limpieza; 
+         -gráficos por área, sexo y sexo según área; mapa), con las herra
+         -mientas MCP `buscar_series`, `resumen`, `serie` y `comparar_ser
+         -ies`, y con `informes/grafico_bcrp.py`, y contraste de las cifr
+         -as con el informe, que no requirió cambios. Creación de esta ca
+         -rpeta. Parte 4: diseño y ejecución de la evaluación en los modo
+         -s A y B, experimento complementario del modo C, redacción del R
+         -EADME, corrección de la figura de evaluación, limpieza final y 
+         -este último ajuste | `evidencias_ia/integracion/02_ejecucion_in
+         -tegrada.txt` (ejecución integrada), `evidencias_ia/evaluacion/0
+         -1_evaluacion_agente.txt` (hasta el modo C) y `evidencias_ia/eva
+         -luacion/02_readme_y_cierre.txt` (hasta la limpieza final) |    
+      14 +| `sesion_04.jsonl` | 8 de noviembre de 2026, 16:07 a 19:31 | `
+         +a3903f2e-9214-4985-92ab-ed3bfd1875d9` | `tarea_8` | Parte 3, ej
+         +ecución integrada: respuesta a la pregunta de investigación con
+         + las skills invocadas mediante la herramienta Skill (limpieza; 
+         +gráficos por área, sexo y sexo según área; mapa), con las herra
+         +mientas MCP `buscar_series`, `resumen`, `serie` y `comparar_ser
+         +ies`, y con `informes/grafico_bcrp.py`, y contraste de las cifr
+         +as con el informe, que no requirió cambios. Creación de esta ca
+         +rpeta. Parte 4: diseño y ejecución de la evaluación en los modo
+         +s A y B, experimento complementario del modo C, redacción del R
+         +EADME, corrección de la figura de evaluación y limpieza final. 
+         +Ajustes de cierre: pruebas de manejo de errores (serie inexiste
+         +nte, periodo futuro y departamento inexistente), plan de anális
+         +is, reorganización de las limitaciones, apartado de manejo de e
+         +rrores y marco conceptual del informe final, y actualización de
+         +l README y de esta carpeta | `evidencias_ia/integracion/02_ejec
+         +ucion_integrada.txt` (ejecución integrada), `evidencias_ia/eval
+         +uacion/01_evaluacion_agente.txt` (hasta el modo C), `evidencias
+         +_ia/evaluacion/02_readme_y_cierre.txt` (hasta la limpieza final
+         +) y `evidencias_ia/integracion/03_verificacion_y_errores.txt` (
+         +hasta el marco conceptual) |                                   
+      15  
+      16  ## Notas
+      17  
+
+● Update(evidencias_ia\historial_completo\LEEME.md)  ⎿  Added 2 lines, removed 2 lines
+      16  ## Notas
+      17  
+      18  - **Sesión excluida.** La carpeta de la raíz del repositorio co
+          ntiene además la sesión `833cee71-ed24-407e-abf1-275223e846c1` 
+          (1 de noviembre de 2026), en la que se descargaron los microdat
+          os de la ENAHO 2024 y 2025 para `tarea_7/`. No se incluyó porqu
+          e corresponde a otra tarea.
+      19 -- **Datos sensibles.** Antes de copiar los registros se buscaro
+         -n claves API (Anthropic, OpenAI, GitHub, AWS y Google), tokens 
+         -Bearer y JWT, contraseñas y correos electrónicos. No se encontr
+         -aron claves, tokens ni contraseñas. Los correos electrónicos (e
+         -l de la autora y el de la línea de coautoría de los commits) se
+         - reemplazaron por `[OCULTO]`. Las coincidencias del tipo `@mcp.
+         -tool`, `@mcp.resource` y `@mcp.prompt` son decoradores de FastM
+         -CP y se conservaron. En `sesion_04.jsonl` se ocultaron además d
+         -os apariciones de un correo escrito con el punto escapado dentr
+         -o de un patrón de búsqueda. Tras el reemplazo, cada línea de lo
+         -s cuatro archivos se verificó como JSON válido.                
+      20 -- **Versión de la cuarta sesión.** `sesion_04.jsonl` se reempla
+         -zó al cierre del proyecto por la versión completa disponible en
+         - ese momento, con 1 022 líneas, cuya última marca de tiempo cor
+         -responde a las 19:12. Como la sesión seguía abierta, el registr
+         -o no incluye la actualización de este archivo ni la respuesta f
+         -inal de ese último ajuste.                                     
+      19 +- **Datos sensibles.** Antes de copiar los registros se buscaro
+         +n claves API (Anthropic, OpenAI, GitHub, AWS y Google), tokens 
+         +Bearer y JWT, contraseñas y correos electrónicos. No se encontr
+         +aron claves, tokens ni contraseñas. Los correos electrónicos (e
+         +l de la autora y el de la línea de coautoría de los commits) se
+         + reemplazaron por `[OCULTO]`. Las coincidencias del tipo `@mcp.
+         +tool`, `@mcp.resource` y `@mcp.prompt` son decoradores de FastM
+         +CP y se conservaron. En `sesion_04.jsonl` se ocultaron además l
+         +os correos escritos con el punto escapado dentro de patrones de
+         + búsqueda y, por prudencia, los fragmentos de la dirección de l
+         +a autora y de la línea de coautoría que aparecían por separado 
+         +en los comandos de verificación, de modo que no fuera posible r
+         +econstruirlas. Las coincidencias restantes con esos fragmentos 
+         +corresponden a secuencias aleatorias dentro de imágenes codific
+         +adas en base64 en `sesion_02.jsonl` y a la cadena `noreply@` si
+         +n dominio en `sesion_04.jsonl`. Tras el reemplazo, cada línea d
+         +e los cuatro archivos se verificó como JSON válido.            
+      20 +- **Versión de la cuarta sesión.** `sesion_04.jsonl` se reempla
+         +zó al cierre del proyecto por la versión completa disponible en
+         + ese momento, con 1 334 líneas, cuya última marca de tiempo cor
+         +responde a las 19:31. Como la sesión seguía abierta, el registr
+         +o no incluye esta última actualización de la carpeta ni su resp
+         +uesta final.                                                   
+      21  - **Sesiones posteriores.** No hubo sesiones de Claude Code pos
+          teriores a la cuarta en las carpetas de la raíz ni de `tarea_8`
+          . Las llamadas de la evaluación (`claude -p`) se ejecutaron con
+           `--no-session-persistence`, de modo que sus carpetas de proyec
+          to en `~/.claude/projects/`, correspondientes a las carpetas te
+          mporales de los modos A y C, quedaron vacías. El registro de ca
+          da una de esas llamadas se conserva en `evaluacion/registros/`.
+      22  - **Exportación duplicada.** La exportación de la primera sesió
+          n también aparece en `datos/tarea_8/evidencias_ia/mcp/01_servid
+          or_mcp.txt`, porque en ese momento la ruta del comando `/export
+          ` se resolvió desde la carpeta `tarea_8/datos`. Su contenido es
+           el de `evidencias_ia/mcp/01_servidor_mcp.txt`.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Actualicé evidencias_ia/historial_completo/. No había sesiones posteriores,
+  así que no se agrega sesion_05. Las cuatro sesiones siguen siendo JSON válido
+  línea por línea. No hice commit.
+
+  - sesion_04.jsonl: la reemplacé por la versión completa de esta sesión, con
+    1334 líneas hasta las 19:31.
+    - Oculté 47 correos con [OCULTO], incluidos los que estaban escritos con el
+      punto escapado dentro de patrones de búsqueda.
+    - No había claves, tokens ni contraseñas.
+    - Mis comandos de verificación contenían por separado la parte local y el
+      dominio de tu dirección, y en una línea aparecían juntos. Por prudencia
+      también los oculté, para que no se pueda reconstruir el correo.
+  - Coincidencias que quedan (falsos positivos): en sesion_02.jsonl son
+    secuencias aleatorias dentro de imágenes en base64, como «PUCp». En
+    sesion_04.jsonl es la cadena noreply@ sin dominio.
+  - Sesiones posteriores: la única carpeta de proyecto con archivos nuevos desde
+    las 16:07 es la de esta sesión. Las carpetas de las llamadas de la
+    evaluación siguen vacías.
+  - LEEME.md:
+    - La fila de la sesión 4 ahora va de las 16:07 a las 19:31 e incluye los
+      ajustes de cierre: pruebas de errores, plan de análisis, limitaciones
+      reorganizadas, manejo de errores, marco conceptual y README.
+    - Agregué como cuarta exportación equivalente
+      integracion/03_verificacion_y_errores.txt.
+    - Actualicé la nota de datos sensibles y la de la versión de la sesión.
+
+  Como la sesión sigue abierta, sesion_04.jsonl no incluye esta última
+  actualización ni esta respuesta. Lo dejé anotado en LEEME.md.
+
+✻ Baked for 3m 5s · done 7:34 PM
+
+❯ Último ajuste de formato APA en informes/informe_final.md. Toda obra de la    
+  sección Referencias debe citarse en el texto. Agrega las citas en formato     
+  autor y año donde corresponda, sin modificar cifras ni el contenido:          
+  (Instituto Nacional de Estadística e Informática [INEI], 2025a) donde se      
+  mencionan las cifras oficiales de pobreza de 2024, incluida la tabla de       
+  verificación; (INEI, 2025b) donde se describen los microdatos de la ENAHO;    
+  (Banco Central de Reserva del Perú [BCRP], s. f.) donde se describen las      
+  series del BCRP; y (d2cml-ai, s. f.) donde se mencionan la referencia         
+  departamental y los materiales del curso. Verifica que cada referencia tenga  
+  al menos una cita y que cada cita tenga su referencia. No hagas commit.       
+
+  Read 1 file (ctrl+o to expand)
+
+● Leo el resto del informe para ubicar los pies de figura, la interpretación y
+  la tabla de verificación.
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+● Distribuyo las citas según APA: la primera aparece en el objetivo, con las
+  siglas [BCRP] e [INEI] desarrolladas, y después uso solo las abreviaturas,
+  reformulando las repeticiones sin cambiar cifras ni contenido.
+
+● Update(informes\informe_final.md)
+  ⎿  Added 1 line, removed 1 line
+       6  
+       7  **Tema.** El presente informe aborda la distribución territoria
+          l y demográfica de la pobreza monetaria en el Perú, en relación
+           con la trayectoria de los precios y de la actividad económica 
+          durante el periodo que comprende la etapa previa a la pandemia,
+           el choque sanitario de 2020, la recuperación posterior y el ep
+          isodio inflacionario de 2022 y 2023.
+       8  
+       9 -**Objetivo.** El objetivo consiste en describir, con cifras ofi
+         -ciales y reproducibles, las brechas de pobreza monetaria entre 
+         -departamentos, entre el área urbana y el área rural, y entre mu
+         -jeres y hombres en 2024, y en situar dichas brechas en el conte
+         -xto de la inflación de Lima Metropolitana y del crecimiento del
+         - producto bruto interno real entre 2019 y 2024.                
+       9 +**Objetivo.** El objetivo consiste en describir, con cifras ofi
+         +ciales (Banco Central de Reserva del Perú [BCRP], s. f.; Instit
+         +uto Nacional de Estadística e Informática [INEI], 2025a) y repr
+         +oducibles, las brechas de pobreza monetaria entre departamentos
+         +, entre el área urbana y el área rural, y entre mujeres y hombr
+         +es en 2024, y en situar dichas brechas en el contexto de la inf
+         +lación de Lima Metropolitana y del crecimiento del producto bru
+         +to interno real entre 2019 y 2024.                             
+      10  
+      11  **Delimitación.** El análisis de la pobreza se circunscribe a l
+          a Encuesta Nacional de Hogares (ENAHO) de 2024 del Instituto Na
+          cional de Estadística e Informática (INEI), mientras que el con
+          texto macroeconómico se limita a dos series del Banco Central d
+          e Reserva del Perú (BCRP) para el periodo 2019 a 2024. Asimismo
+          , se incorpora como referencia el último dato de inflación disp
+          onible en 2026, sin que ello amplíe el periodo de análisis de l
+          a pobreza.
+      12  
+
+● Update(informes\informe_final.md)
+  ⎿  Added 1 line, removed 1 line
+      18  
+      19  ## 2. Fuentes y metodología
+      20  
+      21 -**Datos.** En primer lugar, se emplearon los módulos 34 (sumari
+         -a) y 02 (características de los miembros del hogar) de la ENAHO
+         - 2024, correspondientes al código 966 del portal de microdatos 
+         -del INEI. En segundo lugar, se utilizaron dos series oficiales 
+         -del BCRP, a saber, la variación porcentual en doce meses del ín
+         -dice de precios al consumidor de Lima Metropolitana (PN01273PM,
+         - mensual) y la variación porcentual real del producto bruto int
+         -erno por tipo de gasto (PM04923AA, anual). Por último, la delim
+         -itación departamental procede del archivo `datos/peru_departame
+         -ntal_simple.geojson`, y la referencia de pobreza por departamen
+         -to, del archivo `.claude/skills/mapeando-enaho/referencias/pobr
+         -eza_departamento_2024.csv`.                                    
+      21 +**Datos.** En primer lugar, se emplearon los módulos 34 (sumari
+         +a) y 02 (características de los miembros del hogar) de la ENAHO
+         + 2024 (INEI, 2025b), correspondientes al código 966 del portal 
+         +de microdatos del instituto. En segundo lugar, se utilizaron do
+         +s series oficiales del BCRP, a saber, la variación porcentual e
+         +n doce meses del índice de precios al consumidor de Lima Metrop
+         +olitana (PN01273PM, mensual) y la variación porcentual real del
+         + producto bruto interno por tipo de gasto (PM04923AA, anual), d
+         +isponibles en su base de datos BCRPData (BCRP, s. f.). Por últi
+         +mo, la delimitación departamental procede del archivo `datos/pe
+         +ru_departamental_simple.geojson`, y la referencia de pobreza po
+         +r departamento, del archivo `.claude/skills/mapeando-enaho/refe
+         +rencias/pobreza_departamento_2024.csv`, ambos tomados de los ma
+         +teriales del curso (d2cml-ai, s. f.).                          
+      22  
+      23  **Procesamiento.** Las series del BCRP se obtuvieron mediante e
+          l servidor MCP del proyecto (`mcp/server.py`), cuyas herramient
+          as `buscar_series`, `resumen`, `serie` y `comparar_series` desc
+          argan los valores directamente de la API oficial y efectúan los
+           cálculos en Python, de modo que ninguna cifra se transcribió n
+          i se calculó manualmente. Por su parte, los microdatos de la EN
+          AHO se procesaron con tres skills del proyecto. La skill `limpi
+          ando-enaho` unió ambos módulos, restringió la población a los r
+          esidentes habituales (108 664 personas en 33 691 hogares) y val
+          idó los resultados frente a las cifras publicadas. A continuaci
+          ón, la skill `graficando-enaho` generó los gráficos por área, s
+          exo y sexo según área, mientras que la skill `mapeando-enaho` e
+          laboró el mapa coroplético departamental.
+      24  
+
+● Update(informes\informe_final.md)
+  ⎿  Added 1 line, removed 1 line
+      20  
+      21  **Datos.** En primer lugar, se emplearon los módulos 34 (sumari
+          a) y 02 (características de los miembros del hogar) de la ENAHO
+           2024 (INEI, 2025b), correspondientes al código 966 del portal 
+          de microdatos del instituto. En segundo lugar, se utilizaron do
+          s series oficiales del BCRP, a saber, la variación porcentual e
+          n doce meses del índice de precios al consumidor de Lima Metrop
+          olitana (PN01273PM, mensual) y la variación porcentual real del
+           producto bruto interno por tipo de gasto (PM04923AA, anual), d
+          isponibles en su base de datos BCRPData (BCRP, s. f.). Por últi
+          mo, la delimitación departamental procede del archivo `datos/pe
+          ru_departamental_simple.geojson`, y la referencia de pobreza po
+          r departamento, del archivo `.claude/skills/mapeando-enaho/refe
+          rencias/pobreza_departamento_2024.csv`, ambos tomados de los ma
+          teriales del curso (d2cml-ai, s. f.).
+      22  
+      23 -**Procesamiento.** Las series del BCRP se obtuvieron mediante e
+         -l servidor MCP del proyecto (`mcp/server.py`), cuyas herramient
+         -as `buscar_series`, `resumen`, `serie` y `comparar_series` desc
+         -argan los valores directamente de la API oficial y efectúan los
+         - cálculos en Python, de modo que ninguna cifra se transcribió n
+         -i se calculó manualmente. Por su parte, los microdatos de la EN
+         -AHO se procesaron con tres skills del proyecto. La skill `limpi
+         -ando-enaho` unió ambos módulos, restringió la población a los r
+         -esidentes habituales (108 664 personas en 33 691 hogares) y val
+         -idó los resultados frente a las cifras publicadas. A continuaci
+         -ón, la skill `graficando-enaho` generó los gráficos por área, s
+         -exo y sexo según área, mientras que la skill `mapeando-enaho` e
+         -laboró el mapa coroplético departamental.                      
+      23 +**Procesamiento.** Las series del BCRP se obtuvieron mediante e
+         +l servidor MCP del proyecto (`mcp/server.py`), cuyas herramient
+         +as `buscar_series`, `resumen`, `serie` y `comparar_series` desc
+         +argan los valores directamente de la API oficial y efectúan los
+         + cálculos en Python, de modo que ninguna cifra se transcribió n
+         +i se calculó manualmente. Por su parte, los microdatos de la EN
+         +AHO se procesaron con tres skills del proyecto. La skill `limpi
+         +ando-enaho` unió ambos módulos, restringió la población a los r
+         +esidentes habituales (108 664 personas en 33 691 hogares) y val
+         +idó los resultados frente a las cifras publicadas (INEI, 2025a)
+         +. A continuación, la skill `graficando-enaho` generó los gráfic
+         +os por área, sexo y sexo según área, mientras que la skill `map
+         +eando-enaho` elaboró el mapa coroplético departamental.        
+      24  
+      25  **Indicadores.** Se analizaron la incidencia de la pobreza mone
+          taria, entendida como el porcentaje de personas cuyo gasto per 
+          cápita es inferior al valor de la canasta básica, y, de manera 
+          complementaria, la incidencia de la pobreza extrema. En el ámbi
+          to macroeconómico, se consideraron la inflación interanual mens
+          ual y el crecimiento anual del PBI real.
+      26  
+
+● Update(informes\informe_final.md)
+  ⎿  Added 1 line, removed 1 line
+      31  El análisis siguió una secuencia de seis pasos, definida antes 
+          de consultar las fuentes.
+      32  
+      33  1. **Interpretación de la pregunta.** La pregunta se descompuso
+           en dos componentes. El primero corresponde a la configuración 
+          de la pobreza monetaria en 2024 según tres dimensiones, a saber
+          , el departamento, el área de residencia y el sexo, mientras qu
+          e el segundo corresponde al contexto macroeconómico de 2019 a 2
+          024, representado por la inflación y el crecimiento económico. 
+          Se estableció, además, que ambos componentes se presentarían de
+           forma descriptiva, sin atribuir a la trayectoria macroeconómic
+          a el nivel de pobreza observado.
+      34 -2. **Selección de indicadores y fuentes.** Para el primer compo
+         -nente se eligieron la incidencia de la pobreza monetaria y de l
+         -a pobreza extrema, calculadas con los módulos 34 y 02 de la ENA
+         -HO 2024 del INEI. Para el segundo se eligieron la inflación int
+         -eranual de Lima Metropolitana y la variación real anual del PBI
+         -, procedentes de la API oficial del BCRP.                      
+      34 +2. **Selección de indicadores y fuentes.** Para el primer compo
+         +nente se eligieron la incidencia de la pobreza monetaria y de l
+         +a pobreza extrema, calculadas con los módulos 34 y 02 de la ENA
+         +HO 2024 (INEI, 2025b). Para el segundo se eligieron la inflació
+         +n interanual de Lima Metropolitana y la variación real anual de
+         +l PBI, procedentes de la API oficial del banco central (BCRP, s
+         +. f.).                                                         
+      35  3. **Identificación de las series del BCRP.** Mediante la herra
+          mienta `buscar_series` del servidor MCP se identificaron los có
+          digos PN01273PM, de frecuencia mensual, y PM04923AA, de frecuen
+          cia anual.
+      36  4. **Procesamiento de la ENAHO.** La skill `limpiando-enaho` un
+          ió y validó los módulos, construyó la base de personas y calcul
+          ó los indicadores con el método oficial para los niveles de hog
+          ar y con el método de personas para el sexo. A continuación, la
+           skill `graficando-enaho` elaboró los gráficos por área, sexo y
+           sexo según área, y la skill `mapeando-enaho` elaboró el mapa d
+          epartamental y lo contrastó con la referencia del curso.
+      37  5. **Obtención de las cifras macroeconómicas.** La herramienta 
+          `resumen` proporcionó los promedios y los extremos de cada seri
+          e entre 2019 y 2024, la herramienta `serie` proporcionó los val
+          ores anuales del PBI y los datos de 2026 empleados como referen
+          cia, y la herramienta `comparar_series` alineó ambas series en 
+          frecuencia anual y calculó su correlación. El script `informes/
+          grafico_bcrp.py` obtuvo la serie mensual de inflación a través 
+          del mismo servidor para elaborar la figura 1.
+
+● Update(informes\informe_final.md)
+  ⎿  Added 1 line, removed 1 line
+      33  1. **Interpretación de la pregunta.** La pregunta se descompuso
+           en dos componentes. El primero corresponde a la configuración 
+          de la pobreza monetaria en 2024 según tres dimensiones, a saber
+          , el departamento, el área de residencia y el sexo, mientras qu
+          e el segundo corresponde al contexto macroeconómico de 2019 a 2
+          024, representado por la inflación y el crecimiento económico. 
+          Se estableció, además, que ambos componentes se presentarían de
+           forma descriptiva, sin atribuir a la trayectoria macroeconómic
+          a el nivel de pobreza observado.
+      34  2. **Selección de indicadores y fuentes.** Para el primer compo
+          nente se eligieron la incidencia de la pobreza monetaria y de l
+          a pobreza extrema, calculadas con los módulos 34 y 02 de la ENA
+          HO 2024 (INEI, 2025b). Para el segundo se eligieron la inflació
+          n interanual de Lima Metropolitana y la variación real anual de
+          l PBI, procedentes de la API oficial del banco central (BCRP, s
+          . f.).
+      35  3. **Identificación de las series del BCRP.** Mediante la herra
+          mienta `buscar_series` del servidor MCP se identificaron los có
+          digos PN01273PM, de frecuencia mensual, y PM04923AA, de frecuen
+          cia anual.
+      36 -4. **Procesamiento de la ENAHO.** La skill `limpiando-enaho` un
+         -ió y validó los módulos, construyó la base de personas y calcul
+         -ó los indicadores con el método oficial para los niveles de hog
+         -ar y con el método de personas para el sexo. A continuación, la
+         - skill `graficando-enaho` elaboró los gráficos por área, sexo y
+         - sexo según área, y la skill `mapeando-enaho` elaboró el mapa d
+         -epartamental y lo contrastó con la referencia del curso.       
+      36 +4. **Procesamiento de la ENAHO.** La skill `limpiando-enaho` un
+         +ió y validó los módulos, construyó la base de personas y calcul
+         +ó los indicadores con el método oficial para los niveles de hog
+         +ar y con el método de personas para el sexo. A continuación, la
+         + skill `graficando-enaho` elaboró los gráficos por área, sexo y
+         + sexo según área, y la skill `mapeando-enaho` elaboró el mapa d
+         +epartamental y lo contrastó con la referencia del curso (d2cml-
+         +ai, s. f.).                                                    
+      37  5. **Obtención de las cifras macroeconómicas.** La herramienta 
+          `resumen` proporcionó los promedios y los extremos de cada seri
+          e entre 2019 y 2024, la herramienta `serie` proporcionó los val
+          ores anuales del PBI y los datos de 2026 empleados como referen
+          cia, y la herramienta `comparar_series` alineó ambas series en 
+          frecuencia anual y calculó su correlación. El script `informes/
+          grafico_bcrp.py` obtuvo la serie mensual de inflación a través 
+          del mismo servidor para elaborar la figura 1.
+      38  6. **Contraste y redacción.** Cada cifra se verificó frente a l
+          as publicaciones oficiales del INEI, a la referencia departamen
+          tal del curso y a consultas directas a la API del BCRP, y solo 
+          después se redactaron los hallazgos, la interpretación y las li
+          mitaciones.
+      39  
+
+● Update(informes\informe_final.md)
+  ⎿  Added 1 line, removed 1 line
+      35  3. **Identificación de las series del BCRP.** Mediante la herra
+          mienta `buscar_series` del servidor MCP se identificaron los có
+          digos PN01273PM, de frecuencia mensual, y PM04923AA, de frecuen
+          cia anual.
+      36  4. **Procesamiento de la ENAHO.** La skill `limpiando-enaho` un
+          ió y validó los módulos, construyó la base de personas y calcul
+          ó los indicadores con el método oficial para los niveles de hog
+          ar y con el método de personas para el sexo. A continuación, la
+           skill `graficando-enaho` elaboró los gráficos por área, sexo y
+           sexo según área, y la skill `mapeando-enaho` elaboró el mapa d
+          epartamental y lo contrastó con la referencia del curso (d2cml-
+          ai, s. f.).
+      37  5. **Obtención de las cifras macroeconómicas.** La herramienta 
+          `resumen` proporcionó los promedios y los extremos de cada seri
+          e entre 2019 y 2024, la herramienta `serie` proporcionó los val
+          ores anuales del PBI y los datos de 2026 empleados como referen
+          cia, y la herramienta `comparar_series` alineó ambas series en 
+          frecuencia anual y calculó su correlación. El script `informes/
+          grafico_bcrp.py` obtuvo la serie mensual de inflación a través 
+          del mismo servidor para elaborar la figura 1.
+      38 -6. **Contraste y redacción.** Cada cifra se verificó frente a l
+         -as publicaciones oficiales del INEI, a la referencia departamen
+         -tal del curso y a consultas directas a la API del BCRP, y solo 
+         -después se redactaron los hallazgos, la interpretación y las li
+         -mitaciones.                                                    
+      38 +6. **Contraste y redacción.** Cada cifra se verificó frente a l
+         +as publicaciones oficiales (INEI, 2025a), a la referencia depar
+         +tamental del curso (d2cml-ai, s. f.) y a consultas directas a l
+         +a API del banco central (BCRP, s. f.), y solo después se redact
+         +aron los hallazgos, la interpretación y las limitaciones.      
+      39  
+      40  ## 3. Resultados
+      41  
+
+● Update(informes\informe_final.md)
+  ⎿  Added 1 line, removed 1 line
+      39  
+      40  ## 3. Resultados
+      41  
+      42 -**Hallazgo 1. La pobreza monetaria presenta una marcada heterog
+         -eneidad territorial.** En 2024, la incidencia nacional de la po
+         -breza monetaria ascendió a 27.6 % y la de la pobreza extrema a 
+         -5.5 % (`salidas/indicadores.csv`, método oficial). Sin embargo,
+         - este promedio encubre diferencias considerables entre departam
+         -entos, puesto que Cajamarca registró la incidencia más elevada 
+         -(45.0 %), seguida de Loreto (43.0 %) y Puno (39.9 %), en tanto 
+         -que Ica presentó la más baja (6.0 %), seguida de Moquegua (11.0
+         - %) y Madre de Dios (11.1 %). En consecuencia, la distancia ent
+         -re el departamento con mayor y el de menor pobreza asciende a 3
+         -9.0 puntos porcentuales (`salidas/comparacion_mapa.csv`, método
+         - oficial). De igual modo, Callao (33.9 %) superó tanto a Lima (
+         -27.1 %) como al promedio nacional. Por dominio geográfico, la S
+         -ierra Norte alcanzó la mayor incidencia (45.7 %) y la mayor pob
+         -reza extrema (21.8 %), mientras que la Costa Centro registró la
+         - menor (14.0 %).                                               
+      42 +**Hallazgo 1. La pobreza monetaria presenta una marcada heterog
+         +eneidad territorial.** En 2024, la incidencia nacional de la po
+         +breza monetaria ascendió a 27.6 % y la de la pobreza extrema a 
+         +5.5 % (`salidas/indicadores.csv`, método oficial; véase INEI, 2
+         +025a). Sin embargo, este promedio encubre diferencias considera
+         +bles entre departamentos, puesto que Cajamarca registró la inci
+         +dencia más elevada (45.0 %), seguida de Loreto (43.0 %) y Puno 
+         +(39.9 %), en tanto que Ica presentó la más baja (6.0 %), seguid
+         +a de Moquegua (11.0 %) y Madre de Dios (11.1 %). En consecuenci
+         +a, la distancia entre el departamento con mayor y el de menor p
+         +obreza asciende a 39.0 puntos porcentuales (`salidas/comparacio
+         +n_mapa.csv`, método oficial). De igual modo, Callao (33.9 %) su
+         +peró tanto a Lima (27.1 %) como al promedio nacional. Por domin
+         +io geográfico, la Sierra Norte alcanzó la mayor incidencia (45.
+         +7 %) y la mayor pobreza extrema (21.8 %), mientras que la Costa
+         + Centro registró la menor (14.0 %).                            
+      43  
+      44  **Hallazgo 2. La pobreza rural supera ampliamente a la urbana.*
+          * La incidencia de la pobreza monetaria fue de 39.3 % en el áre
+          a rural y de 24.8 % en el área urbana, lo que representa una br
+          echa de 14.5 puntos porcentuales (`salidas/indicadores.csv`, mé
+          todo oficial). Esta diferencia se acentúa en el caso de la pobr
+          eza extrema, que alcanzó 15.5 % en el área rural frente a 3.1 %
+           en el área urbana. Cabe señalar, además, que la población rura
+          l representa alrededor de una quinta parte de la población expa
+          ndida (6.6 millones de un total de 34.5 millones), por lo que l
+          a mayoría de las personas pobres reside, en términos absolutos,
+           en zonas urbanas.
+      45  
+
+● Update(informes\informe_final.md)
+  ⎿  Added 2 lines, removed 2 lines
+      45  
+      46  **Hallazgo 3. Las diferencias por sexo son reducidas y algo may
+          ores en el área rural.** A escala nacional, la pobreza monetari
+          a afectó al 27.7 % de las mujeres y al 27.4 % de los hombres (`
+          salidas/indicadores.csv`, método de personas con `facpob07`). D
+          entro del área rural, la incidencia fue de 40.0 % entre las muj
+          eres y de 38.8 % entre los hombres, con una diferencia de 1.2 p
+          untos porcentuales, en tanto que en el área urbana las cifras f
+          ueron de 24.8 % y 24.6 %, respectivamente. Por consiguiente, el
+           área de residencia se asocia con diferencias de pobreza mucho 
+          mayores que el sexo. Conviene precisar, sin embargo, que la pob
+          reza monetaria se mide a nivel del hogar y se asigna por igual 
+          a todos sus miembros, de modo que estas diferencias reflejan la
+           composición por sexo de los hogares pobres y no pobres, y no l
+          a distribución de los recursos dentro de ellos.
+      47  
+      48 -**Hallazgo 4. El contexto macroeconómico de 2019 a 2024 combinó
+         - un choque recesivo, un rebote y un episodio inflacionario tran
+         -sitorio.** De acuerdo con la serie PM04923AA, el PBI real creci
+         -ó 2.2 % en 2019, se contrajo 10.9 % en 2020, se expandió 13.4 %
+         - en 2021, creció 2.8 % en 2022, retrocedió 0.4 % en 2023 y crec
+         -ió 3.5 % en 2024, con un promedio simple de 1.8 % anual en el p
+         -eriodo (BCRP, PM04923AA, 2019 a 2024, herramientas `serie` y `r
+         -esumen`). Paralelamente, la inflación interanual de Lima Metrop
+         -olitana pasó de 2.1 % en enero de 2019 a un mínimo de 1.6 % en 
+         -junio de 2020, alcanzó un máximo de 8.8 % en junio de 2022 y de
+         -scendió hasta 2.0 % en diciembre de 2024, con un promedio de 4.
+         -1 % en los 72 meses (BCRP, PN01273PM, 2019-01 a 2024-12, herram
+         -ienta `resumen`). En promedios anuales, la inflación fue de 7.9
+         - % en 2022 y de 6.3 % en 2023, y retornó a 2.4 % en 2024 (BCRP,
+         - PN01273PM, herramienta `comparar_series`). A título de context
+         -o, la inflación interanual se situó en 4.5 % en setiembre de 20
+         -26 y en 5.3 % en octubre de 2026, último periodo disponible (BC
+         -RP, PN01273PM, 2026-09 y 2026-10, herramienta `serie`).        
+      48 +**Hallazgo 4. El contexto macroeconómico de 2019 a 2024 combinó
+         + un choque recesivo, un rebote y un episodio inflacionario tran
+         +sitorio.** De acuerdo con la serie PM04923AA, el PBI real creci
+         +ó 2.2 % en 2019, se contrajo 10.9 % en 2020, se expandió 13.4 %
+         + en 2021, creció 2.8 % en 2022, retrocedió 0.4 % en 2023 y crec
+         +ió 3.5 % en 2024, con un promedio simple de 1.8 % anual en el p
+         +eriodo (BCRP, s. f., PM04923AA, 2019 a 2024, herramientas `seri
+         +e` y `resumen`). Paralelamente, la inflación interanual de Lima
+         + Metropolitana pasó de 2.1 % en enero de 2019 a un mínimo de 1.
+         +6 % en junio de 2020, alcanzó un máximo de 8.8 % en junio de 20
+         +22 y descendió hasta 2.0 % en diciembre de 2024, con un promedi
+         +o de 4.1 % en los 72 meses (BCRP, s. f., PN01273PM, 2019-01 a 2
+         +024-12, herramienta `resumen`). En promedios anuales, la inflac
+         +ión fue de 7.9 % en 2022 y de 6.3 % en 2023, y retornó a 2.4 % 
+         +en 2024 (BCRP, s. f., PN01273PM, herramienta `comparar_series`)
+         +. A título de contexto, la inflación interanual se situó en 4.5
+         + % en setiembre de 2026 y en 5.3 % en octubre de 2026, último p
+         +eriodo disponible (BCRP, s. f., PN01273PM, 2026-09 y 2026-10, h
+         +erramienta `serie`).                                           
+      49  
+      50 -**Hallazgo 5. La asociación entre inflación y crecimiento en el
+         - periodo es débil.** La correlación de Pearson entre el promedi
+         -o anual de la inflación y el crecimiento del PBI real fue de 0.
+         -23 para los seis años comunes (BCRP, PN01273PM y PM04923AA, 201
+         -9 a 2024, herramienta `comparar_series`). Dado que este coefici
+         -ente se basa en solo seis observaciones y que ambas series resp
+         -onden a choques comunes, el resultado únicamente indica una aso
+         -ciación lineal débil y no permite inferir relación causal algun
+         -a.                                                             
+      50 +**Hallazgo 5. La asociación entre inflación y crecimiento en el
+         + periodo es débil.** La correlación de Pearson entre el promedi
+         +o anual de la inflación y el crecimiento del PBI real fue de 0.
+         +23 para los seis años comunes (BCRP, s. f., PN01273PM y PM04923
+         +AA, 2019 a 2024, herramienta `comparar_series`). Dado que este 
+         +coeficiente se basa en solo seis observaciones y que ambas seri
+         +es responden a choques comunes, el resultado únicamente indica 
+         +una asociación lineal débil y no permite inferir relación causa
+         +l alguna.                                                      
+      51  
+      52  ## 4. Visualizaciones
+      53  
+
+● Update(informes\informe_final.md)
+  ⎿  Added 1 line, removed 1 line
+      53  
+      54  ![Figura 1. Inflación interanual de Lima Metropolitana, 2019 a 
+          2024](../figuras/bcrp_inflacion_2019_2024.png)
+      55  
+      56 -*Figura 1.* Inflación interanual mensual de Lima Metropolitana 
+         -entre enero de 2019 y diciembre de 2024. Fuente. Elaboración pr
+         -opia con datos del BCRP (serie PN01273PM), obtenidos mediante e
+         -l servidor MCP del proyecto con `informes/grafico_bcrp.py`.    
+      56 +*Figura 1.* Inflación interanual mensual de Lima Metropolitana 
+         +entre enero de 2019 y diciembre de 2024. Fuente. Elaboración pr
+         +opia con datos del BCRP (s. f., serie PN01273PM), obtenidos med
+         +iante el servidor MCP del proyecto con `informes/grafico_bcrp.p
+         +y`.                                                            
+      57  
+      58  ![Figura 2. Pobreza monetaria por área de residencia, 2024](../
+          figuras/pobreza_area.png)
+      59  
+
+● Update(informes\informe_final.md)
+  ⎿  Added 4 lines, removed 4 lines
+      57  
+      58  ![Figura 2. Pobreza monetaria por área de residencia, 2024](../
+          figuras/pobreza_area.png)
+      59  
+      60 -*Figura 2.* Pobreza monetaria por área de residencia en 2024. F
+         -uente. Elaboración propia con datos de la ENAHO 2024 del INEI, 
+         -según el método oficial con la sumaria.                        
+      60 +*Figura 2.* Pobreza monetaria por área de residencia en 2024. F
+         +uente. Elaboración propia con datos de la ENAHO 2024 (INEI, 202
+         +5b), según el método oficial con la sumaria.                   
+      61  
+      62  ![Figura 3. Pobreza monetaria por sexo y área de residencia, 20
+          24](../figuras/pobreza_sexo_area.png)
+      63  
+      64 -*Figura 3.* Pobreza monetaria de mujeres y hombres dentro de ca
+         -da área en 2024. Fuente. Elaboración propia con datos de la ENA
+         -HO 2024 del INEI, según el método de personas con `facpob07`.  
+      64 +*Figura 3.* Pobreza monetaria de mujeres y hombres dentro de ca
+         +da área en 2024. Fuente. Elaboración propia con datos de la ENA
+         +HO 2024 (INEI, 2025b), según el método de personas con `facpob0
+         +7`.                                                            
+      65  
+      66  ![Figura 4. Pobreza monetaria por sexo, 2024](../figuras/pobrez
+          a_sexo.png)
+      67  
+      68 -*Figura 4.* Pobreza monetaria por sexo en 2024. Fuente. Elabora
+         -ción propia con datos de la ENAHO 2024 del INEI, según el métod
+         -o de personas con `facpob07`.                                  
+      68 +*Figura 4.* Pobreza monetaria por sexo en 2024. Fuente. Elabora
+         +ción propia con datos de la ENAHO 2024 (INEI, 2025b), según el 
+         +método de personas con `facpob07`.                             
+      69  
+      70  ![Figura 5. Mapa de la pobreza monetaria por departamento, 2024
+          ](../mapas/pobreza_departamento.png)
+      71  
+      72 -*Figura 5.* Pobreza monetaria por departamento en 2024, con un 
+         -recuadro ampliado de Lima y Callao. Fuente. Elaboración propia 
+         -con datos de la ENAHO 2024 del INEI, según el método oficial co
+         -n la sumaria.                                                  
+      72 +*Figura 5.* Pobreza monetaria por departamento en 2024, con un 
+         +recuadro ampliado de Lima y Callao. Fuente. Elaboración propia 
+         +con datos de la ENAHO 2024 (INEI, 2025b), según el método ofici
+         +al con la sumaria.                                             
+      73  
+      74  ## 5. Interpretación
+      75  
+
+● Update(informes\informe_final.md)
+  ⎿  Added 1 line, removed 1 line
+      142  
+      143  | Afirmación | Valor calculado | Fuente o procedimiento | ¿Coi
+           ncide? | Diferencia |
+      144  |---|---|---|---|---|
+      145 -| La inflación interanual de Lima Metropolitana fue de 4.5 % e
+          -n setiembre de 2026 | 4.548655 % (herramienta `serie` del MCP,
+          - PN01273PM, 2026-09) | Consulta directa a la API oficial del B
+          -CRP, `https://estadisticas.bcrp.gob.pe/estadisticas/series/api
+          -/PN01273PM/json/2026-9/2026-9`, que devolvió 4.54865469481509 
+          -para Sep.2026 | Sí | 0.000000 pp |                            
+      145 +| La inflación interanual de Lima Metropolitana fue de 4.5 % e
+          +n setiembre de 2026 | 4.548655 % (herramienta `serie` del MCP,
+          + PN01273PM, 2026-09) | Consulta directa a la API oficial del b
+          +anco central (BCRP, s. f.), `https://estadisticas.bcrp.gob.pe/
+          +estadisticas/series/api/PN01273PM/json/2026-9/2026-9`, que dev
+          +olvió 4.54865469481509 para Sep.2026 | Sí | 0.000000 pp |     
+      146  | La pobreza monetaria nacional fue de 27.6 % en 2024 | 27.58 
+           % (`salidas/indicadores.csv`, método oficial) | Comparación co
+           n la cifra de 27.6 % publicada por el INEI en «Cifras de pobre
+           za 2024» (https://www.gob.pe/institucion/inei/informes-publica
+           ciones/6749463-cifras-de-pobreza-2024) | Sí, al decimal | 0.0 
+           pp al decimal (27.58 frente a 27.6) |
+      147  | La pobreza monetaria de Cajamarca fue de 45.0 % en 2024 | 45
+           .01 % (`salidas/comparacion_mapa.csv`, método oficial) | Compa
+           ración con la referencia del curso (`.claude/skills/mapeando-e
+           naho/referencias/pobreza_departamento_2024.csv`), que consigna
+            45.0 %, cifra que el INEI también reporta en «Cifras de pobre
+           za 2024» | Sí, al decimal | 0.0 pp |
+      148  
+
+● Update(informes\informe_final.md)
+  ⎿  Added 1 line, removed 1 line
+      143  | Afirmación | Valor calculado | Fuente o procedimiento | ¿Coi
+           ncide? | Diferencia |
+      144  |---|---|---|---|---|
+      145  | La inflación interanual de Lima Metropolitana fue de 4.5 % e
+           n setiembre de 2026 | 4.548655 % (herramienta `serie` del MCP,
+            PN01273PM, 2026-09) | Consulta directa a la API oficial del b
+           anco central (BCRP, s. f.), `https://estadisticas.bcrp.gob.pe/
+           estadisticas/series/api/PN01273PM/json/2026-9/2026-9`, que dev
+           olvió 4.54865469481509 para Sep.2026 | Sí | 0.000000 pp |
+      146 -| La pobreza monetaria nacional fue de 27.6 % en 2024 | 27.58 
+          -% (`salidas/indicadores.csv`, método oficial) | Comparación co
+          -n la cifra de 27.6 % publicada por el INEI en «Cifras de pobre
+          -za 2024» (https://www.gob.pe/institucion/inei/informes-publica
+          -ciones/6749463-cifras-de-pobreza-2024) | Sí, al decimal | 0.0 
+          -pp al decimal (27.58 frente a 27.6) |                         
+      146 +| La pobreza monetaria nacional fue de 27.6 % en 2024 | 27.58 
+          +% (`salidas/indicadores.csv`, método oficial) | Comparación co
+          +n la cifra de 27.6 % publicada por el INEI (2025a) en «Cifras 
+          +de pobreza 2024» (https://www.gob.pe/institucion/inei/informes
+          +-publicaciones/6749463-cifras-de-pobreza-2024) | Sí, al decima
+          +l | 0.0 pp al decimal (27.58 frente a 27.6) |                 
+      147  | La pobreza monetaria de Cajamarca fue de 45.0 % en 2024 | 45
+           .01 % (`salidas/comparacion_mapa.csv`, método oficial) | Compa
+           ración con la referencia del curso (`.claude/skills/mapeando-e
+           naho/referencias/pobreza_departamento_2024.csv`), que consigna
+            45.0 %, cifra que el INEI también reporta en «Cifras de pobre
+           za 2024» | Sí, al decimal | 0.0 pp |
+      148  
+      149  ### Manejo de errores
+
+● Update(informes\informe_final.md)
+  ⎿  Added 1 line, removed 1 line
+      144  |---|---|---|---|---|
+      145  | La inflación interanual de Lima Metropolitana fue de 4.5 % e
+           n setiembre de 2026 | 4.548655 % (herramienta `serie` del MCP,
+            PN01273PM, 2026-09) | Consulta directa a la API oficial del b
+           anco central (BCRP, s. f.), `https://estadisticas.bcrp.gob.pe/
+           estadisticas/series/api/PN01273PM/json/2026-9/2026-9`, que dev
+           olvió 4.54865469481509 para Sep.2026 | Sí | 0.000000 pp |
+      146  | La pobreza monetaria nacional fue de 27.6 % en 2024 | 27.58 
+           % (`salidas/indicadores.csv`, método oficial) | Comparación co
+           n la cifra de 27.6 % publicada por el INEI (2025a) en «Cifras 
+           de pobreza 2024» (https://www.gob.pe/institucion/inei/informes
+           -publicaciones/6749463-cifras-de-pobreza-2024) | Sí, al decima
+           l | 0.0 pp al decimal (27.58 frente a 27.6) |
+      147 -| La pobreza monetaria de Cajamarca fue de 45.0 % en 2024 | 45
+          -.01 % (`salidas/comparacion_mapa.csv`, método oficial) | Compa
+          -ración con la referencia del curso (`.claude/skills/mapeando-e
+          -naho/referencias/pobreza_departamento_2024.csv`), que consigna
+          - 45.0 %, cifra que el INEI también reporta en «Cifras de pobre
+          -za 2024» | Sí, al decimal | 0.0 pp |                          
+      147 +| La pobreza monetaria de Cajamarca fue de 45.0 % en 2024 | 45
+          +.01 % (`salidas/comparacion_mapa.csv`, método oficial) | Compa
+          +ración con la referencia del curso (d2cml-ai, s. f.), archivo 
+          +`.claude/skills/mapeando-enaho/referencias/pobreza_departament
+          +o_2024.csv`, que consigna 45.0 %, cifra que el INEI (2025a) ta
+          +mbién reporta en «Cifras de pobreza 2024» | Sí, al decimal | 0
+          +.0 pp |                                                       
+      148  
+      149  ### Manejo de errores
+      150  
+
+● Verifico la correspondencia entre citas y referencias, el orden de
+  introducción de las abreviaturas y que ninguna cifra haya cambiado.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Mi comprobación de cifras estaba mal planteada, porque comparé contra la
+  versión de git, que no incluye los cambios sin commit. La rehago para
+  verificar que ninguna cifra de git haya desaparecido y que las nuevas
+  correspondan solo a los apartados añadidos.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Ninguna cifra del cuerpo cambió respecto a la versión registrada; las «citas
+  sin referencia» marcadas son falsos positivos (códigos como PN01273PM o «ENAHO
+  2024»). Ahora hago el último control de puntuación, secciones y enlaces.
+  Ran 1 shell command (ctrl+o to expand)
+
+● Las ocho obras de la sección Referencias ya se citan en el texto, y todas las
+  citas de autor y año tienen su referencia. No cambió ninguna cifra ni el
+  contenido, y no hice commit.
+
+  Primera cita y abreviaturas. La primera cita está en el objetivo («con cifras
+  oficiales»), y allí definí las dos abreviaturas a la vez: «(Banco Central de
+  Reserva del Perú [BCRP], s. f.; Instituto Nacional de Estadística e
+  Informática [INEI], 2025a)». Desde ese punto uso solo «BCRP» e «INEI», como
+  pide APA. No usé la forma completa de INEI 2025a en otro lugar porque las
+  citas de INEI 2025b (microdatos) aparecen antes en el texto, y APA exige
+  definir la abreviatura en la primera cita.
+
+  Dónde agregué cada cita:
+  - INEI 2025a (cifras oficiales de pobreza):
+    - en el objetivo;
+    - en la validación de limpiando-enaho («frente a las cifras publicadas»);
+    - en el paso 6 del plan;
+    - como «véase INEI, 2025a» junto a la cifra nacional del hallazgo 1;
+    - en dos filas de la tabla de verificación, como cita narrativa «el INEI
+      (2025a)».
+  - INEI 2025b (microdatos de la ENAHO):
+    - en la descripción de los datos;
+    - en el paso 2 del plan;
+    - en los pies de las figuras 2 a 5.
+  - BCRP, s. f. (series del BCRP):
+    - en la descripción de las series;
+    - en los pasos 2 y 6 del plan;
+    - en los paréntesis de fuente de los hallazgos 4 y 5, donde agregué «s. f.»;
+    - en el pie de la figura 1;
+    - en la fila del BCRP de la tabla de verificación.
+  - d2cml-ai, s. f. (referencia departamental y materiales del curso):
+    - en la descripción de los datos, donde añadí que el GeoJSON y la referencia
+      proceden de los materiales del curso;
+    - en los pasos 4 y 6 del plan;
+    - en la fila de Cajamarca de la tabla de verificación.
+
+  Redacción. Donde la cita habría quedado repetida, como en «del INEI (INEI,
+  2025b)», reformulé un poco: «portal de microdatos del instituto» y «API
+  oficial del banco central».
+
+  Verificaciones:
+  - Cada referencia tiene entre 2 y 11 citas en el texto.
+  - En las dos abreviaturas, la forma completa aparece antes que la abreviada.
+  - Las cifras decimales del cuerpo son idénticas a las de la versión registrada
+    en git.
+  - El informe sigue teniendo las siete secciones y las Referencias.
+  - Ningún párrafo tiene dos puntos ni guiones dobles.
+  - Los enlaces relativos funcionan.
+
+✻ Brewed for 2m 31s · done 7:39 PM
