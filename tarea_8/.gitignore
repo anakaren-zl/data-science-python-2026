@@ -1,0 +1,12 @@
+# Microdatos originales y catálogo del BCRP (se descargan, no se versionan)
+datos/
+
+# Entorno virtual de uv
+.venv/
+
+# Bases procesadas pesadas
+salidas/*.parquet
+
+# Caché de Python y pytest
+__pycache__/
+.pytest_cache/

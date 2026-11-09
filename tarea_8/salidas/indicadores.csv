@@ -1,0 +1,48 @@
+anio,nivel,codigo,categoria,metodo,pobreza_pct,pobreza_extrema_pct,poblacion,n_muestra,unidad_muestral
+2024,nacional,PE,Perú,sumaria: factor07 x mieperho,27.58,5.5,34482699,33691,hogares
+2024,area,Rural,Rural,sumaria: factor07 x mieperho,39.3,15.52,6595188,11660,hogares
+2024,area,Urbana,Urbana,sumaria: factor07 x mieperho,24.81,3.14,27887511,22031,hogares
+2024,dominio,1,Costa Norte,sumaria: factor07 x mieperho,24.28,1.92,5104587,4751,hogares
+2024,dominio,2,Costa Centro,sumaria: factor07 x mieperho,14.01,1.08,2307204,3287,hogares
+2024,dominio,3,Costa Sur,sumaria: factor07 x mieperho,20.15,1.14,705004,2283,hogares
+2024,dominio,4,Sierra Norte,sumaria: factor07 x mieperho,45.7,21.76,1899899,2015,hogares
+2024,dominio,5,Sierra Centro,sumaria: factor07 x mieperho,30.1,8.77,4057363,5531,hogares
+2024,dominio,6,Sierra Sur,sumaria: factor07 x mieperho,25.6,5.98,4616008,4523,hogares
+2024,dominio,7,Selva,sumaria: factor07 x mieperho,30.02,7.94,4360929,7211,hogares
+2024,dominio,8,Lima Metropolitana,sumaria: factor07 x mieperho,28.21,3.28,11431707,4090,hogares
+2024,departamento,01,Amazonas,sumaria: factor07 x mieperho,25.75,6.01,442355,1243,hogares
+2024,departamento,02,Áncash,sumaria: factor07 x mieperho,22.77,5.8,1212494,1393,hogares
+2024,departamento,03,Apurímac,sumaria: factor07 x mieperho,23.96,5.24,494189,913,hogares
+2024,departamento,04,Arequipa,sumaria: factor07 x mieperho,15.78,1.65,1421684,1506,hogares
+2024,departamento,05,Ayacucho,sumaria: factor07 x mieperho,32.76,9.09,775447,1160,hogares
+2024,departamento,06,Cajamarca,sumaria: factor07 x mieperho,45.01,19.72,1554586,1469,hogares
+2024,departamento,07,Callao,sumaria: factor07 x mieperho,33.86,5.04,1142618,1027,hogares
+2024,departamento,08,Cusco,sumaria: factor07 x mieperho,18.54,2.1,1409467,1230,hogares
+2024,departamento,09,Huancavelica,sumaria: factor07 x mieperho,33.4,11.16,543103,1042,hogares
+2024,departamento,10,Huánuco,sumaria: factor07 x mieperho,38.96,12.2,926653,1244,hogares
+2024,departamento,11,Ica,sumaria: factor07 x mieperho,6.01,0.15,854203,1500,hogares
+2024,departamento,12,Junín,sumaria: factor07 x mieperho,18.5,3.82,1450149,1506,hogares
+2024,departamento,13,La Libertad,sumaria: factor07 x mieperho,30.19,6.56,2080789,1509,hogares
+2024,departamento,14,Lambayeque,sumaria: factor07 x mieperho,14.04,0.5,1349731,1302,hogares
+2024,departamento,15,Lima,sumaria: factor07 x mieperho,27.07,3.12,11279909,4544,hogares
+2024,departamento,16,Loreto,sumaria: factor07 x mieperho,42.97,14.98,1129071,1359,hogares
+2024,departamento,17,Madre de Dios,sumaria: factor07 x mieperho,11.15,1.53,165992,603,hogares
+2024,departamento,18,Moquegua,sumaria: factor07 x mieperho,10.97,2.38,198386,963,hogares
+2024,departamento,19,Pasco,sumaria: factor07 x mieperho,38.97,8.33,327776,865,hogares
+2024,departamento,20,Piura,sumaria: factor07 x mieperho,31.86,4.41,1988570,1611,hogares
+2024,departamento,21,Puno,sumaria: factor07 x mieperho,39.94,12.49,1586886,1123,hogares
+2024,departamento,22,San Martín,sumaria: factor07 x mieperho,22.02,4.39,947446,1347,hogares
+2024,departamento,23,Tacna,sumaria: factor07 x mieperho,23.99,2.65,380755,1271,hogares
+2024,departamento,24,Tumbes,sumaria: factor07 x mieperho,26.9,1.06,261959,842,hogares
+2024,departamento,25,Ucayali,sumaria: factor07 x mieperho,27.07,3.26,558484,1119,hogares
+2024,sexo,Hombre,Hombre,personas: facpob07,27.37,5.37,16453003,52587,personas
+2024,sexo,Mujer,Mujer,personas: facpob07,27.68,5.62,17694764,56077,personas
+2024,grupo_edad,0 a 14 años,0 a 14 años,personas: facpob07,37.52,8.59,7941994,26489,personas
+2024,grupo_edad,15 a 29 años,15 a 29 años,personas: facpob07,25.97,4.5,7512400,23122,personas
+2024,grupo_edad,30 a 44 años,30 a 44 años,personas: facpob07,27.87,5.59,6689119,20648,personas
+2024,grupo_edad,45 a 64 años,45 a 64 años,personas: facpob07,21.15,3.61,7803731,24735,personas
+2024,grupo_edad,65 años a más,65 años a más,personas: facpob07,22.74,4.81,4200522,13670,personas
+2024,sexo_area,Hombre-Rural,Hombre · Rural,personas: facpob07,38.82,15.51,3175623,17813,personas
+2024,sexo_area,Hombre-Urbana,Hombre · Urbana,personas: facpob07,24.63,2.95,13277380,34774,personas
+2024,sexo_area,Mujer-Rural,Mujer · Rural,personas: facpob07,40.04,15.69,3310762,18258,personas
+2024,sexo_area,Mujer-Urbana,Mujer · Urbana,personas: facpob07,24.83,3.3,14384000,37819,personas
