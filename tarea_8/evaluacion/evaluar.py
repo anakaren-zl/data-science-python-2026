@@ -306,10 +306,17 @@ if __name__ == "__main__":
 
     res = pd.DataFrame(filas)
     previo = AQUI / "resultados.csv"
-    if previo.exists():   # conserva tal cual las filas de los modos que no se ejecutaron ahora
-        otras = pd.read_csv(previo, dtype={"id": str})
-        otras = otras[~otras.modo.isin(a.modos)]
-        res = pd.concat([otras, res], ignore_index=True)   # las filas nuevas van al final
+    if previo.exists():
+        # Fusión en el lugar: cada fila (id, modo) recalculada ocupa la posición que tenía en el archivo, las de
+        # los modos que no se ejecutaron ahora se conservan tal cual y las filas nuevas van al final. Así el orden
+        # original (A y B intercalados por pregunta y luego C) se mantiene, y --recalificar reproduce el archivo.
+        anteriores = pd.read_csv(previo, dtype={"id": str})
+        nuevas = {(f["id"], f["modo"]): f for f in res.to_dict("records")}
+        claves_previas = list(zip(anteriores.id, anteriores.modo))
+        filas_finales = [nuevas.pop(k) if k in nuevas else fila
+                         for k, fila in zip(claves_previas, anteriores.to_dict("records"))]
+        filas_finales += list(nuevas.values())
+        res = pd.DataFrame(filas_finales, columns=anteriores.columns.union(res.columns, sort=False))
     res.to_csv(previo, index=False, encoding="utf-8")
     print("\n" + res.pivot(index="id", columns="modo", values="resultado").to_string())
     tabla = res.groupby("modo").resultado.value_counts().unstack(fill_value=0)

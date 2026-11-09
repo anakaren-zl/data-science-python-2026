@@ -185,6 +185,18 @@ La ejecución integrada registrada en [`evidencias_ia/integracion/02_ejecucion_i
 
 Todas las cifras coincidieron al decimal con las de [`informes/informe_final.md`](informes/informe_final.md), por lo que el informe no requirió modificaciones.
 
+## 11 bis. Innovaciones incorporadas
+
+El proyecto incorpora varias de las ideas de innovación propuestas en el enunciado, además de un análisis complementario de carácter interseccional. La tabla siguiente identifica cada una y el archivo donde se documenta.
+
+| Innovación | Descripción | Documentación |
+|---|---|---|
+| Pruebas de robustez frente a datos inexistentes | Se formularon tres consultas de prueba, una serie inexistente del BCRP, un periodo aún no publicado y un departamento inexistente en la ENAHO, y en los tres casos el agente informó el error recibido sin inventar cifras | Apartado «Manejo de errores» de la sección 7 de [`informes/informe_final.md`](informes/informe_final.md) y [`evidencias_ia/integracion/03_verificacion_y_errores.txt`](evidencias_ia/integracion/03_verificacion_y_errores.txt) |
+| Efecto de desactivar herramientas | Las mismas preguntas se formularon sin MCP ni skills (modo A), con ambos desde el proyecto (modo B) y con ambos desde una copia limpia sin resultados precalculados (modo C), lo que permitió aislar la contribución de cada componente | [`evaluacion/comparacion.md`](evaluacion/comparacion.md), [`evaluacion/resultados.csv`](evaluacion/resultados.csv) y [`figuras/evaluacion_modos.png`](figuras/evaluacion_modos.png) |
+| Detección de inconsistencias entre métodos y herramientas | El método oficial del INEI se contrastó con el método de personas, que coincide a escala nacional pero solo en seis departamentos, el mapa se contrastó con la referencia departamental del curso, con 25 coincidencias de 25, y cada cifra de la ejecución integrada se contrastó con las del informe final | [`salidas/validacion.txt`](salidas/validacion.txt), [`salidas/comparacion_mapa.csv`](salidas/comparacion_mapa.csv) y [`evidencias_ia/integracion/02_ejecucion_integrada.txt`](evidencias_ia/integracion/02_ejecucion_integrada.txt) |
+| Generación de informes con tablas, gráficos y referencias | El prompt `informe` del servidor MCP solicita informes breves con cada cifra citada mediante código, periodo y fuente, y con una tabla final de fuentes, mientras que el script `informes/grafico_bcrp.py` elabora gráficos con datos obtenidos del mismo servidor | [`mcp/server.py`](mcp/server.py), [`evidencias_ia/mcp/02_demostracion_mcp.txt`](evidencias_ia/mcp/02_demostracion_mcp.txt) y [`informes/grafico_bcrp.py`](informes/grafico_bcrp.py) |
+| Análisis interseccional complementario | La pobreza se examinó conjuntamente por sexo y área de residencia, lo que mostró una brecha entre mujeres y hombres mayor en el área rural (1.2 puntos porcentuales) que en la urbana (0.2 puntos porcentuales), interpretada a la luz del marco conceptual del informe | [`figuras/pobreza_sexo_area.png`](figuras/pobreza_sexo_area.png), hallazgo 3 y marco conceptual de [`informes/informe_final.md`](informes/informe_final.md) |
+
 ## 12. Evidencias de IA
 
 La carpeta `evidencias_ia/` contiene las exportaciones en texto de las sesiones de Claude Code y sus registros originales.

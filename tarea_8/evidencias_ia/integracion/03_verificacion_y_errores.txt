@@ -5356,3 +5356,204 @@ completed (exit code 0)
   - Los enlaces relativos funcionan.
 
 ✻ Brewed for 2m 31s · done 7:39 PM
+
+❯ /export evidencias_ia/integracion/03_verificacion_y_errores.txt               
+  ⎿  Conversation exported to: C:\Users\anaza\Documents\GitHub\data-science-pyth
+     on-2026\tarea_8\evidencias_ia\integracion\03_verificacion_y_errores.txt
+
+❯ En evaluacion/evaluar.py, haz que la opción --recalificar conserve el orden   
+  original de las filas (modo A y B intercalados por pregunta y luego el modo   
+  C, como en el resultados.csv actual), de modo que recalificar reproduzca el   
+  archivo de forma idéntica. Comprueba con git diff que resultados.csv no       
+  cambie después de ejecutar uv run evaluacion/evaluar.py --recalificar. No     
+  hagas commit.                                                                 
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● El problema está en la fusión, que pone primero las filas no recalificadas (C)
+  y añade al final las recalificadas (A y B). Voy a cambiarla por una fusión en
+  el lugar, de modo que cada fila recalificada conserve su posición original y
+  las nuevas vayan al final.
+
+● Update(evaluacion\evaluar.py)
+  ⎿  Added 11 lines, removed 4 lines
+      306  
+      307      res = pd.DataFrame(filas)
+      308      previo = AQUI / "resultados.csv"
+      309 -    if previo.exists():   # conserva tal cual las filas de los
+          - modos que no se ejecutaron ahora                             
+      310 -        otras = pd.read_csv(previo, dtype={"id": str})        
+      311 -        otras = otras[~otras.modo.isin(a.modos)]              
+      312 -        res = pd.concat([otras, res], ignore_index=True)   # l
+          -as filas nuevas van al final                                  
+      309 +    if previo.exists():                                       
+      310 +        # Fusión en el lugar: cada fila (id, modo) recalculada
+          + ocupa la posición que tenía en el archivo, las de            
+      311 +        # los modos que no se ejecutaron ahora se conservan ta
+          +l cual y las filas nuevas van al final. Así el orden          
+      312 +        # original (A y B intercalados por pregunta y luego C)
+          + se mantiene, y --recalificar reproduce el archivo.           
+      313 +        anteriores = pd.read_csv(previo, dtype={"id": str})   
+      314 +        nuevas = {(f["id"], f["modo"]): f for f in res.to_dict
+          +("records")}                                                  
+      315 +        claves_previas = list(zip(anteriores.id, anteriores.mo
+          +do))                                                          
+      316 +        filas_finales = [nuevas.pop(k) if k in nuevas else fil
+          +a                                                             
+      317 +                         for k, fila in zip(claves_previas, an
+          +teriores.to_dict("records"))]                                 
+      318 +        filas_finales += list(nuevas.values())                
+      319 +        res = pd.DataFrame(filas_finales, columns=anteriores.c
+          +olumns.union(res.columns, sort=False))                        
+      320      res.to_csv(previo, index=False, encoding="utf-8")
+      321      print("\n" + res.pivot(index="id", columns="modo", values=
+           "resultado").to_string())
+      322      tabla = res.groupby("modo").resultado.value_counts().unsta
+           ck(fill_value=0)
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Corregí --recalificar en evaluacion/evaluar.py: ahora conserva el orden
+  original de las filas y reproduce resultados.csv de forma idéntica. No hice
+  commit.
+
+  Causa: al recalificar, el script escribía primero las filas que no recalculaba
+  (las del modo C) y agregaba al final las de A y B, y eso cambiaba el orden.
+
+  Corrección: cada fila recalculada vuelve a la posición que ya tenía en el
+  archivo, y las filas de modos que no se ejecutaron quedan como estaban. Si en
+  el futuro se ejecuta una pregunta o un modo que el archivo no tenía, esas
+  filas nuevas van al final.
+
+  Comprobación:
+  - Tras uv run evaluacion/evaluar.py --recalificar, git diff sobre
+    evaluacion/resultados.csv sale vacío.
+  - Tras --recalificar --modos A B C, que recalcula también las filas del modo
+    C, git diff también sale vacío.
+  - El resumen no cambia: A acierta 1, B acierta 10 y C acierta 6.
+  - El único archivo modificado es evaluacion/evaluar.py.
+
+✻ Worked for 32s · done 7:43 PM
+
+❯ Agrega al README, antes de la sección 12, una sección breve titulada          
+  «Innovaciones incorporadas», sin renumerar las doce secciones obligatorias    
+  (puede ir como sección 11 bis o como apartado final de la sección 10). Debe   
+  identificar, con un párrafo corto o una tabla y el archivo donde se documenta 
+  cada una, las ideas de innovación del enunciado que el proyecto ya            
+  incorpora. Estas son las pruebas de robustez frente a datos inexistentes      
+  (sección «Manejo de errores» del informe), el análisis del efecto de          
+  desactivar herramientas mediante los modos A, B y C                           
+  (evaluacion/comparacion.md), la detección de inconsistencias entre métodos y  
+  herramientas (método oficial frente al de personas, contraste del mapa con la 
+  referencia y contraste de la ejecución integrada con el informe) y la         
+  generación de informes con tablas, gráficos y referencias mediante el prompt  
+  informe del MCP. Añade además el gráfico interseccional de pobreza por sexo y 
+  área como análisis complementario. Mantén la redacción 100 % académica, sin   
+  dos puntos ni guiones dobles dentro de los párrafos. No hagas commit.         
+
+● Update(README.md)
+  ⎿  Added 12 lines
+      185  
+      186  Todas las cifras coincidieron al decimal con las de [`informes
+           /informe_final.md`](informes/informe_final.md), por lo que el 
+           informe no requirió modificaciones.
+      187  
+      188 +## 11 bis. Innovaciones incorporadas                          
+      189 +                                                              
+      190 +El proyecto incorpora varias de las ideas de innovación propue
+          +stas en el enunciado, además de un análisis complementario de 
+          +carácter interseccional. La tabla siguiente identifica cada un
+          +a y el archivo donde se documenta.                            
+      191 +                                                              
+      192 +| Innovación | Descripción | Documentación |                  
+      193 +|---|---|---|                                                 
+      194 +| Pruebas de robustez frente a datos inexistentes | Se formula
+          +ron tres consultas de prueba, una serie inexistente del BCRP, 
+          +un periodo aún no publicado y un departamento inexistente en l
+          +a ENAHO, y en los tres casos el agente informó el error recibi
+          +do sin inventar cifras | Apartado «Manejo de errores» de la se
+          +cción 7 de [`informes/informe_final.md`](informes/informe_fina
+          +l.md) y [`evidencias_ia/integracion/03_verificacion_y_errores.
+          +txt`](evidencias_ia/integracion/03_verificacion_y_errores.txt)
+          + |                                                            
+      195 +| Efecto de desactivar herramientas | Las mismas preguntas se 
+          +formularon sin MCP ni skills (modo A), con ambos desde el proy
+          +ecto (modo B) y con ambos desde una copia limpia sin resultado
+          +s precalculados (modo C), lo que permitió aislar la contribuci
+          +ón de cada componente | [`evaluacion/comparacion.md`](evaluaci
+          +on/comparacion.md), [`evaluacion/resultados.csv`](evaluacion/r
+          +esultados.csv) y [`figuras/evaluacion_modos.png`](figuras/eval
+          +uacion_modos.png) |                                           
+      196 +| Detección de inconsistencias entre métodos y herramientas | 
+          +El método oficial del INEI se contrastó con el método de perso
+          +nas, que coincide a escala nacional pero solo en seis departam
+          +entos, el mapa se contrastó con la referencia departamental de
+          +l curso, con 25 coincidencias de 25, y cada cifra de la ejecuc
+          +ión integrada se contrastó con las del informe final | [`salid
+          +as/validacion.txt`](salidas/validacion.txt), [`salidas/compara
+          +cion_mapa.csv`](salidas/comparacion_mapa.csv) y [`evidencias_i
+          +a/integracion/02_ejecucion_integrada.txt`](evidencias_ia/integ
+          +racion/02_ejecucion_integrada.txt) |                          
+      197 +| Generación de informes con tablas, gráficos y referencias | 
+          +El prompt `informe` del servidor MCP solicita informes breves 
+          +con cada cifra citada mediante código, periodo y fuente, y con
+          + una tabla final de fuentes, mientras que el script `informes/
+          +grafico_bcrp.py` elabora gráficos con datos obtenidos del mism
+          +o servidor | [`mcp/server.py`](mcp/server.py), [`evidencias_ia
+          +/mcp/02_demostracion_mcp.txt`](evidencias_ia/mcp/02_demostraci
+          +on_mcp.txt) y [`informes/grafico_bcrp.py`](informes/grafico_bc
+          +rp.py) |                                                      
+      198 +| Análisis interseccional complementario | La pobreza se exami
+          +nó conjuntamente por sexo y área de residencia, lo que mostró 
+          +una brecha entre mujeres y hombres mayor en el área rural (1.2
+          + puntos porcentuales) que en la urbana (0.2 puntos porcentuale
+          +s), interpretada a la luz del marco conceptual del informe | [
+          +`figuras/pobreza_sexo_area.png`](figuras/pobreza_sexo_area.png
+          +), hallazgo 3 y marco conceptual de [`informes/informe_final.m
+          +d`](informes/informe_final.md) |                              
+      199 +                                                              
+      200  ## 12. Evidencias de IA
+      201  
+      202  La carpeta `evidencias_ia/` contiene las exportaciones en text
+           o de las sesiones de Claude Code y sus registros originales.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Agregué la sección «11 bis. Innovaciones incorporadas» al README, justo antes
+  de la sección 12. Las doce secciones obligatorias conservan su numeración. No
+  hice commit.
+
+  La sección tiene un párrafo introductorio y una tabla con la descripción de
+  cada innovación y los archivos donde se documenta:
+
+  Innovación: Pruebas de robustez frente a datos inexistentes
+  Documentación: Apartado «Manejo de errores» del informe y
+    evidencias_ia/integracion/03_verificacion_y_errores.txt
+  ────────────────────────────────────────
+  Innovación: Efecto de desactivar herramientas (modos A, B y C)
+  Documentación: evaluacion/comparacion.md, evaluacion/resultados.csv y
+    figuras/evaluacion_modos.png
+  ────────────────────────────────────────
+  Innovación: Detección de inconsistencias entre métodos y herramientas
+  Documentación: salidas/validacion.txt, salidas/comparacion_mapa.csv y
+    evidencias_ia/integracion/02_ejecucion_integrada.txt
+  ────────────────────────────────────────
+  Innovación: Generación de informes con tablas, gráficos y referencias
+  Documentación: mcp/server.py, evidencias_ia/mcp/02_demostracion_mcp.txt e
+    informes/grafico_bcrp.py
+  ────────────────────────────────────────
+  Innovación: Análisis interseccional complementario
+  Documentación: figuras/pobreza_sexo_area.png, y el hallazgo 3 y el marco
+    conceptual del informe
+
+  Una precisión sobre la fila de generación de informes: el prompt informe pide
+  cifras citadas y una tabla de fuentes, pero no produce gráficos. Por eso la
+  fila dice que los gráficos los elabora informes/grafico_bcrp.py con datos del
+  mismo servidor, en lugar de atribuírselos al prompt.
+
+  Los 33 enlaces relativos del README apuntan a archivos existentes, incluidos
+  los nuevos, y ningún párrafo tiene dos puntos ni guiones dobles. En el árbol
+  de trabajo siguen sin commit este cambio del README y el de
+  evaluacion/evaluar.py de la petición anterior.
+
+✻ Cogitated for 25s · done 7:45 PM
